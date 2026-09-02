@@ -1,3 +1,5 @@
+import { Colors, Fonts, Spacing } from "@/constants/theme";
+import { Ionicons } from "@expo/vector-icons";
 import { StyleSheet, Text, View } from "react-native";
 
 type Status = "Completed" | "Start" | "Locked";
@@ -14,12 +16,26 @@ export const CourseCard = ({ title, subTitle, status }: courseCardProps) => {
         <Text>ICON</Text>
       </View>
       <View style={styles.middleView}>
-        <Text>{title}</Text>
-        <Text>{subTitle}</Text>
-        <Text style={styles.statusText}>{status}</Text>
+        <View>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.subTitle}>{subTitle}</Text>
+        </View>
+        <Text
+          style={
+            status == "Completed"
+              ? styles.completedStatusText
+              : status == "Start"
+                ? styles.startStatusText
+                : status == "Locked"
+                  ? styles.lockedStatusText
+                  : styles.statusText
+          }
+        >
+          {status}
+        </Text>
       </View>
       <View style={styles.lastView}>
-        <Text>Button Soon</Text>
+        <Ionicons name="chevron-forward" size={24} color="#4b93ff"></Ionicons>
       </View>
     </View>
   );
@@ -33,7 +49,7 @@ const styles = StyleSheet.create({
     borderColor: "#C8C8C8",
     padding: 16,
     marginLeft: 16,
-    gap: 8,
+    gap: Spacing.two,
   },
   firstView: {
     flex: 1,
@@ -42,20 +58,72 @@ const styles = StyleSheet.create({
   middleView: {
     flex: 3,
     flexDirection: "column",
-    alignItems: "center",
+    alignItems: "flex-start",
     justifyContent: "center",
+    paddingLeft: Spacing.two,
+    gap: Spacing.one,
   },
   lastView: {
     flex: 1,
+    alignItems: "flex-end",
+    justifyContent: "center",
+  },
+  title: {
+    fontFamily: Fonts.sans,
+    fontWeight: "bold",
+    fontSize: 10,
+    color: Colors.light.textSecondary,
+  },
+  subTitle: {
+    fontFamily: Fonts.sans,
+    fontWeight: "regular",
+    fontSize: 8,
+    color: Colors.light.statusText,
   },
   statusText: {
-    width: 104,
-    paddingTop: 6,
-    paddingRight: 10,
-    paddingBottom: 6,
-    paddingLeft: 8,
+    fontFamily: Fonts.sans,
+    fontWeight: "bold",
+    fontSize: 8,
+    paddingHorizontal: Spacing.two,
+    paddingVertical: Spacing.one,
     borderRadius: 200,
     backgroundColor: "blue",
+    textAlign: "center",
+    textAlignVertical: "center",
+  },
+  completedStatusText: {
+    fontFamily: Fonts.sans,
+    fontWeight: "bold",
+    fontSize: 8,
+    color: Colors.light.completedStatusText,
+    paddingHorizontal: Spacing.two,
+    paddingVertical: Spacing.one,
+    borderRadius: 200,
+    backgroundColor: Colors.light.completeBackground,
+    textAlign: "center",
+    textAlignVertical: "center",
+  },
+  startStatusText: {
+    fontFamily: Fonts.sans,
+    fontWeight: "bold",
+    fontSize: 8,
+    color: Colors.light.startStatusText,
+    paddingHorizontal: Spacing.two,
+    paddingVertical: Spacing.one,
+    borderRadius: 200,
+    backgroundColor: Colors.light.startStatusBackground,
+    textAlign: "center",
+    textAlignVertical: "center",
+  },
+  lockedStatusText: {
+    fontFamily: Fonts.sans,
+    fontWeight: "bold",
+    fontSize: 8,
+    color: Colors.light.textSecondary,
+    paddingHorizontal: Spacing.two,
+    paddingVertical: Spacing.one,
+    borderRadius: 200,
+    backgroundColor: Colors.light.lockedStatusBackground,
     textAlign: "center",
     textAlignVertical: "center",
   },

@@ -12,6 +12,13 @@ export const Colors = {
     buttonSecondary: "#FBBF24",
     statusColor: "#4b93df",
     statusText: "#000dff",
+    completedStatusText: "#14ac00",
+    completeBackground: "#c4ffcf",
+    startStatusText: "#003CFF",
+    startStatusBackground: "#7db5ff",
+    lockedStatusBackground: "#cfcfcf",
+    activeTabBarBackground: "#2247d8",
+    borderColor: "#C8C8C8",
   },
   dark: {
     text: "#ffffff",

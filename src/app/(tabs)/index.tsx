@@ -31,14 +31,45 @@ export default function Index() {
           </View>
         </View>
         <View style={styles.headerButtons}>
-          <Button label="Learn" size="medium" state="primary"></Button>
-          <Button label="Quiz" size="medium" state="secondary"></Button>
+          <Button
+            label="Learn"
+            size="medium"
+            state="primary"
+            page="index"
+          ></Button>
+          <Button
+            label="Quiz"
+            size="medium"
+            state="secondary"
+            page="index"
+          ></Button>
         </View>
       </View>
       <ScrollView
         style={styles.styleView}
         contentContainerStyle={styles.bodyContainer}
       >
+        <View style={styles.unitHeader}>
+          <Text style={styles.unitHeaderText}>
+            Unit 1 - Intro to Statistics
+          </Text>
+          <Text style={styles.pillUnit}> 2/3 Done</Text>
+        </View>
+        <CourseCard
+          title="Intro to Statistics"
+          subTitle="Types & Classification"
+          status="Completed"
+        ></CourseCard>
+        <CourseCard
+          title="Measures of Tendency"
+          subTitle="Mean, Median & Mode"
+          status="Start"
+        ></CourseCard>
+        <CourseCard
+          title="Correlation & Covariance"
+          subTitle="Relationships in Data"
+          status="Locked"
+        ></CourseCard>
         <View style={styles.unitHeader}>
           <Text style={styles.unitHeaderText}>
             Unit 1 - Intro to Statistics
@@ -112,7 +143,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.light.background,
   },
   headerContainer: {
     paddingVertical: 12,
@@ -138,10 +169,11 @@ const styles = StyleSheet.create({
   },
   headerButtons: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    paddingHorizontal: 32,
+    paddingHorizontal: Spacing.two,
+    gap: Spacing.two,
   },
   bodyContainer: {
     alignItems: "center",
