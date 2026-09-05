@@ -1,4 +1,4 @@
-import { Colors, Fonts } from "@/constants/theme";
+import { Colors } from "@/constants/theme";
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 
@@ -18,12 +18,6 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => (
             <Ionicons size={18} name="home" color={color} />
           ),
-          tabBarLabelStyle: {
-            fontFamily: Fonts.sans,
-            color: Colors.light.textPrimary,
-            fontSize: 10,
-            fontWeight: "bold",
-          },
         }}
       />
       <Tabs.Screen

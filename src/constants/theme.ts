@@ -19,6 +19,8 @@ export const Colors = {
     lockedStatusBackground: "#cfcfcf",
     activeTabBarBackground: "#2247d8",
     borderColor: "#C8C8C8",
+    cancelButtonBackground: "#FF8B8B",
+    cancelButtonText: "#EF4444",
   },
   dark: {
     text: "#ffffff",

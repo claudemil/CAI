@@ -1,6 +1,6 @@
 import { Colors, Fonts, Spacing } from "@/constants/theme";
 import { Ionicons } from "@expo/vector-icons";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 type Status = "Completed" | "Start" | "Locked";
 type courseCardProps = {
@@ -35,7 +35,13 @@ export const CourseCard = ({ title, subTitle, status }: courseCardProps) => {
         </Text>
       </View>
       <View style={styles.lastView}>
-        <Ionicons name="chevron-forward" size={24} color="#4b93ff"></Ionicons>
+        <TouchableOpacity
+          onPress={() => {
+            console.log("not yet!");
+          }}
+        >
+          <Ionicons name="chevron-forward" size={24} color="#4b93ff"></Ionicons>
+        </TouchableOpacity>
       </View>
     </View>
   );

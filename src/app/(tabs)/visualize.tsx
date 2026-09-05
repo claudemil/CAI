@@ -1,9 +1,44 @@
 import { Button } from "@/components/Button";
 import Card from "@/components/Card";
 import { Colors, Fonts, Spacing } from "@/constants/theme";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { useState } from "react";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
+const DataPoint = ({ id }: { id: number }) => (
+  <View
+    style={{
+      width: 80,
+      height: 80,
+      backgroundColor: "#e0e0e0",
+      justifyContent: "center",
+      alignItems: "center",
+      marginRight: 10,
+      borderRadius: 8,
+    }}
+  >
+    <Text>Item {id}</Text>
+  </View>
+);
+
 export default function Index() {
+  const [items, setItems] = useState<number[]>([]);
+
+  const addItem = () => {
+    setItems((prevItems) => [...prevItems, prevItems.length + 1]);
+  };
+
+  const clearItems = () => {
+    setItems([]);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
@@ -54,6 +89,48 @@ export default function Index() {
           <Card label="hey"></Card>
           <Card label="hey"></Card>
           <Card label="hey"></Card>
+        </View>
+        <View
+          style={{
+            borderColor: Colors.light.borderColor,
+            borderWidth: 1,
+            flex: 1,
+            flexDirection: "row",
+            justifyContent: "center",
+            alignContent: "center",
+          }}
+        >
+          <TextInput></TextInput>
+          <TouchableOpacity style={{ flexDirection: "row" }} onPress={addItem}>
+            <Text>Add Item</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={{ flex: 1 }}>
+          <View style={styles.datasetHeaderRow}>
+            <Text
+              style={{
+                color: "#AAAAAA",
+                fontSize: 12,
+                fontWeight: "bold",
+                fontFamily: Fonts.sans,
+                alignSelf: "center",
+              }}
+            >
+              Dataset ({items.length} values)
+            </Text>
+            <TouchableOpacity onPress={clearItems} style={styles.clearButton}>
+              <Text style={styles.clearButtonText}>Clear All</Text>
+            </TouchableOpacity>
+          </View>
+          <ScrollView
+            horizontal
+            style={{ flexDirection: "row" }}
+            showsHorizontalScrollIndicator={false}
+          >
+            {items.map((id) => (
+              <DataPoint key={id} id={id} />
+            ))}
+          </ScrollView>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -124,5 +201,26 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     gap: Spacing.two,
+  },
+  datasetHeaderRow: {
+    flexDirection: "row",
+    gap: Spacing.six,
+    justifyContent: "center",
+    alignContent: "center",
+  },
+  clearButton: {
+    paddingTop: 6,
+    paddingRight: 10,
+    paddingBottom: 6,
+    paddingLeft: 8,
+    backgroundColor: Colors.light.cancelButtonBackground,
+    borderRadius: 200,
+    alignSelf: "center",
+  },
+  clearButtonText: {
+    fontFamily: Fonts.sans,
+    fontSize: 12,
+    color: Colors.light.cancelButtonText,
+    alignSelf: "center",
   },
 });
