@@ -5,29 +5,40 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 type Size = "small" | "medium" | "large";
 type State = "primary" | "secondary";
 type Page = "index" | "profile" | "visualize";
+type Status = "active" | "inactive";
 type buttonProps = {
   label: string;
   size: Size;
   state: State;
   page?: Page;
+  status?: Status;
+  onPress?: (data: any) => void;
 };
 
-export const Button = ({ label, state, size, page }: buttonProps) => {
+export const Button = ({
+  label,
+  state,
+  size,
+  page,
+  status,
+  onPress,
+}: buttonProps) => {
   return (
     <TouchableOpacity
       style={[
         size == "medium" ? styles.mediumButton : styles.largeButton,
         state == "primary" ? styles.primaryButton : styles.secondaryButton,
+        page == "visualize"
+          ? status == "active"
+            ? styles.primaryButton
+            : styles.inactiveButton
+          : state == "primary"
+            ? styles.primaryButton
+            : styles.secondaryButton,
       ]}
+      onPress={onPress}
     >
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 8,
-        }}
-      >
+      <View style={styles.buttonContainer}>
         {state == "primary" && page == "index" && (
           <Ionicons
             name="book-outline"
@@ -45,7 +56,16 @@ export const Button = ({ label, state, size, page }: buttonProps) => {
         )}
 
         <Text
-          style={state == "primary" ? styles.primaryText : styles.secondaryText}
+          style={[
+            page == "visualize"
+              ? status == "active"
+                ? styles.primaryText
+                : styles.inactiveText
+              : state == "primary"
+                ? styles.primaryText
+                : styles.secondaryText,
+            ,
+          ]}
         >
           {label}
         </Text>
@@ -87,5 +107,18 @@ const styles = StyleSheet.create({
     color: Colors.light.textSecondary,
     fontFamily: Fonts.sans,
     fontWeight: "bold",
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+  },
+  inactiveButton: {
+    backgroundColor: Colors.light.backgroundElement,
+  },
+  inactiveText: {
+    color: Colors.light.buttonPrimary,
+    opacity: 0.5,
   },
 });

@@ -3,6 +3,7 @@ import Card from "@/components/Card";
 import { Colors, Fonts, Spacing } from "@/constants/theme";
 import { useState } from "react";
 import {
+  Alert,
   ScrollView,
   StyleSheet,
   Text,
@@ -11,32 +12,51 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+type DataPointProps = {
+  item: DataItem;
+  removeItem: (id: number) => void;
+};
 
-const DataPoint = ({ id }: { id: number }) => (
-  <View
-    style={{
-      width: 80,
-      height: 80,
-      backgroundColor: "#e0e0e0",
-      justifyContent: "center",
-      alignItems: "center",
-      marginRight: 10,
-      borderRadius: 8,
-    }}
-  >
-    <Text>Item {id}</Text>
+interface DataItem {
+  id: number;
+  text: string;
+}
+
+const DataPoint = ({ item, removeItem }: DataPointProps) => (
+  <View style={styles.dataPill}>
+    <Text style={styles.dataPillText}>Item {item.text}</Text>
+    <TouchableOpacity onPress={() => removeItem(item.id)}>
+      <Text style={{ alignSelf: "center" }}>X</Text>
+    </TouchableOpacity>
   </View>
 );
 
 export default function Index() {
-  const [items, setItems] = useState<number[]>([]);
+  const [items, setItems] = useState<DataItem[]>([]);
+  const [numberInput, setNumberInput] = useState<string>("");
+  const [topic, setTopic] = useState<string>("Measure of Tendencies");
 
-  const addItem = () => {
-    setItems((prevItems) => [...prevItems, prevItems.length + 1]);
+  const addItem = (inputText: string) => {
+    if (!inputText.trim()) {
+      Alert.alert("Empty inputs aren't allowed!");
+      return;
+    }
+
+    const newItem: DataItem = {
+      id: Math.random(),
+      text: numberInput,
+    };
+    setItems((prevItems) => [...prevItems, newItem]);
   };
 
   const clearItems = () => {
     setItems([]);
+  };
+
+  const removeItem = (itemToRemove: number) => {
+    setItems((prevItems) =>
+      prevItems.filter((item) => item.id !== itemToRemove),
+    );
   };
 
   return (
@@ -44,22 +64,8 @@ export default function Index() {
       <View style={styles.headerContainer}>
         <View style={styles.header}>
           <View style={styles.headerGreetingsContainer}>
-            <Text
-              style={[
-                styles.headerText,
-                { color: Colors.light.textHeader, fontFamily: Fonts.sans },
-              ]}
-            >
-              Stastationes
-            </Text>
-            <Text
-              style={[
-                styles.headerText,
-                { color: Colors.light.textHeader, fontFamily: Fonts.sans },
-              ]}
-            >
-              Hello, User!
-            </Text>
+            <Text style={styles.headerText}>Stastationes</Text>
+            <Text style={styles.headerText}>Hello, User!</Text>
           </View>
           <View>
             <Text style={[styles.pillPrimary, {}]}>N DAY STREAK</Text>
@@ -70,11 +76,17 @@ export default function Index() {
             label="Measure of Tendencies"
             size="medium"
             state="primary"
+            page="visualize"
+            onPress={() => setTopic("Measure of Tendencies")}
+            status={topic == "Measure of Tendencies" ? "active" : "inactive"}
           ></Button>
           <Button
             label="Correlation & Covariance"
             size="medium"
             state="primary"
+            page="visualize"
+            onPress={() => setTopic("Correlation & Covariance")}
+            status={topic == "Correlation & Covariance" ? "active" : "inactive"}
           ></Button>
         </View>
       </View>
@@ -90,47 +102,38 @@ export default function Index() {
           <Card label="hey"></Card>
           <Card label="hey"></Card>
         </View>
-        <View
-          style={{
-            borderColor: Colors.light.borderColor,
-            borderWidth: 1,
-            flex: 1,
-            flexDirection: "row",
-            justifyContent: "center",
-            alignContent: "center",
-          }}
-        >
-          <TextInput></TextInput>
-          <TouchableOpacity style={{ flexDirection: "row" }} onPress={addItem}>
-            <Text>Add Item</Text>
+        <View style={styles.inputRow}>
+          <TextInput
+            placeholder="Input a number e.g. 43"
+            placeholderTextColor={Colors.light.textHeader}
+            value={numberInput}
+            onChangeText={(newText) => setNumberInput(newText)}
+          ></TextInput>
+          <TouchableOpacity
+            style={{ flexDirection: "row" }}
+            onPress={() => addItem(numberInput)}
+          >
+            <Text style={styles.textCenter}>Add Item</Text>
           </TouchableOpacity>
         </View>
-        <View style={{ flex: 1 }}>
+        <View>
           <View style={styles.datasetHeaderRow}>
-            <Text
-              style={{
-                color: "#AAAAAA",
-                fontSize: 12,
-                fontWeight: "bold",
-                fontFamily: Fonts.sans,
-                alignSelf: "center",
-              }}
-            >
+            <Text style={styles.datasetInfoHeader}>
               Dataset ({items.length} values)
             </Text>
             <TouchableOpacity onPress={clearItems} style={styles.clearButton}>
               <Text style={styles.clearButtonText}>Clear All</Text>
             </TouchableOpacity>
           </View>
-          <ScrollView
-            horizontal
-            style={{ flexDirection: "row" }}
-            showsHorizontalScrollIndicator={false}
-          >
-            {items.map((id) => (
-              <DataPoint key={id} id={id} />
+          <View style={styles.datapointContainer}>
+            {items.map((dataItem) => (
+              <DataPoint
+                key={dataItem.id}
+                item={dataItem}
+                removeItem={removeItem}
+              />
             ))}
-          </ScrollView>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -162,6 +165,8 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 16,
     fontWeight: "bold",
+    color: Colors.light.textHeader,
+    fontFamily: Fonts.sans,
   },
   headerGreetingsContainer: {
     justifyContent: "space-between",
@@ -222,5 +227,45 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: Colors.light.cancelButtonText,
     alignSelf: "center",
+  },
+  inputRow: {
+    borderColor: Colors.light.borderColor,
+    borderWidth: 1,
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignContent: "center",
+  },
+  dataPillText: {
+    color: Colors.light.statusText,
+    fontSize: 12,
+    fontFamily: Fonts.sans,
+    fontWeight: "bold",
+    alignSelf: "center",
+  },
+  dataPill: {
+    padding: Spacing.two,
+    borderRadius: 999,
+    backgroundColor: Colors.light.statusColor,
+    flexDirection: "row",
+    gap: Spacing.two,
+    marginHorizontal: Spacing.half,
+    marginVertical: Spacing.half,
+  },
+  textCenter: {
+    textAlign: "center",
+    justifyContent: "center",
+    alignContent: "center",
+  },
+  datasetInfoHeader: {
+    color: "#AAAAAA",
+    fontSize: 12,
+    fontWeight: "bold",
+    fontFamily: Fonts.sans,
+    alignSelf: "center",
+  },
+  datapointContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
 });

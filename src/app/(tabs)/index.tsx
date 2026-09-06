@@ -9,22 +9,8 @@ export default function Index() {
       <View style={styles.headerContainer}>
         <View style={styles.header}>
           <View style={styles.headerGreetingsContainer}>
-            <Text
-              style={[
-                styles.headerText,
-                { color: Colors.light.textHeader, fontFamily: Fonts.sans },
-              ]}
-            >
-              Stastationes
-            </Text>
-            <Text
-              style={[
-                styles.headerText,
-                { color: Colors.light.textHeader, fontFamily: Fonts.sans },
-              ]}
-            >
-              Hello, User!
-            </Text>
+            <Text style={styles.headerText}>Stastationes</Text>
+            <Text style={styles.headerText}>Hello, User!</Text>
           </View>
           <View>
             <Text style={[styles.pillPrimary, {}]}>N DAY STREAK</Text>
@@ -163,6 +149,8 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 16,
     fontWeight: "bold",
+    color: Colors.light.textHeader,
+    fontFamily: Fonts.sans,
   },
   headerGreetingsContainer: {
     justifyContent: "space-between",
