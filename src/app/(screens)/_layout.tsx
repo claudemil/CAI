@@ -4,29 +4,25 @@ export default function ScreensLayout() {
   return (
     <Stack
       screenOptions={{
-        // 🌟 Global styles for all screens inside this folder
+        //GLobal styles for all the screens in this layout
         headerStyle: {
-          backgroundColor: "#ffffff", // Change header background color
+          backgroundColor: "#ffffff",
         },
-        headerTintColor: "#000000", // Change back button and title color
+        headerTintColor: "#000000",
         headerTitleStyle: {
           fontWeight: "bold",
         },
-        headerBackTitle: "Back", // Label next to the iOS back arrow
+        headerBackTitle: "Back",
       }}
     >
-      {/* 1. The Dynamic Quiz Screen Configuration */}
       <Stack.Screen
         name="quiz/[quizId]"
         options={{
-          title: "Quiz Active", // Default title shown in the top header
-          headerShown: true, // Shows the top bar with a Back button
-          gestureEnabled: false, // Optional: Prevents swiping back mid-quiz
+          title: "Quiz Active",
+          headerShown: true,
+          gestureEnabled: false,
         }}
       />
-
-      {/* Add more screens here as you create them, for example: */}
-      {/* <Stack.Screen name="settings" options={{ title: 'Settings' }} /> */}
     </Stack>
   );
 }
