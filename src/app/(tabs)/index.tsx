@@ -45,6 +45,7 @@ export default function Index() {
           title="Intro to Statistics"
           subTitle="Types & Classification"
           status="Completed"
+          id="math-101"
         ></CourseCard>
         <CourseCard
           title="Measures of Tendency"
