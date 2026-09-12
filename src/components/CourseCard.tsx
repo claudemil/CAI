@@ -1,5 +1,6 @@
 import { Colors, Fonts, Spacing } from "@/constants/theme";
 import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 type Status = "Completed" | "Start" | "Locked";
@@ -7,9 +8,23 @@ type courseCardProps = {
   title: string;
   subTitle: string;
   status: Status;
+  id?: string;
 };
 
-export const CourseCard = ({ title, subTitle, status }: courseCardProps) => {
+export const CourseCard = ({
+  title,
+  subTitle,
+  status,
+  id,
+}: courseCardProps) => {
+  const router = useRouter();
+
+  const handleStartQuiz = (id: string) => {
+    router.push({
+      pathname: "/quiz/[quizId]", // The literal filename structure
+      params: { quizId: id },
+    });
+  };
   return (
     <View style={styles.container}>
       <View style={styles.firstView}>
@@ -37,7 +52,7 @@ export const CourseCard = ({ title, subTitle, status }: courseCardProps) => {
       <View style={styles.lastView}>
         <TouchableOpacity
           onPress={() => {
-            console.log("not yet!");
+            handleStartQuiz(id!);
           }}
         >
           <Ionicons name="chevron-forward" size={24} color="#4b93ff"></Ionicons>
