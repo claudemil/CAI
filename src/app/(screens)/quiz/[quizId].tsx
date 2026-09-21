@@ -1,9 +1,18 @@
 import { Button } from "@/components/Button";
 import { Colors, Fonts, Spacing } from "@/constants/theme";
 import { useLocalSearchParams } from "expo-router";
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
+import { useState } from "react";
+import {
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 export default function Quiz() {
+  const [selectedAnswer, setSelectedAnswer] = useState<String | null>(null);
   const { quizId } = useLocalSearchParams<{ quizId: string }>();
 
   const quizData = getQuizDataById("math-101");
@@ -38,14 +47,10 @@ export default function Quiz() {
             page="index"
           ></Button>
         </View>
-        <Text style={{ fontWeight: "800" }}>{quizData.title}</Text>
       </View>
       <ScrollView
         style={styles.styleView}
-        contentContainerStyle={[
-          styles.bodyContainer,
-          { backgroundColor: "#000000" },
-        ]}
+        contentContainerStyle={[styles.bodyContainer]}
       >
         <View style={styles.progressRow}>
           <Text style={{ backgroundColor: "#000000" }}>
@@ -53,8 +58,42 @@ export default function Quiz() {
           </Text>
           <Text>1/3</Text>
         </View>
-        <View>
-          <Text style={{ fontWeight: "800" }}>{quizData.title}</Text>
+        <View style={styles.questionCard}>
+          <View
+            style={{
+              flexDirection: "row",
+              gap: Spacing.two,
+            }}
+          >
+            <Text>Q1</Text>
+            <Text>{quizData.type}</Text>
+          </View>
+          <View>
+            <Text>{quizData.questions[0]}</Text>
+          </View>
+        </View>
+        <View style={{ gap: Spacing.three }}>
+          {quizData.answers.map((answer: string, index: number) => {
+            const isSelected = selectedAnswer === answer;
+            const letterLabel = String.fromCharCode(65 + index);
+
+            return (
+              <View key={index} style={styles.answerCard}>
+                <TouchableOpacity onPress={() => setSelectedAnswer(answer)}>
+                  <Text
+                    style={[
+                      styles.answerText,
+                      isSelected && styles.answerTextSelected,
+                    ]}
+                  >
+                    {letterLabel}
+                  </Text>
+                </TouchableOpacity>
+
+                <Text>{answer}</Text>
+              </View>
+            );
+          })}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -63,7 +102,12 @@ export default function Quiz() {
 
 function getQuizDataById(id: string) {
   const quizzes: Record<string, any> = {
-    "math-101": { title: "Basic Math", type: "multiple-choice", questions: [] },
+    "math-101": {
+      title: "Basic Math",
+      type: "Multiple Choice",
+      questions: ["Probability can take values ranging from"],
+      answers: ["-∞ to ∞", "-∞ to 1", "-1 to 1", "1 to 1"],
+    },
     "history-rules": {
       title: "True History",
       type: "true-false",
@@ -130,12 +174,58 @@ const styles = StyleSheet.create({
   bodyContainer: {
     alignItems: "center",
     justifyContent: "center",
+    width: "100%",
     gap: Spacing.three,
     marginTop: Spacing.two,
     paddingVertical: Spacing.five,
   },
   progressRow: {
     flex: 1,
+    flexDirection: "row",
     gap: Spacing.three,
+  },
+  questionCard: {
+    backgroundColor: Colors.light.background,
+    borderWidth: 1,
+    borderColor: Colors.light.borderColor,
+    borderRadius: 16,
+    padding: Spacing.four,
+    overflow: "hidden",
+    flex: 1,
+  },
+  answerCard: {
+    backgroundColor: Colors.light.background,
+    borderWidth: 1,
+    borderColor: Colors.light.borderColor,
+    borderRadius: 16,
+    paddingVertical: Spacing.four,
+    paddingHorizontal: Spacing.four,
+    overflow: "hidden",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    gap: Spacing.two,
+  },
+  answerText: {
+    padding: Spacing.two,
+    paddingHorizontal: Spacing.three,
+    marginHorizontal: Spacing.two,
+    borderRadius: 999,
+    backgroundColor: Colors.light.statusColor,
+    color: Colors.light.statusText,
+    fontSize: 12,
+    fontFamily: Fonts.sans,
+    fontWeight: "bold",
+  },
+  answerTextSelected: {
+    color: Colors.light.statusText,
+    fontWeight: "600",
+    padding: Spacing.two,
+    paddingHorizontal: Spacing.three,
+    marginHorizontal: Spacing.two,
+    borderRadius: 999,
+    backgroundColor: "#8bf187",
+    fontSize: 12,
+    fontFamily: Fonts.sans,
   },
 });
