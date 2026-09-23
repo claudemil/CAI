@@ -17,9 +17,73 @@ export default function Profile() {
         style={styles.styleView}
         contentContainerStyle={styles.bodyContainer}
       >
-        <View style={{ flex: 1, width: "100%", paddingHorizontal: 100 }}>
+        <ScrollView>
           <Text style={{ alignSelf: "flex-start" }}>Achievements</Text>
-        </View>
+          <View style={styles.achievementCardContainer}>
+            <View style={styles.achievementCardRow}>
+              <View
+                style={{
+                  backgroundColor: "#f020f0",
+                  padding: Spacing.four,
+                  justifyContent: "center",
+                  alignContent: "center",
+                  gap: Spacing.two,
+                }}
+              >
+                <Text
+                  style={{ backgroundColor: "gray", padding: Spacing.three }}
+                >
+                  Icon
+                </Text>
+                <Text>First Lesson</Text>
+              </View>
+              <View
+                style={{
+                  backgroundColor: "#f020f0",
+                  padding: Spacing.four,
+                  gap: Spacing.two,
+                }}
+              >
+                <Text
+                  style={{ backgroundColor: "gray", padding: Spacing.three }}
+                >
+                  Icon
+                </Text>
+                <Text>Statistical Newbie</Text>
+              </View>
+            </View>
+            <View style={styles.achievementCardRow}>
+              <View
+                style={{
+                  backgroundColor: "#f020f0",
+                  padding: Spacing.four,
+                  gap: Spacing.two,
+                }}
+              >
+                <Text
+                  style={{ backgroundColor: "gray", padding: Spacing.three }}
+                >
+                  Icon
+                </Text>{" "}
+                <Text>Statistician</Text>
+              </View>
+              <View
+                style={{
+                  backgroundColor: "#f020f0",
+                  padding: Spacing.four,
+                  gap: Spacing.two,
+                }}
+              >
+                <Text
+                  style={{ backgroundColor: "gray", padding: Spacing.three }}
+                >
+                  Icon
+                </Text>
+                <Text>Data Analyst</Text>
+              </View>
+            </View>
+          </View>
+        </ScrollView>
       </ScrollView>
     </SafeAreaView>
   );
@@ -28,6 +92,7 @@ export default function Profile() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: "100%",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: Colors.light.background,
@@ -83,6 +148,7 @@ const styles = StyleSheet.create({
   },
   styleView: {
     flex: 1,
+    width: "100%",
   },
   pillPrimary: {
     paddingTop: 6,
@@ -105,5 +171,15 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.sans,
     fontWeight: "bold",
     alignSelf: "center",
+  },
+  achievementCardRow: {
+    marginVertical: Spacing.two,
+    flexDirection: "row",
+    flex: 1,
+    width: "100%",
+    gap: Spacing.three,
+  },
+  achievementCardContainer: {
+    width: "100%",
   },
 });
