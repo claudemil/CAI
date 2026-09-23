@@ -12,7 +12,8 @@ import {
 } from "react-native";
 
 export default function Quiz() {
-  const [selectedAnswer, setSelectedAnswer] = useState<String | null>(null);
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  const [correctFlag, setCorrectFlag] = useState<boolean>(false);
   const { quizId } = useLocalSearchParams<{ quizId: string }>();
 
   const quizData = getQuizDataById("math-101");
@@ -21,8 +22,16 @@ export default function Quiz() {
     return <Text>"Quiz not found!"</Text>;
   }
 
+  const checkAnswer = (answer: string) => {
+    if (quizData.correctAnswer == answer) {
+      setCorrectFlag(true);
+    } else {
+      setCorrectFlag(false);
+    }
+  };
+
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
         <View style={styles.header}>
           <View style={styles.headerGreetingsContainer}>
@@ -72,7 +81,7 @@ export default function Quiz() {
             <Text>{quizData.questions[0]}</Text>
           </View>
         </View>
-        <View style={{ gap: Spacing.three }}>
+        <View style={styles.answerCardRow}>
           {quizData.answers.map((answer: string, index: number) => {
             const isSelected = selectedAnswer === answer;
             const letterLabel = String.fromCharCode(65 + index);
@@ -95,6 +104,15 @@ export default function Quiz() {
             );
           })}
         </View>
+        <View>
+          <TouchableOpacity
+            style={styles.checkAnswerButton}
+            onPress={() => checkAnswer(selectedAnswer!)}
+          >
+            <Text style={styles.checkAnswerText}>Check Answer</Text>
+            {correctFlag && <Text>Correct!</Text>}
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -106,7 +124,8 @@ function getQuizDataById(id: string) {
       title: "Basic Math",
       type: "Multiple Choice",
       questions: ["Probability can take values ranging from"],
-      answers: ["-∞ to ∞", "-∞ to 1", "-1 to 1", "1 to 1"],
+      answers: ["-∞ to ∞", "-∞ to 1", "-1 to 1", "0 to 1"],
+      correctAnswer: "0 to 1",
     },
     "history-rules": {
       title: "True History",
@@ -120,13 +139,14 @@ function getQuizDataById(id: string) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    height: "100%",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: Colors.light.background,
   },
   headerContainer: {
     paddingVertical: 12,
-    width: "100%",
+    // width: "100%",
     alignItems: "center",
     justifyContent: "center",
     gap: Spacing.three,
@@ -227,5 +247,18 @@ const styles = StyleSheet.create({
     backgroundColor: "#8bf187",
     fontSize: 12,
     fontFamily: Fonts.sans,
+  },
+  answerCardRow: {
+    gap: Spacing.three,
+  },
+  checkAnswerButton: {
+    backgroundColor: "blue",
+    padding: Spacing.four,
+    justifyContent: "center",
+  },
+  checkAnswerText: {
+    fontFamily: Fonts.sans,
+    fontWeight: "bold",
+    color: "#ffffff",
   },
 });
