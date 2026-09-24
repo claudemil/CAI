@@ -18,18 +18,10 @@ export default function Profile() {
         contentContainerStyle={styles.bodyContainer}
       >
         <ScrollView>
-          <Text style={{ alignSelf: "flex-start" }}>Achievements</Text>
+          <Text style={{ alignSelf: "center" }}>Achievements</Text>
           <View style={styles.achievementCardContainer}>
             <View style={styles.achievementCardRow}>
-              <View
-                style={{
-                  backgroundColor: "#f020f0",
-                  padding: Spacing.four,
-                  justifyContent: "center",
-                  alignContent: "center",
-                  gap: Spacing.two,
-                }}
-              >
+              <View style={styles.achievementCard}>
                 <Text
                   style={{ backgroundColor: "gray", padding: Spacing.three }}
                 >
@@ -37,13 +29,7 @@ export default function Profile() {
                 </Text>
                 <Text>First Lesson</Text>
               </View>
-              <View
-                style={{
-                  backgroundColor: "#f020f0",
-                  padding: Spacing.four,
-                  gap: Spacing.two,
-                }}
-              >
+              <View style={styles.achievementCard}>
                 <Text
                   style={{ backgroundColor: "gray", padding: Spacing.three }}
                 >
@@ -53,27 +39,15 @@ export default function Profile() {
               </View>
             </View>
             <View style={styles.achievementCardRow}>
-              <View
-                style={{
-                  backgroundColor: "#f020f0",
-                  padding: Spacing.four,
-                  gap: Spacing.two,
-                }}
-              >
+              <View style={styles.achievementCard}>
                 <Text
                   style={{ backgroundColor: "gray", padding: Spacing.three }}
                 >
                   Icon
-                </Text>{" "}
+                </Text>
                 <Text>Statistician</Text>
               </View>
-              <View
-                style={{
-                  backgroundColor: "#f020f0",
-                  padding: Spacing.four,
-                  gap: Spacing.two,
-                }}
-              >
+              <View style={styles.achievementCard}>
                 <Text
                   style={{ backgroundColor: "gray", padding: Spacing.three }}
                 >
@@ -84,6 +58,17 @@ export default function Profile() {
             </View>
           </View>
         </ScrollView>
+        <Text style={{ alignSelf: "center" }}>Your Learning Stats</Text>
+        <View style={{ gap: Spacing.two }}>
+          <View style={styles.statCard}>
+            <Text style={styles.statBadge}>1</Text>
+            <Text style={styles.statText}>Days Active</Text>
+          </View>
+          <View style={styles.statCard}>
+            <Text style={styles.statBadge}>2</Text>
+            <Text style={styles.statText}>Questions Answered</Text>
+          </View>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -181,5 +166,40 @@ const styles = StyleSheet.create({
   },
   achievementCardContainer: {
     width: "100%",
+  },
+  achievementCard: {
+    backgroundColor: "#f020f0",
+    padding: Spacing.four,
+    gap: Spacing.two,
+  },
+  statCard: {
+    flexDirection: "row",
+    gap: Spacing.three,
+    width: "100%",
+    paddingVertical: Spacing.two,
+    justifyContent: "flex-start",
+    alignContent: "flex-start",
+    borderWidth: 3,
+    borderRadius: 20,
+    borderColor: Colors.light.backgroundElement,
+  },
+  statBadge: {
+    fontFamily: Fonts.sans,
+    fontWeight: "bold",
+    fontSize: 10,
+    color: Colors.light.textPrimary,
+    paddingVertical: Spacing.two,
+    paddingHorizontal: Spacing.three,
+    marginLeft: Spacing.two,
+    backgroundColor: Colors.light.statusText,
+    borderRadius: 999,
+  },
+  statText: {
+    fontFamily: Fonts.sans,
+    fontWeight: "bold",
+    fontSize: 12,
+    color: Colors.light.textSecondary,
+    alignSelf: "center",
+    marginRight: Spacing.six,
   },
 });
