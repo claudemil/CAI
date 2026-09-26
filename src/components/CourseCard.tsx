@@ -19,10 +19,17 @@ export const CourseCard = ({
 }: courseCardProps) => {
   const router = useRouter();
 
-  const handleStartQuiz = (id: string) => {
+  // const handleStartQuiz = (id: string) => {
+  //   router.push({
+  //     pathname: "/quiz/[quizId]", // The literal filename structure
+  //     params: { quizId: id },
+  //   });
+  // };
+
+  const handleShowLessonOutline = (id: string) => {
     router.push({
-      pathname: "/quiz/[quizId]", // The literal filename structure
-      params: { quizId: id },
+      pathname: "/lesson/[lessonOutlineId]", // The literal filename structure
+      params: { lessonId: id },
     });
   };
   return (
@@ -52,7 +59,7 @@ export const CourseCard = ({
       <View style={styles.lastView}>
         <TouchableOpacity
           onPress={() => {
-            handleStartQuiz(id!);
+            handleShowLessonOutline(id!);
           }}
         >
           <Ionicons name="chevron-forward" size={24} color="#4b93ff"></Ionicons>
