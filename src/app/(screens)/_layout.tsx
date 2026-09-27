@@ -16,10 +16,26 @@ export default function ScreensLayout() {
       }}
     >
       <Stack.Screen
-        name="quiz/[quizId]"
+        name="quiz/[Id]"
         options={{
           title: "Quiz Active",
-          headerShown: true,
+          headerShown: false,
+          gestureEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="lesson/completion/[Id]"
+        options={{
+          title: "Lesson Completion",
+          headerShown: false,
+          gestureEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="lesson/outline/[Id]"
+        options={{
+          title: "Lesson Outline",
+          headerShown: false,
           gestureEnabled: false,
         }}
       />
