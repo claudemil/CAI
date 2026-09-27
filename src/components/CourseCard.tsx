@@ -28,8 +28,8 @@ export const CourseCard = ({
 
   const handleShowLessonOutline = (id: string) => {
     router.push({
-      pathname: "/lesson/[lessonOutlineId]", // The literal filename structure
-      params: { lessonId: id },
+      pathname: "/lesson/outline/[Id]", // The literal filename structure
+      params: { Id: id },
     });
   };
   return (
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.two,
     paddingVertical: Spacing.one,
     borderRadius: 200,
-    backgroundColor: Colors.light.completeBackground,
+    backgroundColor: Colors.light.completedBackground,
     textAlign: "center",
     textAlignVertical: "center",
   },

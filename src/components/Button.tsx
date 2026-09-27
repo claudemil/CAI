@@ -1,5 +1,6 @@
 import { Colors, Fonts } from "@/constants/theme";
 import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 type Size = "small" | "medium" | "large";
@@ -23,6 +24,7 @@ export const Button = ({
   status,
   onPress,
 }: buttonProps) => {
+  const router = useRouter();
   return (
     <TouchableOpacity
       style={[

@@ -51,6 +51,7 @@ export default function Index() {
           title="Measures of Tendency"
           subTitle="Mean, Median & Mode"
           status="Start"
+          id="history-rules"
         ></CourseCard>
         <CourseCard
           title="Correlation & Covariance"
@@ -134,7 +135,7 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     paddingVertical: 12,
-    width: "100%",
+    width: "25%",
     alignItems: "center",
     justifyContent: "center",
     gap: Spacing.three,
