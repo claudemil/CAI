@@ -13,7 +13,7 @@ export const Colors = {
     statusColor: "#4b93df",
     statusText: "#000dff",
     completedStatusText: "#14ac00",
-    completeBackground: "#c4ffcf",
+    completedBackground: "#c4ffcf",
     startStatusText: "#003CFF",
     startStatusBackground: "#7db5ff",
     lockedStatusBackground: "#cfcfcf",
@@ -21,6 +21,7 @@ export const Colors = {
     borderColor: "#C8C8C8",
     cancelButtonBackground: "#FF8B8B",
     cancelButtonText: "#EF4444",
+    headerBackgroundColor: "#3660CB",
   },
   dark: {
     text: "#ffffff",
