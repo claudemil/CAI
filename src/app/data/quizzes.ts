@@ -9,7 +9,7 @@ export interface Quiz {
 export type QuizzesMap = Record<string, Quiz>;
 
 export const Quizzes: QuizzesMap = {
-  statistics: {
+  "intro-to-statistics": {
     title: "Statistics",
     type: "Multiple Choice",
     questions: ["Probability can take values ranging from"],

@@ -7,7 +7,7 @@ export interface Lesson {
 export type LessonsMap = Record<string, Lesson>;
 
 export const lessons: LessonsMap = {
-  statistics: {
+  "intro-to-statistics": {
     title: "Intro to Statistics",
     subtitle: "Type & Classifications",
     objectives: [
@@ -16,8 +16,17 @@ export const lessons: LessonsMap = {
       "Understand Predictive and Prescriptive Statistics",
     ],
   },
-  "history-rules": {
-    title: "Intro to Statistics",
+  "measure-of-tendencies": {
+    title: "Measures Of Tendencies",
+    subtitle: "Type & Classifications",
+    objectives: [
+      "Distinguish the difference Descriptive vs Inferential Statistics",
+      "Classify Quantitative and Qualitative Data",
+      "Understand Predictive and Prescriptive Statistics",
+    ],
+  },
+  "correlation-and-covariance": {
+    title: "Correlation and Covariance",
     subtitle: "Type & Classifications",
     objectives: [
       "Distinguish the difference Descriptive vs Inferential Statistics",
