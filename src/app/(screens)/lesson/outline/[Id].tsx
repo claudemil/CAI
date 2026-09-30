@@ -1,6 +1,6 @@
 import { Colors, Fonts, Spacing } from "@/constants/theme";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { lessons } from "../../../data/lessons"; // Import your dictionary and type
+import { lessons } from "../../../data/lessons";
 
 import {
   SafeAreaView,
@@ -23,23 +23,30 @@ export default function LessonOutlineId() {
     return <Text>"Lesson not found!"</Text>;
   }
 
-  const handleShowLessonCompletion = (lessonData: any) => {
+  const handleShowLessonCompletion = () => {
     router.push({
       pathname: "/(screens)/lesson/completion/[Id]",
       params: { Id: Id },
     });
   };
 
+  const handleReturn = () => {
+    router.back();
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
         <View style={styles.header}>
+          <TouchableOpacity onPress={handleReturn}>
+            <Text style={{ color: "white" }}>{"<--"}</Text>
+          </TouchableOpacity>
           <Text style={{ padding: Spacing.three, backgroundColor: "blue" }}>
             Icon
           </Text>
-          <Text>Lesson 1</Text>
-          <Text>{lessonData.title}</Text>
-          <Text>{lessonData.subtitle}</Text>
+          <Text style={styles.headerText}>Lesson 1</Text>
+          <Text style={styles.headerText}>{lessonData.title}</Text>
+          <Text style={styles.mutedHeaderText}>{lessonData.subtitle}</Text>
         </View>
       </View>
       <ScrollView
@@ -95,7 +102,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: Spacing.three,
-    backgroundColor: "#C8C8C8",
+    backgroundColor: Colors.light.headerBackgroundColor,
   },
   header: {
     alignItems: "flex-start",
@@ -106,9 +113,15 @@ const styles = StyleSheet.create({
     paddingLeft: Spacing.three,
   },
   headerText: {
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: "bold",
-    color: Colors.light.textHeader,
+    color: Colors.light.background,
+    fontFamily: Fonts.sans,
+  },
+  mutedHeaderText: {
+    fontSize: 10,
+    fontWeight: "bold",
+    color: Colors.light.backgroundElement,
     fontFamily: Fonts.sans,
   },
   aboutLessonCard: {
@@ -117,6 +130,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     paddingVertical: Spacing.two,
     paddingHorizontal: Spacing.three,
+    marginLeft: Spacing.three,
     maxWidth: "50%",
   },
   aboutLessonHeader: {
@@ -136,7 +150,7 @@ const styles = StyleSheet.create({
     gap: Spacing.two,
   },
   objectiveCard: {
-    maxWidth: "50%",
+    width: "75%",
     borderColor: Colors.light.borderColor,
     borderWidth: 1,
     borderRadius: 16,
@@ -152,7 +166,7 @@ const styles = StyleSheet.create({
     paddingBottom: 6,
     paddingLeft: 10,
     borderRadius: 999,
-    backgroundColor: Colors.light.buttonPrimary,
+    backgroundColor: Colors.light.statusText,
     color: Colors.light.textPrimary,
     fontFamily: Fonts.sans,
     fontWeight: "bold",
@@ -180,6 +194,7 @@ const styles = StyleSheet.create({
   },
   styleView: {
     flex: 1,
+    width: "50%",
   },
   startButton: {
     backgroundColor: "blue",
@@ -201,5 +216,6 @@ const styles = StyleSheet.create({
     gap: Spacing.three,
     marginTop: Spacing.two,
     paddingVertical: Spacing.five,
+    paddingHorizontal: Spacing.three,
   },
 });
