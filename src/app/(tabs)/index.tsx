@@ -1,16 +1,34 @@
 import { Button } from "@/components/Button";
 import { CourseCard } from "@/components/CourseCard";
 import { Colors, Fonts, Spacing } from "@/constants/theme";
+import { useRouter } from "expo-router";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useCourse } from "../context/course";
+import { lessons, LessonsMap } from "../data/lessons";
+
+interface IndexProp {
+  lessons: LessonsMap;
+}
+
 export default function Index() {
+  const lessonEntries = Object.entries(lessons);
+  const { handleCompleteCourse, getCourseStatus } = useCourse();
+  const router = useRouter();
+
+  const handleRedirectQuiz = (Id: string) => {
+    router.push({ pathname: "/(screens)/quiz/[Id]", params: { Id: Id } });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
         <View style={styles.header}>
           <View style={styles.headerGreetingsContainer}>
             <Text style={styles.headerText}>Stastationes</Text>
-            <Text style={styles.headerText}>Hello, User!</Text>
+            <Text style={[styles.headerText, { fontSize: 16 }]}>
+              Hello, User!
+            </Text>
           </View>
           <View>
             <Text style={[styles.pillPrimary, {}]}>N DAY STREAK</Text>
@@ -28,6 +46,7 @@ export default function Index() {
             size="medium"
             state="secondary"
             page="index"
+            onPress={() => handleRedirectQuiz("intro-to-statistics")}
           ></Button>
         </View>
       </View>
@@ -41,86 +60,18 @@ export default function Index() {
           </Text>
           <Text style={styles.pillUnit}> 2/3 Done</Text>
         </View>
-        <CourseCard
-          title="Intro to Statistics"
-          subTitle="Types & Classification"
-          status="Completed"
-          id="statistics"
-        ></CourseCard>
-        <CourseCard
-          title="Measures of Tendency"
-          subTitle="Mean, Median & Mode"
-          status="Start"
-          id="history-rules"
-        ></CourseCard>
-        <CourseCard
-          title="Correlation & Covariance"
-          subTitle="Relationships in Data"
-          status="Locked"
-        ></CourseCard>
-        <View style={styles.unitHeader}>
-          <Text style={styles.unitHeaderText}>
-            Unit 1 - Intro to Statistics
-          </Text>
-          <Text style={styles.pillUnit}> 2/3 Done</Text>
-        </View>
-        <CourseCard
-          title="Intro to Statistics"
-          subTitle="Types & Classification"
-          status="Completed"
-        ></CourseCard>
-        <CourseCard
-          title="Measures of Tendency"
-          subTitle="Mean, Median & Mode"
-          status="Start"
-        ></CourseCard>
-        <CourseCard
-          title="Correlation & Covariance"
-          subTitle="Relationships in Data"
-          status="Locked"
-        ></CourseCard>
-        <View style={styles.unitHeader}>
-          <Text style={styles.unitHeaderText}>
-            Unit 1 - Intro to Statistics
-          </Text>
-          <Text style={styles.pillUnit}> 2/3 Done</Text>
-        </View>
-        <CourseCard
-          title="Intro to Statistics"
-          subTitle="Types & Classification"
-          status="Completed"
-        ></CourseCard>
-        <CourseCard
-          title="Measures of Tendency"
-          subTitle="Mean, Median & Mode"
-          status="Start"
-        ></CourseCard>
-        <CourseCard
-          title="Correlation & Covariance"
-          subTitle="Relationships in Data"
-          status="Locked"
-        ></CourseCard>
-        <View style={styles.unitHeader}>
-          <Text style={styles.unitHeaderText}>
-            Unit 1 - Intro to Statistics
-          </Text>
-          <Text style={styles.pillUnit}> 2/3 Done</Text>
-        </View>
-        <CourseCard
-          title="Intro to Statistics"
-          subTitle="Types & Classification"
-          status="Completed"
-        ></CourseCard>
-        <CourseCard
-          title="Measures of Tendency"
-          subTitle="Mean, Median & Mode"
-          status="Start"
-        ></CourseCard>
-        <CourseCard
-          title="Correlation & Covariance"
-          subTitle="Relationships in Data"
-          status="Locked"
-        ></CourseCard>
+        {lessonEntries.map(([key, lesson], index) => {
+          return (
+            <CourseCard
+              key={key}
+              title={lesson.title}
+              subTitle={lesson.subtitle}
+              status={getCourseStatus(key)}
+              id={key}
+              onComplete={() => handleCompleteCourse(key)}
+            ></CourseCard>
+          );
+        })}
       </ScrollView>
     </SafeAreaView>
   );
@@ -139,7 +90,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: Spacing.three,
-    backgroundColor: "#C8C8C8",
+    backgroundColor: Colors.light.headerBackgroundColor,
   },
   header: {
     flexDirection: "row",
@@ -149,7 +100,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
   },
   headerText: {
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: "bold",
     color: Colors.light.textHeader,
     fontFamily: Fonts.sans,
@@ -170,7 +121,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     gap: Spacing.three,
     marginTop: Spacing.two,
-    paddingVertical: Spacing.five,
+    paddingVertical: Spacing.two,
   },
   unitHeader: {
     paddingHorizontal: 16,
