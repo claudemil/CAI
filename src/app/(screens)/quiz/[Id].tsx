@@ -4,6 +4,7 @@ import { Colors, Fonts, Spacing } from "@/constants/theme";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import {
+  Modal,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -122,6 +123,14 @@ export default function QuizScreen() {
             {correctFlag && <Text>Correct!</Text>}
           </TouchableOpacity>
         </View>
+        {correctFlag && (
+          <Modal>
+            <TouchableOpacity
+              style={styles.checkAnswerButton}
+              onPress={() => checkAnswer(selectedAnswer!)}
+            ></TouchableOpacity>
+          </Modal>
+        )}
       </ScrollView>
     </SafeAreaView>
   );
@@ -136,19 +145,21 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.background,
   },
   headerContainer: {
-    paddingVertical: 12,
-    width: "25%",
+    width: "auto",
     alignItems: "center",
     justifyContent: "center",
     gap: Spacing.three,
-    backgroundColor: "#C8C8C8",
+    backgroundColor: Colors.light.headerBackgroundColor,
+    paddingHorizontal: Spacing.seven,
+    paddingVertical: Spacing.three,
   },
   header: {
     flexDirection: "row",
+    gap: 32,
     alignItems: "center",
     justifyContent: "space-between",
     width: "100%",
-    paddingHorizontal: 32,
+    // paddingHorizontal: 32,
   },
   headerText: {
     fontSize: 16,
@@ -165,7 +176,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     paddingHorizontal: Spacing.two,
-    gap: Spacing.two,
+    gap: Spacing.five,
   },
   pillPrimary: {
     paddingTop: 6,
