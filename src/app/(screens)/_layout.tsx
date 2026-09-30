@@ -4,7 +4,6 @@ export default function ScreensLayout() {
   return (
     <Stack
       screenOptions={{
-        //GLobal styles for all the screens in this layout
         headerStyle: {
           backgroundColor: "#ffffff",
         },

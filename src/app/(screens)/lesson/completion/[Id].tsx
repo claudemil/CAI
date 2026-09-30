@@ -1,3 +1,4 @@
+import { useCourse } from "@/app/context/course";
 import { Colors, Fonts, Spacing } from "@/constants/theme";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import {
@@ -14,14 +15,22 @@ export default function Id() {
   const router = useRouter();
   const { Id } = useLocalSearchParams<{ Id: string }>();
   const lessonData: Lesson | undefined = Id ? lessons[Id] : undefined;
+  const { handleCompleteCourse, getCourseStatus } = useCourse();
+
+  const status = getCourseStatus(Id);
 
   if (!lessonData) {
     return <Text>"Lesson not found!"</Text>;
   }
 
+  const handleRedirectLessons = () => {
+    router.dismissAll();
+    router.navigate("/(tabs)");
+  };
+
   const handleStartQuiz = () => {
     router.push({
-      pathname: "/(screens)/quiz/[Id]", // The literal filename structure
+      pathname: "/(screens)/quiz/[Id]",
       params: { Id: Id },
     });
   };
@@ -30,6 +39,9 @@ export default function Id() {
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
         <View style={styles.header}>
+          <TouchableOpacity onPress={handleRedirectLessons}>
+            <Text style={{ color: "white" }}>{"<--"}</Text>
+          </TouchableOpacity>
           <Text
             style={{
               padding: Spacing.three,
@@ -38,11 +50,20 @@ export default function Id() {
           >
             Icon
           </Text>
-          <Text>Lesson Complete!</Text>
-          <Text>{lessonData.title}</Text>
+          <Text style={styles.bigHeaderText}>Lesson Complete!</Text>
+          <Text
+            style={[
+              styles.headerText,
+              { color: Colors.light.backgroundElement },
+            ]}
+          >
+            {lessonData.title}
+          </Text>
           <View style={styles.streakColumn}>
-            <Text style={{ alignSelf: "center" }}>X</Text>
-            <Text>Day Streak</Text>
+            <Text style={[styles.headerText, { alignSelf: "center" }]}>X</Text>
+            <Text style={[styles.headerText, { alignSelf: "center" }]}>
+              Day Streak
+            </Text>
           </View>
         </View>
       </View>
@@ -51,7 +72,7 @@ export default function Id() {
         contentContainerStyle={[styles.bodyContainer]}
       >
         <View style={{ width: "75%" }}>
-          <Text style={{ alignSelf: "flex-start" }}>Skills practiced</Text>
+          <Text style={styles.bodyHeader}>Skills practiced</Text>
         </View>
         <View style={styles.objectivesContainer}>
           {lessonData.objectives.map((objectives: string, index: number) => {
@@ -63,34 +84,19 @@ export default function Id() {
             );
           })}
         </View>
-        <TouchableOpacity style={styles.startButton} onPress={handleStartQuiz}>
-          <Text style={styles.startText}>Start Quiz</Text>
+        <TouchableOpacity
+          style={styles.startButton}
+          onPress={() => {
+            handleCompleteCourse(Id);
+            handleRedirectLessons;
+          }}
+        >
+          <Text style={styles.startText}>Complete Lesson</Text>
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );
 }
-
-function getLessonCompletionDataById(id: string) {
-  const lessons: Record<string, any> = {
-    statistics: {
-      title: "Intro to Statistics",
-      subtitle: "Type & Classifications",
-      objectives: [
-        "Distinguish the difference  Descriptive vs Inferential Statistics",
-        "Classify Quantitative and Qualitative Data",
-        "Understand Predictive and Prescriptive Statistics",
-      ],
-    },
-    "history-rules": {
-      title: "True History",
-      type: "true-false",
-      questions: [],
-    },
-  };
-  return lessons[id];
-}
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -101,12 +107,13 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.background,
   },
   headerContainer: {
-    paddingVertical: 12,
-    width: "25%",
+    width: "auto",
     alignItems: "center",
     justifyContent: "center",
     gap: Spacing.three,
     backgroundColor: Colors.light.headerBackgroundColor,
+    paddingHorizontal: Spacing.seven,
+    paddingVertical: Spacing.three,
   },
   header: {
     alignItems: "center",
@@ -114,12 +121,17 @@ const styles = StyleSheet.create({
     width: "100%",
     gap: Spacing.two,
     paddingHorizontal: Spacing.five,
-    paddingLeft: Spacing.three,
+  },
+  bigHeaderText: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: Colors.light.textPrimary,
+    fontFamily: Fonts.sans,
   },
   headerText: {
     fontSize: 16,
     fontWeight: "bold",
-    color: Colors.light.textHeader,
+    color: Colors.light.textPrimary,
     fontFamily: Fonts.sans,
   },
   streakColumn: {
@@ -127,29 +139,11 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
   },
-  aboutLessonCard: {
-    borderWidth: 1,
-    borderColor: Colors.light.borderColor,
-    borderRadius: 12,
-    paddingVertical: Spacing.two,
-    paddingHorizontal: Spacing.three,
-    maxWidth: "50%",
-  },
-  aboutLessonHeader: {
-    fontFamily: Fonts.sans,
-    fontSize: 12,
-    fontWeight: "bold",
-    marginBottom: Spacing.three,
-  },
-  aboutLessonContent: {
-    fontFamily: Fonts.sans,
-    fontSize: 12,
-    marginBottom: Spacing.three,
-  },
   objectivesContainer: {
     alignContent: "center",
     justifyContent: "center",
     gap: Spacing.two,
+    marginBottom: Spacing.five,
   },
   objectiveCard: {
     maxWidth: "75%",
@@ -182,27 +176,17 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginRight: Spacing.two,
   },
-  pillPrimary: {
-    paddingTop: 6,
-    paddingRight: 10,
-    paddingBottom: 6,
-    paddingLeft: 10,
-    borderRadius: 999,
-    alignSelf: "flex-start",
-    backgroundColor: Colors.light.buttonPrimary,
-    color: Colors.light.textPrimary,
-    fontFamily: Fonts.sans,
-    fontWeight: "bold",
-  },
   styleView: {
     flex: 1,
   },
   startButton: {
     backgroundColor: "blue",
-    padding: Spacing.four,
+    paddingVertical: Spacing.four,
+    paddingHorizontal: Spacing.seven,
     borderRadius: 16,
     justifyContent: "center",
-    width: "50%",
+    width: "100%",
+    marginHorizontal: Spacing.three,
   },
   startText: {
     fontFamily: Fonts.sans,
@@ -216,6 +200,12 @@ const styles = StyleSheet.create({
     width: "100%",
     gap: Spacing.three,
     marginTop: Spacing.two,
-    paddingVertical: Spacing.five,
+    paddingVertical: Spacing.three,
+  },
+  bodyHeader: {
+    fontFamily: Fonts.sans,
+    fontSize: 16,
+    fontWeight: "bold",
+    alignSelf: "flex-start",
   },
 });
