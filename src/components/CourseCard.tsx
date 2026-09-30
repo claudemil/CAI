@@ -3,12 +3,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-type Status = "Completed" | "Start" | "Locked";
+type Status = "Completed" | "In Progress" | "Locked";
 type courseCardProps = {
   title: string;
   subTitle: string;
   status: Status;
   id?: string;
+  onComplete?: () => void;
 };
 
 export const CourseCard = ({
@@ -16,24 +17,22 @@ export const CourseCard = ({
   subTitle,
   status,
   id,
+  onComplete,
 }: courseCardProps) => {
   const router = useRouter();
 
-  // const handleStartQuiz = (id: string) => {
-  //   router.push({
-  //     pathname: "/quiz/[quizId]", // The literal filename structure
-  //     params: { quizId: id },
-  //   });
-  // };
-
   const handleShowLessonOutline = (id: string) => {
     router.push({
-      pathname: "/lesson/outline/[Id]", // The literal filename structure
+      pathname: "/lesson/outline/[Id]",
       params: { Id: id },
     });
   };
   return (
-    <View style={styles.container}>
+    <View
+      style={
+        status == "Completed" ? styles.completedContainer : styles.container
+      }
+    >
       <View style={styles.firstView}>
         <Text>ICON</Text>
       </View>
@@ -46,8 +45,8 @@ export const CourseCard = ({
           style={
             status == "Completed"
               ? styles.completedStatusText
-              : status == "Start"
-                ? styles.startStatusText
+              : status == "In Progress"
+                ? styles.InProgressStatusText
                 : status == "Locked"
                   ? styles.lockedStatusText
                   : styles.statusText
@@ -61,8 +60,14 @@ export const CourseCard = ({
           onPress={() => {
             handleShowLessonOutline(id!);
           }}
+          // onPress={onComplete}
+          disabled={status === "Locked" ? true : false}
         >
-          <Ionicons name="chevron-forward" size={24} color="#4b93ff"></Ionicons>
+          <Ionicons
+            name="chevron-forward"
+            size={24}
+            color={status === "Locked" ? Colors.light.borderColor : "#4b93ff"}
+          ></Ionicons>
         </TouchableOpacity>
       </View>
     </View>
@@ -71,10 +76,21 @@ export const CourseCard = ({
 
 const styles = StyleSheet.create({
   container: {
+    width: 260,
     flexDirection: "row",
     borderRadius: 14,
     borderWidth: 1,
     borderColor: "#C8C8C8",
+    padding: 16,
+    marginLeft: 16,
+    gap: Spacing.two,
+  },
+  completedContainer: {
+    width: 260,
+    flexDirection: "row",
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: Colors.light.completedBorder,
     padding: 16,
     marginLeft: 16,
     gap: Spacing.two,
@@ -131,7 +147,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     textAlignVertical: "center",
   },
-  startStatusText: {
+  InProgressStatusText: {
     fontFamily: Fonts.sans,
     fontWeight: "bold",
     fontSize: 8,
