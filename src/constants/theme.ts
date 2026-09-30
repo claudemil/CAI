@@ -13,6 +13,7 @@ export const Colors = {
     statusColor: "#4b93df",
     statusText: "#000dff",
     completedStatusText: "#14ac00",
+    completedBorder: "#9be191",
     completedBackground: "#c4ffcf",
     startStatusText: "#003CFF",
     startStatusBackground: "#7db5ff",
