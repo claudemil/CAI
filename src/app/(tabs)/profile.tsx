@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     paddingVertical: 12,
-    width: "100%",
+    width: "50%",
     alignItems: "center",
     justifyContent: "center",
     gap: Spacing.three,
