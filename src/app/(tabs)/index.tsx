@@ -5,16 +5,12 @@ import { useRouter } from "expo-router";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useCourse } from "../context/course";
-import { lessons, LessonsMap } from "../data/lessons";
-
-interface IndexProp {
-  lessons: LessonsMap;
-}
+import { lessons } from "../data/lessons";
 
 export default function Index() {
+  const router = useRouter();
   const lessonEntries = Object.entries(lessons);
   const { handleCompleteCourse, getCourseStatus } = useCourse();
-  const router = useRouter();
 
   const handleRedirectQuiz = (Id: string) => {
     router.push({ pathname: "/(screens)/quiz/[Id]", params: { Id: Id } });
@@ -60,18 +56,20 @@ export default function Index() {
           </Text>
           <Text style={styles.pillUnit}> 2/3 Done</Text>
         </View>
-        {lessonEntries.map(([key, lesson], index) => {
-          return (
-            <CourseCard
-              key={key}
-              title={lesson.title}
-              subTitle={lesson.subtitle}
-              status={getCourseStatus(key)}
-              id={key}
-              onComplete={() => handleCompleteCourse(key)}
-            ></CourseCard>
-          );
-        })}
+        <View style={styles.courseCardContainer}>
+          {lessonEntries.map(([key, lesson], index) => {
+            return (
+              <CourseCard
+                key={key}
+                title={lesson.title}
+                subTitle={lesson.subtitle}
+                status={getCourseStatus(key)}
+                id={key}
+                onComplete={() => handleCompleteCourse(key)}
+              ></CourseCard>
+            );
+          })}
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -86,7 +84,7 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     paddingVertical: 12,
-    width: "25%",
+    width: "100%",
     alignItems: "center",
     justifyContent: "center",
     gap: Spacing.three,
@@ -117,17 +115,20 @@ const styles = StyleSheet.create({
     gap: Spacing.two,
   },
   bodyContainer: {
+    width: "100%",
     alignItems: "center",
     justifyContent: "center",
     gap: Spacing.three,
     marginTop: Spacing.two,
     paddingVertical: Spacing.two,
+    paddingHorizontal: Spacing.three,
   },
   unitHeader: {
     paddingHorizontal: 16,
     paddingVertical: 12,
     gap: 28,
     flexDirection: "row",
+    width: "100%",
     borderRadius: 8,
     borderColor: "#C8C8C8",
     borderWidth: 1,
@@ -141,6 +142,7 @@ const styles = StyleSheet.create({
   },
   styleView: {
     flex: 1,
+    width: "100%",
   },
   pillPrimary: {
     paddingTop: 6,
@@ -163,5 +165,12 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.sans,
     fontWeight: "bold",
     alignSelf: "flex-start",
+  },
+  courseCardContainer: {
+    width: "100%",
+    gap: Spacing.two,
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
   },
 });
