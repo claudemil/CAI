@@ -76,7 +76,7 @@ export const CourseCard = ({
 
 const styles = StyleSheet.create({
   container: {
-    width: 260,
+    width: "75%",
     flexDirection: "row",
     borderRadius: 14,
     borderWidth: 1,
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     gap: Spacing.two,
   },
   completedContainer: {
-    width: 260,
+    width: "75%",
     flexDirection: "row",
     borderRadius: 14,
     borderWidth: 1,
