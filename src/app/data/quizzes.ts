@@ -17,3 +17,5 @@ export const Quizzes: QuizzesMap = {
     correctAnswer: "0 to 1",
   },
 };
+
+export default Quizzes;

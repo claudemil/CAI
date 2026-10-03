@@ -35,3 +35,5 @@ export const lessons: LessonsMap = {
     ],
   },
 };
+
+export default lessons;
