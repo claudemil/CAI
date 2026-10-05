@@ -4,11 +4,13 @@ import { Colors, Fonts, Spacing } from "@/constants/theme";
 import { useRouter } from "expo-router";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useAuth } from "../context/auth";
 import { useCourse } from "../context/course";
 import { lessons } from "../data/lessons";
 
 export default function Index() {
   const router = useRouter();
+  const { appUser } = useAuth();
   const lessonEntries = Object.entries(lessons);
   const { handleCompleteCourse, getCourseStatus } = useCourse();
 
@@ -23,7 +25,7 @@ export default function Index() {
           <View style={styles.headerGreetingsContainer}>
             <Text style={styles.headerText}>Stastationes</Text>
             <Text style={[styles.headerText, { fontSize: 16 }]}>
-              Hello, User!
+              Hello, {appUser?.username}
             </Text>
           </View>
           <View>
