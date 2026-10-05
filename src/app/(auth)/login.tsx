@@ -1,15 +1,15 @@
-import { Colors, Spacing } from "@/constants/theme";
+import { Colors, Fonts, Spacing } from "@/constants/theme";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
+import { useAuth } from "../context/auth";
 
 const login = () => {
   const [username, setUsername] = useState("");
@@ -20,15 +20,29 @@ const login = () => {
   const handleRedirectRegister = () => {
     router.navigate("/(auth)/register");
   };
+
+  const { login } = useAuth();
+
+  const handleLogin = async () => {
+    login(username, password);
+  };
   return (
-    <ScrollView>
+    <View>
       <View style={styles.headerContainer}>
-        <TouchableOpacity
-          onPress={() => handleRedirectRegister()}
-          style={{ backgroundColor: Colors.light.buttonPrimary }}
-        >
-          <Text>Register</Text>
-        </TouchableOpacity>
+        <View>
+          <TouchableOpacity
+            onPress={() => handleRedirectRegister()}
+            style={styles.registerLink}
+          >
+            <Text>
+              Don't have an account?{" "}
+              <Text style={{ color: Colors.light.startStatusBackground }}>
+                Register here!
+              </Text>
+            </Text>
+          </TouchableOpacity>
+        </View>
+
         <View style={styles.header}>
           <View style={styles.avatarCircle}>
             <Ionicons
@@ -37,27 +51,49 @@ const login = () => {
               color={Colors.light.buttonPrimary}
             />
           </View>
-          <Text style={styles.userName}>Login Account</Text>
-          <Text style={styles.userEmail}>Enter your credentials</Text>
+          <Text style={styles.headerText}>Login Account</Text>
+          <Text style={styles.subHeaderText}>Enter your credentials</Text>
         </View>
-
-        <TextInput
-          style={{ backgroundColor: Colors.light.background }}
-        ></TextInput>
       </View>
-      <ScrollView></ScrollView>
-    </ScrollView>
+      <View style={styles.bodyContainer}>
+        <View style={styles.inputRow}>
+          <TextInput
+            placeholder="Username"
+            placeholderTextColor={Colors.light.textSecondary}
+            value={username}
+            onChangeText={setUsername}
+            autoCapitalize="none"
+          ></TextInput>
+        </View>
+        <View style={styles.inputRow}>
+          <TextInput
+            placeholder="Password"
+            placeholderTextColor={Colors.light.textSecondary}
+            value={password}
+            onChangeText={setPassword}
+            autoCapitalize="none"
+            secureTextEntry
+          ></TextInput>
+        </View>
+        <View style={styles.buttonRow}>
+          <TouchableOpacity
+            onPress={() => handleLogin()}
+            style={styles.loginButton}
+          >
+            <Text>Login</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   headerContainer: {
-    width: "auto",
-    alignItems: "center",
-    justifyContent: "center",
+    width: "100%",
     gap: Spacing.three,
     backgroundColor: Colors.light.headerBackgroundColor,
-    paddingHorizontal: Spacing.seven,
+    paddingHorizontal: Spacing.three,
     paddingVertical: Spacing.three,
   },
   header: {
@@ -75,6 +111,29 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 15,
   },
+  registerLink: {
+    alignSelf: "flex-end",
+  },
+  bodyContainer: {
+    marginTop: Spacing.six,
+    padding: Spacing.six,
+    gap: Spacing.two,
+    width: "75%",
+    alignSelf: "center",
+    backgroundColor: Colors.light.backgroundSelected,
+  },
+  headerText: {
+    fontSize: 48,
+    fontWeight: "bold",
+    fontFamily: Fonts.sans,
+    color: Colors.light.headerTextColor,
+  },
+  subHeaderText: {
+    fontSize: 24,
+    fontWeight: "heavy",
+    fontFamily: Fonts.sans,
+    color: Colors.light.headerTextColor,
+  },
   userName: {
     fontSize: 24,
     fontWeight: "700",
@@ -84,6 +143,30 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: Colors.light.textSecondary,
     marginTop: 4,
+  },
+  inputRow: {
+    width: "100%",
+    flexDirection: "row",
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    backgroundColor: Colors.light.background,
+    borderBottomWidth: 0.5,
+    borderBottomColor: Colors.light.borderColor,
+  },
+  buttonRow: {
+    width: "auto",
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+  },
+  loginButton: {
+    alignSelf: "center",
+    paddingVertical: Spacing.four,
+    paddingHorizontal: Spacing.six,
+    marginVertical: Spacing.three,
+    backgroundColor: Colors.light.buttonPrimary,
+    borderRadius: 16,
   },
 });
 export default login;

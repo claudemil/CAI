@@ -1,19 +1,16 @@
-import { Colors, Spacing } from "@/constants/theme";
+import { Colors, Fonts, Spacing } from "@/constants/theme";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
 import { useState } from "react";
 import {
   Alert,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
-import { auth, db } from "../../../firebaseConfig";
+import { useAuth } from "../context/auth";
 
 const register = () => {
   const [username, setUsername] = useState("");
@@ -22,70 +19,31 @@ const register = () => {
   const [email, setEmail] = useState("");
   const [isVerifying, setIsVerifying] = useState(false);
   const router = useRouter();
-
+  const { register, user } = useAuth();
   const handleRedirectLogin = () => {
     router.navigate("/(auth)/login");
   };
 
   const handleRegister = async () => {
-    if (!username || !password || !confirmPassword || !email) {
-      Alert.alert("Error", "Please fill in all fields!");
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      Alert.alert("Error", "Passwords do not match");
-      return;
-    }
-
     try {
-      setIsVerifying(true);
-      const userCred = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password,
-      );
-
-      const user = userCred.user;
-
-      await setDoc(doc(db, "users", user.uid), {
-        uid: user.uid,
-        username: username,
-        email: email,
-        createdAt: new Date().toISOString(),
-      });
-      console.log(user);
-    } catch (e: any) {
-      let errorMessage = "Registration failed!";
-
-      if (e.code === "auth/email-already-in-use") {
-        errorMessage = "That email address is already in use!";
-      } else if (e.code === "auth/invalid-email") {
-        errorMessage = "That email address is invalid!";
-      } else if (e.code === "auth/weak-password") {
-        errorMessage = "Password should be at least 6 characters.";
-      } else if (e.message) {
-        errorMessage = e.message;
-      }
-
-      Alert.alert("Error", errorMessage);
+      await register(username, password, confirmPassword, email);
     } finally {
-      setIsVerifying(false);
-      Alert.alert("Success", "Account created successfully!");
-      router.replace({
-        pathname: "/",
-      });
+      Alert.alert("Success", "Registered account successfully!");
     }
   };
   return (
-    <ScrollView>
+    <View>
       <View style={styles.headerContainer}>
-        <TouchableOpacity
-          onPress={() => handleRedirectLogin()}
-          style={{ backgroundColor: Colors.light.buttonPrimary }}
-        >
-          <Text>Login</Text>
-        </TouchableOpacity>
+        <View style={{ alignSelf: "flex-end" }}>
+          <TouchableOpacity style={{}} onPress={() => handleRedirectLogin()}>
+            <Text>
+              Already have an account?{"  "}
+              <Text style={{ color: Colors.light.startStatusBackground }}>
+                Login
+              </Text>
+            </Text>
+          </TouchableOpacity>
+        </View>
         <View style={styles.header}>
           <View style={styles.avatarCircle}>
             <Ionicons
@@ -94,12 +52,13 @@ const register = () => {
               color={Colors.light.buttonPrimary}
             />
           </View>
-          <Text style={styles.userName}>Create Account</Text>
-          <Text style={styles.userEmail}>
+          <Text style={styles.headerText}>Create Account</Text>
+          <Text style={styles.subHeaderText}>
             Enter your credentials to get started
           </Text>
         </View>
-
+      </View>
+      <View style={styles.bodyContainer}>
         <View style={styles.inputRow}>
           <TextInput
             style={{ backgroundColor: Colors.light.background }}
@@ -112,7 +71,6 @@ const register = () => {
         </View>
         <View style={styles.inputRow}>
           <TextInput
-            style={{ backgroundColor: Colors.light.background }}
             placeholder="Email"
             placeholderTextColor={Colors.light.textSecondary}
             value={email}
@@ -123,7 +81,6 @@ const register = () => {
 
         <View style={styles.inputRow}>
           <TextInput
-            style={{ backgroundColor: Colors.light.background }}
             placeholder="Password"
             placeholderTextColor={Colors.light.textSecondary}
             value={password}
@@ -133,7 +90,6 @@ const register = () => {
         </View>
         <View style={styles.inputRow}>
           <TextInput
-            style={{ backgroundColor: Colors.light.background }}
             placeholder="Confirm Password"
             placeholderTextColor={Colors.light.textSecondary}
             value={confirmPassword}
@@ -141,31 +97,32 @@ const register = () => {
             secureTextEntry
           ></TextInput>
         </View>
-        <View style={styles.inputRow}>
-          <TouchableOpacity onPress={() => handleRegister()}>
+        <View style={styles.buttonRow}>
+          <TouchableOpacity
+            style={styles.registerButton}
+            onPress={() => handleRegister()}
+          >
             <Text>Register</Text>
           </TouchableOpacity>
         </View>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   headerContainer: {
-    width: "auto",
-    alignItems: "center",
-    justifyContent: "center",
+    width: "100%",
     gap: Spacing.three,
     backgroundColor: Colors.light.headerBackgroundColor,
-    paddingHorizontal: Spacing.seven,
+    paddingHorizontal: Spacing.three,
     paddingVertical: Spacing.three,
   },
   header: {
     alignItems: "center",
     justifyContent: "space-between",
     width: "100%",
-    gap: Spacing.two,
+    gap: 0,
   },
   avatarCircle: {
     width: 90,
@@ -176,10 +133,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 15,
   },
-  userName: {
+  bodyContainer: {
+    marginTop: Spacing.six,
+    padding: Spacing.six,
+    gap: Spacing.two,
+    width: "75%",
+    alignSelf: "center",
+    backgroundColor: Colors.light.backgroundSelected,
+  },
+  headerText: {
+    fontSize: 48,
+    fontWeight: "bold",
+    fontFamily: Fonts.sans,
+    color: Colors.light.headerTextColor,
+  },
+  subHeaderText: {
     fontSize: 24,
-    fontWeight: "700",
-    color: "#333",
+    fontWeight: "heavy",
+    fontFamily: Fonts.sans,
+    color: Colors.light.headerTextColor,
   },
   userEmail: {
     fontSize: 14,
@@ -187,13 +159,28 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   inputRow: {
+    width: "100%",
     flexDirection: "row",
-    alignItems: "center",
     paddingHorizontal: 16,
     paddingVertical: 14,
     backgroundColor: Colors.light.background,
     borderBottomWidth: 0.5,
     borderBottomColor: Colors.light.borderColor,
+  },
+  buttonRow: {
+    width: "auto",
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+  },
+  registerButton: {
+    alignSelf: "center",
+    paddingVertical: Spacing.four,
+    paddingHorizontal: Spacing.six,
+    marginVertical: Spacing.three,
+    backgroundColor: Colors.light.buttonPrimary,
+    borderRadius: 16,
   },
 });
 export default register;
