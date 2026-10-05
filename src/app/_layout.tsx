@@ -3,6 +3,7 @@ import { onAuthStateChanged, User } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
 import { auth } from "../../firebaseConfig";
+import { AuthProvider } from "./context/auth";
 import { CourseProvider } from "./context/course";
 export default function Layout() {
   const [user, setUser] = useState<User | null>(null);
@@ -24,7 +25,7 @@ export default function Layout() {
     if (initializing) return;
     const inAuthGroup = segments[0] === "(auth)";
     if (!user && !inAuthGroup) {
-      router.replace("/(auth)/register");
+      router.replace("/(auth)/login");
     } else if (user && inAuthGroup) {
       router.replace("/(tabs)");
     }
@@ -38,12 +39,14 @@ export default function Layout() {
     );
   }
   return (
-    <CourseProvider>
-      <Stack>
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="(screens)" options={{ headerShown: false }} />
-      </Stack>
-    </CourseProvider>
+    <AuthProvider>
+      <CourseProvider>
+        <Stack>
+          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="(screens)" options={{ headerShown: false }} />
+        </Stack>
+      </CourseProvider>
+    </AuthProvider>
   );
 }
