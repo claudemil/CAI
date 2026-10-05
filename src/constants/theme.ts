@@ -23,6 +23,7 @@ export const Colors = {
     cancelButtonBackground: "#FF8B8B",
     cancelButtonText: "#EF4444",
     headerBackgroundColor: "#3660CB",
+    headerTextColor: "#EAECF8",
   },
   dark: {
     text: "#ffffff",
@@ -38,7 +39,7 @@ export type ThemeColor = keyof typeof Colors.light & keyof typeof Colors.dark;
 export const Fonts = Platform.select({
   ios: {
     /** iOS `UIFontDescriptorSystemDesignDefault` */
-    sans: "system-ui",
+    sans: "inter",
     /** iOS `UIFontDescriptorSystemDesignSerif` */
     serif: "ui-serif",
     /** iOS `UIFontDescriptorSystemDesignRounded` */
@@ -53,7 +54,7 @@ export const Fonts = Platform.select({
     mono: "monospace",
   },
   web: {
-    sans: "var(--font-display)",
+    sans: "inter",
     serif: "var(--font-serif)",
     rounded: "var(--font-rounded)",
     mono: "var(--font-mono)",
