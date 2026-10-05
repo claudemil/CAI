@@ -1,14 +1,44 @@
 import { Colors, Fonts, Spacing } from "@/constants/theme";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { useRouter } from "expo-router";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useAuth } from "../context/auth";
 export default function Profile() {
+  const { appUser, logout } = useAuth();
+  const router = useRouter();
+  const handleRedirectRegister = () => {
+    router.navigate({ pathname: "/(auth)/register", params: undefined });
+  };
+
+  const handleLogout = async () => {
+    logout();
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
+        <TouchableOpacity
+          onPress={() => console.log(appUser)}
+          style={{ backgroundColor: Colors.light.buttonPrimary }}
+        >
+          <Text>check user</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => handleRedirectRegister()}>
+          <Text>Register Here</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => handleLogout()}>
+          <Text>Logout</Text>
+        </TouchableOpacity>
         <View style={styles.header}>
           <View style={styles.profileContainer}></View>
           <View>
-            <Text style={styles.headerText}>TUNG SAHUR</Text>
+            <Text style={styles.headerText}>{appUser?.username}</Text>
           </View>
           <Text style={styles.pillUnit}>N DAY STREAK</Text>
         </View>
@@ -84,7 +114,7 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     paddingVertical: 12,
-    width: "50%",
+    width: "100%",
     alignItems: "center",
     justifyContent: "center",
     gap: Spacing.three,
