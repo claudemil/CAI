@@ -68,3 +68,5 @@ export const useCourse = () => {
   }
   return context;
 };
+
+export default useCourse;
