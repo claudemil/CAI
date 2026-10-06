@@ -1,6 +1,5 @@
 import { Colors, Fonts } from "@/constants/theme";
 import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 type Size = "small" | "medium" | "large";
@@ -24,7 +23,6 @@ export const Button = ({
   status,
   onPress,
 }: buttonProps) => {
-  const router = useRouter();
   return (
     <TouchableOpacity
       style={[
@@ -101,14 +99,12 @@ const styles = StyleSheet.create({
   },
   primaryText: {
     color: Colors.light.textPrimary,
-    fontFamily: Fonts.sans,
-    fontWeight: "bold",
+    fontFamily: Fonts.nunitoBlack,
     textAlign: "center",
   },
   secondaryText: {
     color: Colors.light.textSecondary,
-    fontFamily: Fonts.sans,
-    fontWeight: "bold",
+    fontFamily: Fonts.nunitoBlack,
   },
   buttonContainer: {
     flexDirection: "row",
@@ -122,5 +118,6 @@ const styles = StyleSheet.create({
   inactiveText: {
     color: Colors.light.buttonPrimary,
     opacity: 0.5,
+    fontFamily: Fonts.nunitoBlack,
   },
 });
