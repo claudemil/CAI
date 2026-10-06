@@ -1,5 +1,6 @@
 import { Colors, Fonts, Spacing } from "@/constants/theme";
 import { Ionicons } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
@@ -28,7 +29,10 @@ const login = () => {
   };
   return (
     <View>
-      <View style={styles.headerContainer}>
+      <LinearGradient
+        {...Colors.light.buttonGradient}
+        style={styles.headerContainer}
+      >
         <View>
           <TouchableOpacity
             onPress={() => handleRedirectRegister()}
@@ -54,7 +58,8 @@ const login = () => {
           <Text style={styles.headerText}>Login Account</Text>
           <Text style={styles.subHeaderText}>Enter your credentials</Text>
         </View>
-      </View>
+      </LinearGradient>
+
       <View style={styles.bodyContainer}>
         <View style={styles.inputRow}>
           <TextInput
@@ -76,11 +81,13 @@ const login = () => {
           ></TextInput>
         </View>
         <View style={styles.buttonRow}>
-          <TouchableOpacity
-            onPress={() => handleLogin()}
-            style={styles.loginButton}
-          >
-            <Text>Login</Text>
+          <TouchableOpacity onPress={() => handleLogin()}>
+            <LinearGradient
+              {...Colors.light.buttonGradient}
+              style={styles.loginButton}
+            >
+              <Text style={styles.loginButtonText}>Login</Text>
+            </LinearGradient>
           </TouchableOpacity>
         </View>
       </View>
@@ -167,6 +174,9 @@ const styles = StyleSheet.create({
     marginVertical: Spacing.three,
     backgroundColor: Colors.light.buttonPrimary,
     borderRadius: 16,
+  },
+  loginButtonText: {
+    color: Colors.light.textPrimary,
   },
 });
 export default login;

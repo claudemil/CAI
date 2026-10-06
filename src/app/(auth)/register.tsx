@@ -1,5 +1,6 @@
 import { Colors, Fonts, Spacing } from "@/constants/theme";
 import { Ionicons } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
@@ -33,7 +34,10 @@ const register = () => {
   };
   return (
     <View>
-      <View style={styles.headerContainer}>
+      <LinearGradient
+        {...Colors.light.buttonGradient}
+        style={styles.headerContainer}
+      >
         <View style={{ alignSelf: "flex-end" }}>
           <TouchableOpacity style={{}} onPress={() => handleRedirectLogin()}>
             <Text>
@@ -57,7 +61,8 @@ const register = () => {
             Enter your credentials to get started
           </Text>
         </View>
-      </View>
+      </LinearGradient>
+
       <View style={styles.bodyContainer}>
         <View style={styles.inputRow}>
           <TextInput
@@ -98,11 +103,13 @@ const register = () => {
           ></TextInput>
         </View>
         <View style={styles.buttonRow}>
-          <TouchableOpacity
-            style={styles.registerButton}
-            onPress={() => handleRegister()}
-          >
-            <Text>Register</Text>
+          <TouchableOpacity onPress={() => handleRegister()}>
+            <LinearGradient
+              {...Colors.light.buttonGradient}
+              style={styles.registerButton}
+            >
+              <Text style={styles.registerButtonText}>Register</Text>
+            </LinearGradient>
           </TouchableOpacity>
         </View>
       </View>
@@ -181,6 +188,9 @@ const styles = StyleSheet.create({
     marginVertical: Spacing.three,
     backgroundColor: Colors.light.buttonPrimary,
     borderRadius: 16,
+  },
+  registerButtonText: {
+    color: Colors.light.textPrimary,
   },
 });
 export default register;
