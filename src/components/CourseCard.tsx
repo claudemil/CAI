@@ -30,7 +30,11 @@ export const CourseCard = ({
   return (
     <View
       style={
-        status == "Completed" ? styles.completedContainer : styles.container
+        status == "Completed"
+          ? styles.completedContainer
+          : status == "In Progress"
+            ? styles.inProgressContainer
+            : styles.container
       }
     >
       <View style={styles.firstView}>
@@ -81,6 +85,16 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     borderWidth: 1,
     borderColor: "#C8C8C8",
+    padding: 16,
+    marginLeft: 16,
+    gap: Spacing.two,
+  },
+  inProgressContainer: {
+    width: "75%",
+    flexDirection: "row",
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: Colors.light.activeTabBarBackground,
     padding: 16,
     marginLeft: 16,
     gap: Spacing.two,
