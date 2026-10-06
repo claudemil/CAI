@@ -1,5 +1,7 @@
 import { useCourse } from "@/app/context/course";
 import { Colors, Fonts, Spacing } from "@/constants/theme";
+import { Ionicons } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import {
   SafeAreaView,
@@ -37,41 +39,47 @@ export default function Id() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.headerContainer}>
-        <View style={styles.header}>
-          <TouchableOpacity onPress={handleRedirectLessons}>
-            <Text style={{ color: "white" }}>{"<--"}</Text>
-          </TouchableOpacity>
-          <Text
+      <View>
+        <LinearGradient
+          {...Colors.light.buttonGradient}
+          style={[
+            styles.headerContainer,
+            {
+              gap: Spacing.two,
+              flexDirection: "row",
+            },
+          ]}
+        >
+          <View style={styles.header}>
+            <TouchableOpacity onPress={handleRedirectLessons}>
+              <Text style={{ color: "white" }}>{"<--"}</Text>
+            </TouchableOpacity>
+            <Text style={styles.bigHeaderText}>Lesson Completed!</Text>
+            <Text style={styles.headerText}>{lessonData.title}</Text>
+            <View style={styles.streakColumn}>
+              <Text style={[styles.headerText, { alignSelf: "center" }]}>
+                X
+              </Text>
+              <Text style={[styles.headerText, { alignSelf: "center" }]}>
+                Day Streak
+              </Text>
+            </View>
+            {/* <Text
             style={{
               padding: Spacing.three,
               backgroundColor: "gray",
             }}
           >
             Icon
-          </Text>
-          <Text style={styles.bigHeaderText}>Lesson Complete!</Text>
-          <Text
-            style={[
-              styles.headerText,
-              { color: Colors.light.backgroundElement },
-            ]}
-          >
-            {lessonData.title}
-          </Text>
-          <View style={styles.streakColumn}>
-            <Text style={[styles.headerText, { alignSelf: "center" }]}>X</Text>
-            <Text style={[styles.headerText, { alignSelf: "center" }]}>
-              Day Streak
-            </Text>
+          </Text> */}
           </View>
-        </View>
+        </LinearGradient>
       </View>
       <ScrollView
         style={styles.styleView}
         contentContainerStyle={[styles.bodyContainer]}
       >
-        <View style={{ width: "75%" }}>
+        <View style={{ width: "100%" }}>
           <Text style={styles.bodyHeader}>Skills practiced</Text>
         </View>
         <View style={styles.objectivesContainer}>
@@ -84,15 +92,33 @@ export default function Id() {
             );
           })}
         </View>
-        <TouchableOpacity
-          style={styles.startButton}
-          onPress={() => {
-            handleCompleteCourse(Id);
-            handleRedirectLessons;
-          }}
-        >
-          <Text style={styles.startText}>Complete Lesson</Text>
-        </TouchableOpacity>
+        <View style={{ margin: 0, padding: 0 }}>
+          <TouchableOpacity
+            onPress={() => {
+              handleCompleteCourse(Id);
+              handleRedirectLessons();
+            }}
+          >
+            <LinearGradient
+              {...Colors.light.buttonGradient}
+              style={[
+                styles.startButton,
+                {
+                  gap: Spacing.two,
+                  flexDirection: "row",
+                },
+              ]}
+            >
+              <Text style={styles.startText}>Complete Lesson</Text>
+              <Ionicons
+                name="arrow-forward"
+                size={18}
+                style={{ alignSelf: "center" }}
+                color={Colors.light.textPrimary}
+              ></Ionicons>
+            </LinearGradient>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -107,12 +133,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.background,
   },
   headerContainer: {
-    width: "auto",
+    width: "100%",
     alignItems: "center",
     justifyContent: "center",
     gap: Spacing.three,
     backgroundColor: Colors.light.headerBackgroundColor,
-    paddingHorizontal: Spacing.seven,
+    // paddingHorizontal: Spacing.seven,
     paddingVertical: Spacing.three,
   },
   header: {
@@ -123,16 +149,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.five,
   },
   bigHeaderText: {
-    fontSize: 24,
-    fontWeight: "bold",
+    fontSize: 36,
     color: Colors.light.textPrimary,
-    fontFamily: Fonts.sans,
+    fontFamily: Fonts.nunitoBlack,
   },
   headerText: {
-    fontSize: 16,
-    fontWeight: "bold",
+    fontSize: 18,
     color: Colors.light.textPrimary,
-    fontFamily: Fonts.sans,
+    fontFamily: Fonts.nunitoExtraBold,
   },
   streakColumn: {
     flexDirection: "column",
@@ -146,7 +170,7 @@ const styles = StyleSheet.create({
     marginBottom: Spacing.five,
   },
   objectiveCard: {
-    maxWidth: "75%",
+    maxWidth: "100%",
     borderColor: Colors.light.borderColor,
     borderWidth: 1,
     borderRadius: 16,
@@ -170,27 +194,27 @@ const styles = StyleSheet.create({
     marginRight: Spacing.two,
   },
   objectiveText: {
+    maxWidth: "75%",
     fontFamily: Fonts.sans,
-    fontSize: 12,
+    fontSize: 16,
     fontWeight: "bold",
     alignSelf: "center",
     marginRight: Spacing.two,
   },
   styleView: {
     flex: 1,
+    width: "100%",
   },
   startButton: {
-    backgroundColor: "blue",
     paddingVertical: Spacing.four,
     paddingHorizontal: Spacing.seven,
     borderRadius: 16,
     justifyContent: "center",
     width: "100%",
-    marginHorizontal: Spacing.three,
   },
   startText: {
-    fontFamily: Fonts.sans,
-    fontWeight: "bold",
+    fontFamily: Fonts.nunitoBold,
+    fontSize: 18,
     color: "#ffffff",
     alignSelf: "center",
   },
@@ -200,11 +224,12 @@ const styles = StyleSheet.create({
     width: "100%",
     gap: Spacing.three,
     marginTop: Spacing.two,
-    paddingVertical: Spacing.three,
+    paddingVertical: Spacing.five,
+    paddingHorizontal: Spacing.three,
   },
   bodyHeader: {
     fontFamily: Fonts.sans,
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "bold",
     alignSelf: "flex-start",
   },

@@ -1,6 +1,8 @@
+import { useAuth } from "@/app/context/auth";
 import { Quiz, Quizzes } from "@/app/data/quizzes";
 import { Button } from "@/components/Button";
 import { Colors, Fonts, Spacing } from "@/constants/theme";
+import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import {
@@ -15,6 +17,7 @@ import {
 
 export default function QuizScreen() {
   const router = useRouter();
+  const { appUser } = useAuth();
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [correctFlag, setCorrectFlag] = useState<boolean>(false);
   const { Id } = useLocalSearchParams<{ Id: string }>();
@@ -40,14 +43,19 @@ export default function QuizScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.headerContainer}>
+      <LinearGradient
+        {...Colors.light.buttonGradient}
+        style={styles.headerContainer}
+      >
         <View style={styles.header}>
           <View style={styles.headerGreetingsContainer}>
             <Text style={styles.headerText}>Stastationes</Text>
-            <Text style={styles.headerText}>Hello, User!</Text>
+            <Text style={styles.headerText}>
+              Hello, {appUser?.username || "Guest User"}!
+            </Text>
           </View>
           <View>
-            <Text style={[styles.pillPrimary, {}]}>N DAY STREAK</Text>
+            <Text style={styles.pillPrimary}>N DAY STREAK</Text>
           </View>
         </View>
         <View style={styles.headerButtons}>
@@ -65,10 +73,10 @@ export default function QuizScreen() {
             page="index"
           ></Button>
         </View>
-      </View>
+      </LinearGradient>
       <ScrollView
         style={styles.styleView}
-        contentContainerStyle={[styles.bodyContainer]}
+        contentContainerStyle={styles.bodyContainer}
       >
         <View style={styles.progressRow}>
           <Text style={{ backgroundColor: "#000000" }}>
@@ -127,7 +135,7 @@ export default function QuizScreen() {
           <Modal>
             <TouchableOpacity
               style={styles.checkAnswerButton}
-              onPress={() => checkAnswer(selectedAnswer!)}
+              onPress={() => handleRedirectLessons}
             ></TouchableOpacity>
           </Modal>
         )}
@@ -145,27 +153,24 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.background,
   },
   headerContainer: {
-    width: "auto",
+    paddingVertical: 12,
+    width: "100%",
     alignItems: "center",
     justifyContent: "center",
     gap: Spacing.three,
     backgroundColor: Colors.light.headerBackgroundColor,
-    paddingHorizontal: Spacing.seven,
-    paddingVertical: Spacing.three,
   },
   header: {
     flexDirection: "row",
-    gap: 32,
     alignItems: "center",
     justifyContent: "space-between",
     width: "100%",
-    // paddingHorizontal: 32,
+    paddingHorizontal: 32,
   },
   headerText: {
-    fontSize: 16,
-    fontWeight: "bold",
+    fontSize: 24,
     color: Colors.light.textHeader,
-    fontFamily: Fonts.sans,
+    fontFamily: Fonts.nunitoBlack,
   },
   headerGreetingsContainer: {
     justifyContent: "space-between",
@@ -176,7 +181,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     paddingHorizontal: Spacing.two,
-    gap: Spacing.five,
+    gap: Spacing.two,
   },
   pillPrimary: {
     paddingTop: 6,
@@ -187,8 +192,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     backgroundColor: Colors.light.buttonPrimary,
     color: Colors.light.textPrimary,
-    fontFamily: Fonts.sans,
-    fontWeight: "bold",
+    fontFamily: Fonts.nunitoBlack,
   },
   styleView: {
     flex: 1,

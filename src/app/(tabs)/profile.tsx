@@ -1,6 +1,9 @@
 import { Colors, Fonts, Spacing } from "@/constants/theme";
+import { BlurView } from "expo-blur";
+import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import {
+  ImageBackground,
   ScrollView,
   StyleSheet,
   Text,
@@ -22,81 +25,127 @@ export default function Profile() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.headerContainer}>
-        <TouchableOpacity
-          onPress={() => console.log(appUser)}
-          style={{ backgroundColor: Colors.light.buttonPrimary }}
-        >
-          <Text>check user</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleRedirectRegister()}>
-          <Text>Register Here</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleLogout()}>
-          <Text>Logout</Text>
-        </TouchableOpacity>
+      <LinearGradient
+        {...Colors.light.buttonGradient}
+        style={styles.headerContainer}
+      >
+        <View>
+          <LinearGradient
+            {...Colors.light.buttonGradient}
+            style={styles.headerButtonRow}
+          >
+            <TouchableOpacity
+              style={{ alignSelf: "flex-end" }}
+              onPress={() => handleRedirectRegister()}
+            >
+              <Text
+                style={{
+                  alignSelf: "flex-end",
+                  color: Colors.light.textPrimary,
+                }}
+              >
+                Register Here
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => handleLogout()}>
+              <Text
+                style={{
+                  color: "#f33918",
+                  fontWeight: "bold",
+                  fontFamily: Fonts.sans,
+                }}
+              >
+                Logout
+              </Text>
+            </TouchableOpacity>
+          </LinearGradient>
+        </View>
+
         <View style={styles.header}>
           <View style={styles.profileContainer}></View>
           <View>
-            <Text style={styles.headerText}>{appUser?.username}</Text>
+            <Text style={styles.headerText}>
+              {appUser?.username || "Guest User"}
+            </Text>
           </View>
           <Text style={styles.pillUnit}>N DAY STREAK</Text>
         </View>
-      </View>
+      </LinearGradient>
+
       <ScrollView
         style={styles.styleView}
         contentContainerStyle={styles.bodyContainer}
       >
         <ScrollView>
-          <Text style={{ alignSelf: "center" }}>Achievements</Text>
-          <View style={styles.achievementCardContainer}>
+          <ImageBackground
+            source={require("../images/snflower.jpg")}
+            resizeMode="cover"
+            style={styles.achievementCardContainer}
+          >
+            <Text style={{ alignSelf: "center", marginBottom: Spacing.two }}>
+              Achievements
+            </Text>
+
             <View style={styles.achievementCardRow}>
-              <View style={styles.achievementCard}>
-                <Text
-                  style={{ backgroundColor: "gray", padding: Spacing.three }}
-                >
-                  Icon
-                </Text>
-                <Text>First Lesson</Text>
-              </View>
-              <View style={styles.achievementCard}>
-                <Text
-                  style={{ backgroundColor: "gray", padding: Spacing.three }}
-                >
-                  Icon
-                </Text>
-                <Text>Statistical Newbie</Text>
-              </View>
+              <BlurView intensity={20} style={styles.achievementCard}>
+                <View style={{ alignSelf: "center" }}>
+                  <Text
+                    style={{ backgroundColor: "gray", padding: Spacing.five }}
+                  >
+                    Icon
+                  </Text>
+                </View>
+                <Text style={{ alignSelf: "center" }}>First Lesson</Text>
+              </BlurView>
+              <BlurView intensity={20} style={styles.achievementCard}>
+                <View style={{ alignSelf: "center" }}>
+                  <Text
+                    style={{ backgroundColor: "gray", padding: Spacing.five }}
+                  >
+                    Icon
+                  </Text>
+                </View>
+                <Text style={{ alignSelf: "center" }}>Statistical Newbie</Text>
+              </BlurView>
             </View>
             <View style={styles.achievementCardRow}>
-              <View style={styles.achievementCard}>
-                <Text
-                  style={{ backgroundColor: "gray", padding: Spacing.three }}
-                >
-                  Icon
-                </Text>
-                <Text>Statistician</Text>
-              </View>
-              <View style={styles.achievementCard}>
-                <Text
-                  style={{ backgroundColor: "gray", padding: Spacing.three }}
-                >
-                  Icon
-                </Text>
-                <Text>Data Analyst</Text>
-              </View>
+              <BlurView intensity={20} style={styles.achievementCard}>
+                <View style={{ alignSelf: "center" }}>
+                  <Text
+                    style={{ backgroundColor: "gray", padding: Spacing.five }}
+                  >
+                    Icon
+                  </Text>
+                </View>
+
+                <Text style={{ alignSelf: "center" }}>Statistician</Text>
+              </BlurView>
+              <BlurView intensity={20} style={styles.achievementCard}>
+                <View style={{ alignSelf: "center" }}>
+                  <Text
+                    style={{ backgroundColor: "gray", padding: Spacing.five }}
+                  >
+                    Icon
+                  </Text>
+                </View>
+                <Text style={{ alignSelf: "center" }}>Data Analyst</Text>
+              </BlurView>
             </View>
-          </View>
+          </ImageBackground>
         </ScrollView>
-        <Text style={{ alignSelf: "center" }}>Your Learning Stats</Text>
-        <View style={{ gap: Spacing.two }}>
-          <View style={styles.statCard}>
-            <Text style={styles.statBadge}>1</Text>
-            <Text style={styles.statText}>Days Active</Text>
-          </View>
-          <View style={styles.statCard}>
-            <Text style={styles.statBadge}>2</Text>
-            <Text style={styles.statText}>Questions Answered</Text>
+        <View style={{ width: "75%" }}>
+          <Text style={{ alignSelf: "center", marginBottom: Spacing.three }}>
+            Your Learning Stats
+          </Text>
+          <View style={{ gap: Spacing.two, width: "75%", alignSelf: "center" }}>
+            <View style={styles.statCard}>
+              <Text style={styles.statBadge}>1</Text>
+              <Text style={styles.statText}>Days Active</Text>
+            </View>
+            <View style={styles.statCard}>
+              <Text style={styles.statBadge}>2</Text>
+              <Text style={styles.statText}>Questions Answered</Text>
+            </View>
           </View>
         </View>
       </ScrollView>
@@ -113,12 +162,22 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.background,
   },
   headerContainer: {
-    paddingVertical: 12,
+    paddingTop: Spacing.two,
+    paddingBottom: Spacing.four,
+    paddingHorizontal: Spacing.three,
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
     gap: Spacing.three,
-    backgroundColor: "#C8C8C8",
+    backgroundColor: Colors.light.headerBackgroundColor,
+  },
+  headerButtonRow: {
+    width: "100%",
+    gap: Spacing.two,
+    backgroundColor: Colors.light.headerBackgroundColor,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignContent: "flex-end",
   },
   header: {
     alignItems: "center",
@@ -127,10 +186,9 @@ const styles = StyleSheet.create({
     gap: Spacing.two,
   },
   headerText: {
-    fontSize: 16,
-    fontWeight: "bold",
+    fontSize: 24,
     color: Colors.light.textHeader,
-    fontFamily: Fonts.sans,
+    fontFamily: Fonts.nunitoBlack,
   },
   profileContainer: {
     backgroundColor: Colors.light.backgroundElement,
@@ -182,25 +240,34 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     backgroundColor: Colors.light.statusColor,
     color: Colors.light.statusText,
-    fontSize: 12,
-    fontFamily: Fonts.sans,
-    fontWeight: "bold",
+    fontSize: 16,
+    fontFamily: Fonts.nunitoBlack,
     alignSelf: "center",
   },
   achievementCardRow: {
     marginVertical: Spacing.two,
     flexDirection: "row",
-    flex: 1,
-    width: "100%",
-    gap: Spacing.three,
+    alignSelf: "center",
+    width: "75%",
+    gap: Spacing.two,
   },
   achievementCardContainer: {
     width: "100%",
+    alignSelf: "center",
+    paddingVertical: Spacing.four,
+    borderRadius: 16,
+    // backgroundColor: Colors.light.startStatusBackground,
+    backgroundImage: "../images/snflower.jpg",
   },
   achievementCard: {
-    backgroundColor: "#f020f0",
     padding: Spacing.four,
+    borderColor: Colors.light.borderColor,
+    borderWidth: 1,
+    borderRadius: 16,
     gap: Spacing.two,
+    width: "50%",
+    overflow: "hidden", // Required to keep the blur clipped within borderRadius
+    backgroundColor: "rgba(255, 255, 255, 0.4)",
   },
   statCard: {
     flexDirection: "row",

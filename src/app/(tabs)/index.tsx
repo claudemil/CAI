@@ -1,6 +1,8 @@
 import { Button } from "@/components/Button";
 import { CourseCard } from "@/components/CourseCard";
 import { Colors, Fonts, Spacing } from "@/constants/theme";
+import { BlurView } from "expo-blur";
+import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -20,16 +22,19 @@ export default function Index() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.headerContainer}>
+      <LinearGradient
+        {...Colors.light.buttonGradient}
+        style={styles.headerContainer}
+      >
         <View style={styles.header}>
           <View style={styles.headerGreetingsContainer}>
             <Text style={styles.headerText}>Stastationes</Text>
-            <Text style={[styles.headerText, { fontSize: 16 }]}>
-              Hello, {appUser?.username}
+            <Text style={styles.headerText}>
+              Hello, {appUser?.username || "Guest User"}
             </Text>
           </View>
           <View>
-            <Text style={[styles.pillPrimary, {}]}>N DAY STREAK</Text>
+            <Text style={styles.pillPrimary}>N DAY STREAK</Text>
           </View>
         </View>
         <View style={styles.headerButtons}>
@@ -47,7 +52,8 @@ export default function Index() {
             onPress={() => handleRedirectQuiz("intro-to-statistics")}
           ></Button>
         </View>
-      </View>
+      </LinearGradient>
+
       <ScrollView
         style={styles.styleView}
         contentContainerStyle={styles.bodyContainer}
@@ -56,7 +62,9 @@ export default function Index() {
           <Text style={styles.unitHeaderText}>
             Unit 1 - Intro to Statistics
           </Text>
-          <Text style={styles.pillUnit}> 2/3 Done</Text>
+          <BlurView intensity={20}>
+            <Text style={styles.pillUnit}> 2/3 Done</Text>
+          </BlurView>
         </View>
         <View style={styles.courseCardContainer}>
           {lessonEntries.map(([key, lesson], index) => {
@@ -100,10 +108,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
   },
   headerText: {
-    fontSize: 12,
-    fontWeight: "bold",
+    fontSize: 24,
     color: Colors.light.textHeader,
-    fontFamily: Fonts.sans,
+    fontFamily: Fonts.nunitoBlack,
   },
   headerGreetingsContainer: {
     justifyContent: "space-between",
@@ -132,14 +139,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     borderRadius: 8,
-    borderColor: "#C8C8C8",
+    borderColor: Colors.light.activeTabBarBackground,
     borderWidth: 1,
   },
   unitHeaderText: {
     fontSize: 16,
     paddingVertical: Spacing.two,
-    fontWeight: "bold",
-    fontFamily: Fonts.sans,
+    fontFamily: Fonts.nunitoExtraBold,
     color: Colors.light.textSecondary,
   },
   styleView: {
@@ -155,18 +161,19 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     backgroundColor: Colors.light.buttonPrimary,
     color: Colors.light.textPrimary,
-    fontFamily: Fonts.sans,
-    fontWeight: "bold",
+    fontFamily: Fonts.nunitoBlack,
   },
   pillUnit: {
+    alignSelf: "flex-start",
     padding: Spacing.two,
+    borderWidth: 1,
+    borderColor: Colors.light.activeTabBarBackground,
     borderRadius: 999,
-    backgroundColor: Colors.light.statusColor,
+    overflow: "hidden",
+    backgroundColor: "rgba(255, 255, 255, 0.4)",
     color: Colors.light.statusText,
     fontSize: 12,
-    fontFamily: Fonts.sans,
-    fontWeight: "bold",
-    alignSelf: "flex-start",
+    fontFamily: Fonts.nunitoBold,
   },
   courseCardContainer: {
     width: "100%",

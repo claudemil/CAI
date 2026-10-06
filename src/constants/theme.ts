@@ -24,6 +24,12 @@ export const Colors = {
     cancelButtonText: "#EF4444",
     headerBackgroundColor: "#3660CB",
     headerTextColor: "#EAECF8",
+    buttonColor: "linear-gradient(90deg, #1B0365 0%, #3660CB 100%)",
+    buttonGradient: {
+      colors: ["#1B0365", "#3660CB"] as const,
+      start: { x: 0, y: 0 },
+      end: { x: 1, y: 0 },
+    },
   },
   dark: {
     text: "#ffffff",
@@ -36,6 +42,12 @@ export const Colors = {
 
 export type ThemeColor = keyof typeof Colors.light & keyof typeof Colors.dark;
 
+const nunitoFonts = {
+  nunitoBold: "Nunito_700Bold",
+  nunitoExtraBold: "Nunito_800ExtraBold",
+  nunitoBlack: "Nunito_900Black",
+};
+
 export const Fonts = Platform.select({
   ios: {
     /** iOS `UIFontDescriptorSystemDesignDefault` */
@@ -46,18 +58,21 @@ export const Fonts = Platform.select({
     rounded: "ui-rounded",
     /** iOS `UIFontDescriptorSystemDesignMonospaced` */
     mono: "ui-monospace",
+    ...nunitoFonts,
   },
   default: {
     sans: "inter",
     serif: "serif",
     rounded: "normal",
     mono: "monospace",
+    ...nunitoFonts,
   },
   web: {
     sans: "inter",
     serif: "var(--font-serif)",
     rounded: "var(--font-rounded)",
     mono: "var(--font-mono)",
+    ...nunitoFonts,
   },
 });
 
