@@ -1,6 +1,5 @@
 import { Colors, Fonts, Spacing } from "@/constants/theme";
 import { Ionicons } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
@@ -28,43 +27,35 @@ const login = () => {
     login(username, password);
   };
   return (
-    <View>
-      <LinearGradient
-        {...Colors.light.buttonGradient}
-        style={styles.headerContainer}
-      >
+    <View style={styles.screenContainer}>
+      <View style={styles.headerContainer}>
         <View>
           <TouchableOpacity
             onPress={() => handleRedirectRegister()}
-            style={styles.registerLink}
+            style={styles.loginLink}
           >
             <Text>
               Don't have an account?{" "}
-              <Text style={{ color: Colors.light.startStatusBackground }}>
-                Register here!
-              </Text>
+              <Text style={styles.loginLinkText}>Register here!</Text>
             </Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.header}>
           <View style={styles.avatarCircle}>
-            <Ionicons
-              name="person-add"
-              size={46}
-              color={Colors.light.buttonPrimary}
-            />
+            <Ionicons name="person" size={48} color={Colors.light.background} />
           </View>
           <Text style={styles.headerText}>Login Account</Text>
           <Text style={styles.subHeaderText}>Enter your credentials</Text>
         </View>
-      </LinearGradient>
+      </View>
 
       <View style={styles.bodyContainer}>
         <View style={styles.inputRow}>
           <TextInput
+            style={styles.inputText}
             placeholder="Username"
-            placeholderTextColor={Colors.light.textSecondary}
+            placeholderTextColor={Colors.light.startStatusBackground}
             value={username}
             onChangeText={setUsername}
             autoCapitalize="none"
@@ -72,8 +63,9 @@ const login = () => {
         </View>
         <View style={styles.inputRow}>
           <TextInput
+            style={styles.inputText}
             placeholder="Password"
-            placeholderTextColor={Colors.light.textSecondary}
+            placeholderTextColor={Colors.light.startStatusBackground}
             value={password}
             onChangeText={setPassword}
             autoCapitalize="none"
@@ -81,13 +73,11 @@ const login = () => {
           ></TextInput>
         </View>
         <View style={styles.buttonRow}>
-          <TouchableOpacity onPress={() => handleLogin()}>
-            <LinearGradient
-              {...Colors.light.buttonGradient}
-              style={styles.loginButton}
-            >
-              <Text style={styles.loginButtonText}>Login</Text>
-            </LinearGradient>
+          <TouchableOpacity
+            style={styles.loginButton}
+            onPress={() => handleLogin()}
+          >
+            <Text style={styles.loginButtonText}>Login</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -96,12 +86,19 @@ const login = () => {
 };
 
 const styles = StyleSheet.create({
+  screenContainer: {
+    backgroundColor: Colors.light.background,
+    height: "100%",
+  },
   headerContainer: {
     width: "100%",
+    height: "40%",
+    alignContent: "center",
+    justifyContent: "flex-end",
     gap: Spacing.three,
-    backgroundColor: Colors.light.headerBackgroundColor,
     paddingHorizontal: Spacing.three,
     paddingVertical: Spacing.three,
+    paddingTop: Spacing.seven,
   },
   header: {
     alignItems: "center",
@@ -113,33 +110,36 @@ const styles = StyleSheet.create({
     width: 90,
     height: 90,
     borderRadius: 45,
-    backgroundColor: "#E8F5E9",
+    backgroundColor: Colors.light.startStatusBackground,
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 15,
   },
-  registerLink: {
+  loginLink: {
     alignSelf: "flex-end",
   },
+  loginLinkText: {
+    color: Colors.light.startStatusBackground,
+    fontFamily: Fonts.nunitoBlack,
+  },
   bodyContainer: {
-    marginTop: Spacing.six,
-    padding: Spacing.six,
     gap: Spacing.two,
     width: "75%",
+    height: "60%",
     alignSelf: "center",
-    backgroundColor: Colors.light.backgroundSelected,
+    justifyContent: "flex-start",
+    backgroundColor: Colors.light.background,
   },
   headerText: {
     fontSize: 48,
-    fontWeight: "bold",
-    fontFamily: Fonts.sans,
-    color: Colors.light.headerTextColor,
+    fontFamily: Fonts.nunitoBlack,
+
+    color: Colors.light.startStatusBackground,
   },
   subHeaderText: {
     fontSize: 24,
-    fontWeight: "heavy",
-    fontFamily: Fonts.sans,
-    color: Colors.light.headerTextColor,
+    fontFamily: Fonts.nunitoExtraBold,
+    color: Colors.light.startStatusBackground,
   },
   userName: {
     fontSize: 24,
@@ -157,8 +157,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 14,
     backgroundColor: Colors.light.background,
-    borderBottomWidth: 0.5,
-    borderBottomColor: Colors.light.borderColor,
+    borderColor: Colors.light.startStatusBackground,
+    borderWidth: 2,
+    borderRadius: 12,
+  },
+  inputText: {
+    fontFamily: Fonts.nunitoBold,
+    fontSize: 16,
+    color: Colors.light.startStatusBackground,
   },
   buttonRow: {
     width: "auto",
@@ -172,10 +178,12 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.four,
     paddingHorizontal: Spacing.six,
     marginVertical: Spacing.three,
-    backgroundColor: Colors.light.buttonPrimary,
+    backgroundColor: Colors.light.startStatusBackground,
     borderRadius: 16,
   },
   loginButtonText: {
+    fontFamily: Fonts.nunitoBlack,
+    fontSize: 24,
     color: Colors.light.textPrimary,
   },
 });

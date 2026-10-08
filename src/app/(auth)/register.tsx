@@ -1,6 +1,5 @@
 import { Colors, Fonts, Spacing } from "@/constants/theme";
 import { Ionicons } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
@@ -33,11 +32,8 @@ const register = () => {
     }
   };
   return (
-    <View>
-      <LinearGradient
-        {...Colors.light.buttonGradient}
-        style={styles.headerContainer}
-      >
+    <View style={{ backgroundColor: Colors.light.background }}>
+      <View style={styles.headerContainer}>
         <View style={{ alignSelf: "flex-end" }}>
           <TouchableOpacity style={{}} onPress={() => handleRedirectLogin()}>
             <Text>
@@ -52,8 +48,8 @@ const register = () => {
           <View style={styles.avatarCircle}>
             <Ionicons
               name="person-add"
-              size={46}
-              color={Colors.light.buttonPrimary}
+              size={48}
+              color={Colors.light.background}
             />
           </View>
           <Text style={styles.headerText}>Create Account</Text>
@@ -61,14 +57,18 @@ const register = () => {
             Enter your credentials to get started
           </Text>
         </View>
-      </LinearGradient>
+      </View>
 
       <View style={styles.bodyContainer}>
         <View style={styles.inputRow}>
           <TextInput
-            style={{ backgroundColor: Colors.light.background }}
+            style={{
+              fontFamily: Fonts.nunitoBold,
+              fontSize: 16,
+              color: Colors.light.startStatusBackground,
+            }}
             placeholder="Username"
-            placeholderTextColor={Colors.light.textSecondary}
+            placeholderTextColor={Colors.light.startStatusBackground}
             value={username}
             onChangeText={setUsername}
             autoCapitalize="none"
@@ -76,8 +76,13 @@ const register = () => {
         </View>
         <View style={styles.inputRow}>
           <TextInput
+            style={{
+              fontFamily: Fonts.nunitoBold,
+              fontSize: 16,
+              color: Colors.light.startStatusBackground,
+            }}
             placeholder="Email"
-            placeholderTextColor={Colors.light.textSecondary}
+            placeholderTextColor={Colors.light.startStatusBackground}
             value={email}
             onChangeText={setEmail}
             autoCapitalize="none"
@@ -86,8 +91,13 @@ const register = () => {
 
         <View style={styles.inputRow}>
           <TextInput
+            style={{
+              fontFamily: Fonts.nunitoBold,
+              fontSize: 16,
+              color: Colors.light.startStatusBackground,
+            }}
             placeholder="Password"
-            placeholderTextColor={Colors.light.textSecondary}
+            placeholderTextColor={Colors.light.startStatusBackground}
             value={password}
             onChangeText={setPassword}
             secureTextEntry
@@ -95,21 +105,24 @@ const register = () => {
         </View>
         <View style={styles.inputRow}>
           <TextInput
+            style={{
+              fontFamily: Fonts.nunitoBold,
+              fontSize: 16,
+              color: Colors.light.startStatusBackground,
+            }}
             placeholder="Confirm Password"
-            placeholderTextColor={Colors.light.textSecondary}
+            placeholderTextColor={Colors.light.startStatusBackground}
             value={confirmPassword}
             onChangeText={setConfirmPassword}
             secureTextEntry
           ></TextInput>
         </View>
         <View style={styles.buttonRow}>
-          <TouchableOpacity onPress={() => handleRegister()}>
-            <LinearGradient
-              {...Colors.light.buttonGradient}
-              style={styles.registerButton}
-            >
-              <Text style={styles.registerButtonText}>Register</Text>
-            </LinearGradient>
+          <TouchableOpacity
+            style={styles.registerButton}
+            onPress={() => handleRegister()}
+          >
+            <Text style={styles.registerButtonText}>Register</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -120,10 +133,13 @@ const register = () => {
 const styles = StyleSheet.create({
   headerContainer: {
     width: "100%",
+    height: "40%",
+    alignContent: "center",
+    justifyContent: "flex-end",
     gap: Spacing.three,
-    backgroundColor: Colors.light.headerBackgroundColor,
     paddingHorizontal: Spacing.three,
     paddingVertical: Spacing.three,
+    paddingTop: Spacing.seven,
   },
   header: {
     alignItems: "center",
@@ -135,30 +151,28 @@ const styles = StyleSheet.create({
     width: 90,
     height: 90,
     borderRadius: 45,
-    backgroundColor: "#E8F5E9",
+    backgroundColor: Colors.light.startStatusBackground,
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 15,
   },
   bodyContainer: {
-    marginTop: Spacing.six,
-    padding: Spacing.six,
     gap: Spacing.two,
     width: "75%",
+    height: "60%",
     alignSelf: "center",
-    backgroundColor: Colors.light.backgroundSelected,
+    justifyContent: "flex-start",
+    backgroundColor: Colors.light.background,
   },
   headerText: {
     fontSize: 48,
-    fontWeight: "bold",
-    fontFamily: Fonts.sans,
-    color: Colors.light.headerTextColor,
+    fontFamily: Fonts.nunitoBlack,
+    color: Colors.light.startStatusBackground,
   },
   subHeaderText: {
     fontSize: 24,
-    fontWeight: "heavy",
-    fontFamily: Fonts.sans,
-    color: Colors.light.headerTextColor,
+    fontFamily: Fonts.nunitoBlack,
+    color: Colors.light.startStatusBackground,
   },
   userEmail: {
     fontSize: 14,
@@ -171,8 +185,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 14,
     backgroundColor: Colors.light.background,
-    borderBottomWidth: 0.5,
-    borderBottomColor: Colors.light.borderColor,
+    borderColor: Colors.light.startStatusBackground,
+    borderWidth: 2,
+    borderRadius: 12,
   },
   buttonRow: {
     width: "auto",
@@ -186,10 +201,12 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.four,
     paddingHorizontal: Spacing.six,
     marginVertical: Spacing.three,
-    backgroundColor: Colors.light.buttonPrimary,
+    backgroundColor: Colors.light.startStatusBackground,
     borderRadius: 16,
   },
   registerButtonText: {
+    fontFamily: Fonts.nunitoBlack,
+    fontSize: 24,
     color: Colors.light.textPrimary,
   },
 });

@@ -31,6 +31,14 @@ export default function ScreensLayout() {
           gestureEnabled: false,
         }}
       />
+      <Stack.Screen
+        name="landing"
+        options={{
+          title: "Landing Shi",
+          headerShown: false,
+          gestureEnabled: false,
+        }}
+      />
     </Stack>
   );
 }
