@@ -12,6 +12,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import useAuth from "../context/auth";
 type DataPointProps = {
   item: DataItem;
   removeItem: (id: number) => void;
@@ -35,6 +36,7 @@ export default function Index() {
   const [items, setItems] = useState<DataItem[]>([]);
   const [numberInput, setNumberInput] = useState<string>("");
   const [topic, setTopic] = useState<string>("Measure of Tendencies");
+  const { appUser } = useAuth();
 
   const addItem = (inputText: string) => {
     if (!inputText.trim()) {
@@ -65,7 +67,9 @@ export default function Index() {
         <View style={styles.header}>
           <View style={styles.headerGreetingsContainer}>
             <Text style={styles.headerText}>Stastationes</Text>
-            <Text style={styles.headerText}>Hello, User!</Text>
+            <Text style={styles.headerText}>
+              Hello, {appUser?.username || "Guest User"}!
+            </Text>
           </View>
           <View>
             <Text style={[styles.pillPrimary, {}]}>N DAY STREAK</Text>
@@ -105,7 +109,7 @@ export default function Index() {
         <View style={styles.inputRow}>
           <TextInput
             placeholder="Input a number e.g. 43"
-            placeholderTextColor={Colors.light.textHeader}
+            placeholderTextColor={Colors.light.textPrimary}
             value={numberInput}
             onChangeText={(newText) => setNumberInput(newText)}
           ></TextInput>
@@ -153,7 +157,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: Spacing.three,
-    backgroundColor: "#C8C8C8",
+    backgroundColor: Colors.light.headerBackgroundColor,
   },
   header: {
     flexDirection: "row",
@@ -163,10 +167,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
   },
   headerText: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: Colors.light.textHeader,
-    fontFamily: Fonts.sans,
+    fontSize: 24,
+    color: Colors.light.textPrimary,
+    fontFamily: Fonts.nunitoBlack,
   },
   headerGreetingsContainer: {
     justifyContent: "space-between",
@@ -197,10 +200,12 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     borderRadius: 200,
     alignSelf: "flex-start",
-    backgroundColor: Colors.light.buttonPrimary,
-    color: Colors.light.textPrimary,
-    fontFamily: Fonts.sans,
-    fontWeight: "bold",
+    backgroundColor: Colors.light.startStatusBackground,
+    borderColor: Colors.light.background,
+    borderWidth: 2,
+    color: Colors.light.background,
+    fontFamily: Fonts.nunitoBlack,
+    fontSize: 16,
   },
   cardRow: {
     flex: 1,
