@@ -1,5 +1,6 @@
 import { Colors, Fonts, Spacing } from "@/constants/theme";
 import { Ionicons } from "@expo/vector-icons";
+import { BlurView } from "expo-blur";
 import { useRouter } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
@@ -28,7 +29,8 @@ export const CourseCard = ({
     });
   };
   return (
-    <View
+    <BlurView
+      intensity={20}
       style={
         status == "Completed"
           ? styles.completedContainer
@@ -74,7 +76,7 @@ export const CourseCard = ({
           ></Ionicons>
         </TouchableOpacity>
       </View>
-    </View>
+    </BlurView>
   );
 };
 
@@ -88,6 +90,8 @@ const styles = StyleSheet.create({
     padding: 16,
     marginLeft: 16,
     gap: Spacing.two,
+    overflow: "hidden",
+    backgroundColor: "rgba(255, 255, 255, 0.4)",
   },
   inProgressContainer: {
     width: "75%",
@@ -98,6 +102,8 @@ const styles = StyleSheet.create({
     padding: 16,
     marginLeft: 16,
     gap: Spacing.two,
+    overflow: "hidden",
+    backgroundColor: "rgba(255, 255, 255, 0.4)",
   },
   completedContainer: {
     width: "75%",
@@ -127,20 +133,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   title: {
-    fontFamily: Fonts.sans,
-    fontWeight: "bold",
-    fontSize: 10,
-    color: Colors.light.textSecondary,
+    fontFamily: Fonts.nunitoExtraBold,
+    fontSize: 16,
+    color: Colors.light.buttonPrimary,
   },
   subTitle: {
-    fontFamily: Fonts.sans,
-    fontWeight: "regular",
-    fontSize: 8,
-    color: Colors.light.statusText,
+    fontFamily: Fonts.nunitoBold,
+    fontSize: 12,
+    color: Colors.light.startStatusText,
   },
   statusText: {
-    fontFamily: Fonts.sans,
-    fontWeight: "bold",
+    fontFamily: Fonts.nunitoBold,
     fontSize: 8,
     paddingHorizontal: Spacing.two,
     paddingVertical: Spacing.one,
@@ -150,8 +153,7 @@ const styles = StyleSheet.create({
     textAlignVertical: "center",
   },
   completedStatusText: {
-    fontFamily: Fonts.sans,
-    fontWeight: "bold",
+    fontFamily: Fonts.nunitoBold,
     fontSize: 8,
     color: Colors.light.completedStatusText,
     paddingHorizontal: Spacing.two,
@@ -162,8 +164,7 @@ const styles = StyleSheet.create({
     textAlignVertical: "center",
   },
   InProgressStatusText: {
-    fontFamily: Fonts.sans,
-    fontWeight: "bold",
+    fontFamily: Fonts.nunitoBold,
     fontSize: 8,
     color: Colors.light.startStatusText,
     paddingHorizontal: Spacing.two,
