@@ -1,4 +1,4 @@
-import { Colors } from "@/constants/theme";
+import { Colors, Fonts } from "@/constants/theme";
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 export default function TabLayout() {
@@ -14,6 +14,8 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "Home",
+          tabBarLabelStyle: { fontFamily: Fonts.nunitoBlack },
+
           tabBarIcon: ({ color }) => (
             <Ionicons size={18} name="home" color={color} />
           ),
@@ -23,6 +25,7 @@ export default function TabLayout() {
         name="visualize"
         options={{
           title: "Visualize",
+          tabBarLabelStyle: { fontFamily: Fonts.nunitoBlack },
           tabBarIcon: ({ color }) => (
             <Ionicons size={18} name="stats-chart-outline" color={color} />
           ),
@@ -32,6 +35,8 @@ export default function TabLayout() {
         name="profile"
         options={{
           title: "Profile",
+          tabBarLabelStyle: { fontFamily: Fonts.nunitoBlack },
+
           tabBarIcon: ({ color }) => (
             <Ionicons size={18} name="person-outline" color={color} />
           ),

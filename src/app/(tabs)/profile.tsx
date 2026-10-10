@@ -1,6 +1,5 @@
 import { Colors, Fonts, Spacing } from "@/constants/theme";
 import { BlurView } from "expo-blur";
-import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import {
   ImageBackground,
@@ -25,15 +24,9 @@ export default function Profile() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <LinearGradient
-        {...Colors.light.buttonGradient}
-        style={styles.headerContainer}
-      >
+      <View style={styles.headerContainer}>
         <View>
-          <LinearGradient
-            {...Colors.light.buttonGradient}
-            style={styles.headerButtonRow}
-          >
+          <View style={styles.headerButtonRow}>
             <TouchableOpacity
               style={{ alignSelf: "flex-end" }}
               onPress={() => handleRedirectRegister()}
@@ -41,24 +34,33 @@ export default function Profile() {
               <Text
                 style={{
                   alignSelf: "flex-end",
-                  color: Colors.light.textPrimary,
+                  color: Colors.light.textWhite,
+                  fontFamily: Fonts.nunitoBlack,
                 }}
               >
                 Register Here
               </Text>
             </TouchableOpacity>
+            <Text
+              style={{
+                fontFamily: Fonts.nunitoBlack,
+                fontSize: 16,
+                color: Colors.light.textSecondary,
+              }}
+            >
+              |
+            </Text>
             <TouchableOpacity onPress={() => handleLogout()}>
               <Text
                 style={{
                   color: "#f33918",
-                  fontWeight: "bold",
-                  fontFamily: Fonts.sans,
+                  fontFamily: Fonts.nunitoBlack,
                 }}
               >
                 Logout
               </Text>
             </TouchableOpacity>
-          </LinearGradient>
+          </View>
         </View>
 
         <View style={styles.header}>
@@ -70,7 +72,7 @@ export default function Profile() {
           </View>
           <Text style={styles.pillUnit}>N DAY STREAK</Text>
         </View>
-      </LinearGradient>
+      </View>
 
       <ScrollView
         style={styles.styleView}
@@ -82,7 +84,13 @@ export default function Profile() {
             resizeMode="cover"
             style={styles.achievementCardContainer}
           >
-            <Text style={{ alignSelf: "center", marginBottom: Spacing.two }}>
+            <Text
+              style={{
+                alignSelf: "center",
+                marginBottom: Spacing.two,
+                fontFamily: Fonts.nunitoExtraBold,
+              }}
+            >
               Achievements
             </Text>
 
@@ -95,7 +103,7 @@ export default function Profile() {
                     Icon
                   </Text>
                 </View>
-                <Text style={{ alignSelf: "center" }}>First Lesson</Text>
+                <Text style={styles.achievementLabel}>First Lesson</Text>
               </BlurView>
               <BlurView intensity={20} style={styles.achievementCard}>
                 <View style={{ alignSelf: "center" }}>
@@ -105,7 +113,7 @@ export default function Profile() {
                     Icon
                   </Text>
                 </View>
-                <Text style={{ alignSelf: "center" }}>Statistical Newbie</Text>
+                <Text style={styles.achievementLabel}>Statistical Newbie</Text>
               </BlurView>
             </View>
             <View style={styles.achievementCardRow}>
@@ -118,7 +126,7 @@ export default function Profile() {
                   </Text>
                 </View>
 
-                <Text style={{ alignSelf: "center" }}>Statistician</Text>
+                <Text style={styles.achievementLabel}>Statistician</Text>
               </BlurView>
               <BlurView intensity={20} style={styles.achievementCard}>
                 <View style={{ alignSelf: "center" }}>
@@ -128,15 +136,15 @@ export default function Profile() {
                     Icon
                   </Text>
                 </View>
-                <Text style={{ alignSelf: "center" }}>Data Analyst</Text>
+                <Text style={styles.achievementLabel}>Data Analyst</Text>
               </BlurView>
             </View>
           </ImageBackground>
         </ScrollView>
-        <View style={{ width: "75%" }}>
-          <Text style={{ alignSelf: "center", marginBottom: Spacing.three }}>
-            Your Learning Stats
-          </Text>
+        <View style={styles.statContainer}>
+          <View style={styles.statTitleContainer}>
+            <Text style={styles.statTitle}>Your Learning Stats</Text>
+          </View>
           <View style={{ gap: Spacing.two, width: "75%", alignSelf: "center" }}>
             <View style={styles.statCard}>
               <Text style={styles.statBadge}>1</Text>
@@ -187,7 +195,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 24,
-    color: Colors.light.textHeader,
+    color: Colors.light.textWhite,
     fontFamily: Fonts.nunitoBlack,
   },
   profileContainer: {
@@ -236,10 +244,15 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   pillUnit: {
-    padding: Spacing.two,
+    paddingTop: 6,
+    paddingRight: 10,
+    paddingBottom: 6,
+    paddingLeft: 8,
     borderRadius: 999,
-    backgroundColor: Colors.light.statusColor,
-    color: Colors.light.statusText,
+    backgroundColor: Colors.light.headerBackgroundColor,
+    borderColor: Colors.light.textWhite,
+    borderWidth: 2,
+    color: Colors.light.textWhite,
     fontSize: 16,
     fontFamily: Fonts.nunitoBlack,
     alignSelf: "center",
@@ -266,34 +279,53 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     gap: Spacing.two,
     width: "50%",
-    overflow: "hidden", // Required to keep the blur clipped within borderRadius
+    overflow: "hidden",
     backgroundColor: "rgba(255, 255, 255, 0.4)",
+  },
+  achievementLabel: {
+    alignSelf: "center",
+    fontFamily: Fonts.nunitoExtraBold,
+  },
+  statContainer: {
+    width: "75%",
+  },
+  statTitleContainer: {
+    width: "75%",
+    alignSelf: "center",
+    borderBottomWidth: 2,
+    borderColor: Colors.light.headerBackgroundColor,
+    marginBottom: Spacing.three,
+  },
+  statTitle: {
+    alignSelf: "center",
+    fontFamily: Fonts.nunitoExtraBold,
+    marginBottom: Spacing.one,
+    color: Colors.light.headerBackgroundColor,
   },
   statCard: {
     flexDirection: "row",
     gap: Spacing.three,
-    width: "100%",
+    width: "75%",
     paddingVertical: Spacing.two,
     justifyContent: "flex-start",
     alignContent: "flex-start",
+    alignSelf: "center",
     borderWidth: 3,
     borderRadius: 20,
-    borderColor: Colors.light.backgroundElement,
+    borderColor: Colors.light.headerBackgroundColor,
   },
   statBadge: {
-    fontFamily: Fonts.sans,
-    fontWeight: "bold",
+    fontFamily: Fonts.nunitoBold,
     fontSize: 10,
-    color: Colors.light.textPrimary,
+    color: Colors.light.textWhite,
     paddingVertical: Spacing.two,
     paddingHorizontal: Spacing.three,
     marginLeft: Spacing.two,
-    backgroundColor: Colors.light.statusText,
+    backgroundColor: Colors.light.headerBackgroundColor,
     borderRadius: 999,
   },
   statText: {
-    fontFamily: Fonts.sans,
-    fontWeight: "bold",
+    fontFamily: Fonts.nunitoBold,
     fontSize: 12,
     color: Colors.light.textSecondary,
     alignSelf: "center",
