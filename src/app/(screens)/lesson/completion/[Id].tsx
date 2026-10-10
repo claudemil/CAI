@@ -1,7 +1,6 @@
 import { useCourse } from "@/app/context/course";
 import { Colors, Fonts, Spacing } from "@/constants/theme";
 import { Ionicons } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import {
   SafeAreaView,
@@ -39,32 +38,25 @@ export default function Id() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View>
-        <LinearGradient
-          {...Colors.light.buttonGradient}
-          style={[
-            styles.headerContainer,
-            {
-              gap: Spacing.two,
-              flexDirection: "row",
-            },
-          ]}
-        >
-          <View style={styles.header}>
-            <TouchableOpacity onPress={handleRedirectLessons}>
-              <Text style={{ color: "white" }}>{"<--"}</Text>
-            </TouchableOpacity>
-            <Text style={styles.bigHeaderText}>Lesson Completed!</Text>
-            <Text style={styles.headerText}>{lessonData.title}</Text>
-            <View style={styles.streakColumn}>
-              <Text style={[styles.headerText, { alignSelf: "center" }]}>
-                X
-              </Text>
-              <Text style={[styles.headerText, { alignSelf: "center" }]}>
-                Day Streak
-              </Text>
-            </View>
-            {/* <Text
+      <View
+        style={[
+          styles.headerContainer,
+          {
+            gap: Spacing.two,
+            flexDirection: "row",
+          },
+        ]}
+      >
+        <View style={styles.header}>
+          <Text style={styles.bigHeaderText}>Lesson Completed!</Text>
+          <Text style={styles.headerText}>{lessonData.title}</Text>
+          <View style={styles.streakColumn}>
+            <Text style={[styles.headerText, { alignSelf: "center" }]}>X</Text>
+            <Text style={[styles.headerText, { alignSelf: "center" }]}>
+              Day Streak
+            </Text>
+          </View>
+          {/* <Text
             style={{
               padding: Spacing.three,
               backgroundColor: "gray",
@@ -72,8 +64,7 @@ export default function Id() {
           >
             Icon
           </Text> */}
-          </View>
-        </LinearGradient>
+        </View>
       </View>
       <ScrollView
         style={styles.styleView}
@@ -92,31 +83,21 @@ export default function Id() {
             );
           })}
         </View>
-        <View style={{ margin: 0, padding: 0 }}>
+        <View style={{ width: "75%", alignSelf: "center" }}>
           <TouchableOpacity
+            style={styles.startButton}
             onPress={() => {
               handleCompleteCourse(Id);
               handleRedirectLessons();
             }}
           >
-            <LinearGradient
-              {...Colors.light.buttonGradient}
-              style={[
-                styles.startButton,
-                {
-                  gap: Spacing.two,
-                  flexDirection: "row",
-                },
-              ]}
-            >
-              <Text style={styles.startText}>Complete Lesson</Text>
-              <Ionicons
-                name="arrow-forward"
-                size={18}
-                style={{ alignSelf: "center" }}
-                color={Colors.light.textPrimary}
-              ></Ionicons>
-            </LinearGradient>
+            <Text style={styles.startText}>Complete Lesson</Text>
+            <Ionicons
+              name="arrow-forward"
+              size={24}
+              style={{ alignSelf: "center" }}
+              color={Colors.light.headerBackgroundColor}
+            ></Ionicons>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -130,16 +111,18 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: Colors.light.background,
+    backgroundColor: Colors.light.headerBackgroundColor,
   },
   headerContainer: {
     width: "100%",
-    alignItems: "center",
+    height: "30%",
+    alignItems: "flex-end",
     justifyContent: "center",
     gap: Spacing.three,
     backgroundColor: Colors.light.headerBackgroundColor,
+    marginBottom: Spacing.three,
     // paddingHorizontal: Spacing.seven,
-    paddingVertical: Spacing.three,
+    // paddingVertical: Spacing.three,
   },
   header: {
     alignItems: "center",
@@ -150,12 +133,12 @@ const styles = StyleSheet.create({
   },
   bigHeaderText: {
     fontSize: 36,
-    color: Colors.light.textPrimary,
+    color: Colors.light.textWhite,
     fontFamily: Fonts.nunitoBlack,
   },
   headerText: {
     fontSize: 18,
-    color: Colors.light.textPrimary,
+    color: Colors.light.textWhite,
     fontFamily: Fonts.nunitoExtraBold,
   },
   streakColumn: {
@@ -164,6 +147,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   objectivesContainer: {
+    width: "85%",
     alignContent: "center",
     justifyContent: "center",
     gap: Spacing.two,
@@ -171,14 +155,23 @@ const styles = StyleSheet.create({
   },
   objectiveCard: {
     maxWidth: "100%",
-    borderColor: Colors.light.borderColor,
-    borderWidth: 1,
+    backgroundColor: Colors.light.background,
+    borderColor: Colors.light.headerBackgroundColor,
+    borderWidth: 2,
     borderRadius: 16,
     flexDirection: "row",
     alignSelf: "center",
-    paddingHorizontal: Spacing.two,
+    paddingHorizontal: Spacing.three,
     paddingVertical: Spacing.three,
     gap: Spacing.two,
+  },
+  objectiveText: {
+    width: "75%",
+    fontFamily: Fonts.nunitoBold,
+    fontSize: 16,
+    color: Colors.light.headerBackgroundColor,
+    alignSelf: "center",
+    marginRight: Spacing.two,
   },
   checkPill: {
     paddingTop: 6,
@@ -193,29 +186,26 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginRight: Spacing.two,
   },
-  objectiveText: {
-    maxWidth: "75%",
-    fontFamily: Fonts.sans,
-    fontSize: 16,
-    fontWeight: "bold",
-    alignSelf: "center",
-    marginRight: Spacing.two,
-  },
   styleView: {
     flex: 1,
-    width: "100%",
+    height: "70%",
+    width: "85%",
   },
   startButton: {
+    backgroundColor: Colors.light.background,
+    borderColor: Colors.light.headerBackgroundColor,
     paddingVertical: Spacing.four,
     paddingHorizontal: Spacing.seven,
     borderRadius: 16,
     justifyContent: "center",
     width: "100%",
+    gap: Spacing.two,
+    flexDirection: "row",
   },
   startText: {
     fontFamily: Fonts.nunitoBold,
-    fontSize: 18,
-    color: "#ffffff",
+    fontSize: 24,
+    color: Colors.light.headerBackgroundColor,
     alignSelf: "center",
   },
   bodyContainer: {
@@ -223,14 +213,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "100%",
     gap: Spacing.three,
-    marginTop: Spacing.two,
+    // marginTop: Spacing.five,
     paddingVertical: Spacing.five,
-    paddingHorizontal: Spacing.three,
+    paddingHorizontal: Spacing.five,
+    borderWidth: 2,
+    borderRadius: 16,
+    borderColor: Colors.light.background,
   },
   bodyHeader: {
-    fontFamily: Fonts.sans,
+    fontFamily: Fonts.nunitoExtraBold,
     fontSize: 18,
-    fontWeight: "bold",
+    color: Colors.light.textWhite,
     alignSelf: "flex-start",
   },
 });

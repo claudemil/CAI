@@ -1,5 +1,4 @@
 import { Colors, Fonts, Spacing } from "@/constants/theme";
-import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { lessons } from "../../../data/lessons";
 
@@ -38,10 +37,7 @@ export default function LessonOutlineId() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <LinearGradient
-        {...Colors.light.buttonGradient}
-        style={styles.headerContainer}
-      >
+      <View style={styles.headerContainer}>
         <View style={styles.header}>
           <TouchableOpacity onPress={handleReturn}>
             <Ionicons
@@ -60,7 +56,7 @@ export default function LessonOutlineId() {
             <Text style={styles.mutedHeaderText}>{lessonData.subtitle}</Text>
           </View>
         </View>
-      </LinearGradient>
+      </View>
       <ScrollView
         style={styles.styleView}
         contentContainerStyle={[styles.bodyContainer]}
@@ -84,25 +80,17 @@ export default function LessonOutlineId() {
           })}
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress={handleShowLessonCompletion}>
-            <LinearGradient
-              {...Colors.light.buttonGradient}
-              style={[
-                styles.startButton,
-                {
-                  gap: Spacing.two,
-                  flexDirection: "row",
-                },
-              ]}
-            >
-              <Text style={styles.startText}>Start Lesson</Text>
-              <Ionicons
-                name="arrow-forward"
-                size={18}
-                style={{ alignSelf: "center" }}
-                color={Colors.light.textPrimary}
-              ></Ionicons>
-            </LinearGradient>
+          <TouchableOpacity
+            style={styles.startButton}
+            onPress={handleShowLessonCompletion}
+          >
+            <Text style={styles.startText}>Start Lesson</Text>
+            <Ionicons
+              name="arrow-forward"
+              size={24}
+              style={{ alignSelf: "center" }}
+              color={Colors.light.textWhite}
+            ></Ionicons>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -123,7 +111,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.background,
   },
   headerContainer: {
-    paddingVertical: Spacing.four,
+    paddingVertical: 12,
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
@@ -141,7 +129,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 32,
-    color: Colors.light.background,
+    color: Colors.light.textWhite,
     fontFamily: Fonts.nunitoBlack,
   },
   mutedHeaderText: {
@@ -150,39 +138,48 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.nunitoExtraBold,
   },
   aboutLessonCard: {
-    borderWidth: 1,
-    borderColor: Colors.light.borderColor,
+    // borderWidth: 2,
+    // borderColor: Colors.light.headerBackgroundColor,
+    width: "75%",
+    backgroundColor: Colors.light.headerBackgroundColor,
     borderRadius: 12,
     paddingVertical: Spacing.two,
     paddingHorizontal: Spacing.three,
   },
   aboutLessonHeader: {
-    fontFamily: Fonts.sans,
+    fontFamily: Fonts.nunitoExtraBold,
+    color: Colors.light.textWhite,
     fontSize: 24,
-    fontWeight: "bold",
     marginBottom: Spacing.one,
   },
   aboutLessonContent: {
-    fontFamily: Fonts.sans,
-    fontSize: 12,
+    fontFamily: Fonts.nunitoBold,
+    color: Colors.light.textWhite,
+    fontSize: 18,
     marginBottom: Spacing.three,
   },
   bodyHeader: {
-    fontFamily: Fonts.sans,
+    fontFamily: Fonts.nunitoExtraBold,
     fontSize: 18,
-    fontWeight: "bold",
+    color: Colors.light.headerBackgroundColor,
+    paddingBottom: Spacing.two,
+    paddingRight: Spacing.four,
+    borderBottomWidth: 1,
+    borderColor: Colors.light.headerBackgroundColor,
     alignSelf: "flex-start",
+    marginBottom: Spacing.four,
   },
   objectivesContainer: {
-    paddingHorizontal: Spacing.five,
+    width: "75%",
+    // paddingHorizontal: Spacing.five,
     alignContent: "center",
     justifyContent: "center",
     gap: Spacing.two,
   },
   objectiveCard: {
     width: "85%",
-    borderColor: Colors.light.borderColor,
-    borderWidth: 1,
+    borderColor: Colors.light.headerBackgroundColor,
+    borderWidth: 2,
     borderRadius: 16,
     flexDirection: "row",
     alignSelf: "center",
@@ -196,18 +193,17 @@ const styles = StyleSheet.create({
     paddingBottom: 6,
     paddingLeft: 10,
     borderRadius: 999,
-    backgroundColor: Colors.light.statusText,
-    color: Colors.light.textPrimary,
-    fontFamily: Fonts.sans,
-    fontWeight: "bold",
+    backgroundColor: Colors.light.headerBackgroundColor,
+    color: Colors.light.textWhite,
+    fontFamily: Fonts.nunitoExtraBold,
     alignSelf: "center",
     marginLeft: Spacing.one,
     marginRight: Spacing.two,
   },
   objectiveText: {
-    fontFamily: Fonts.sans,
+    fontFamily: Fonts.nunitoBold,
+    color: Colors.light.headerBackgroundColor,
     fontSize: 16,
-    fontWeight: "bold",
     alignSelf: "center",
     marginRight: Spacing.two,
   },
@@ -228,21 +224,22 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   buttonContainer: {
-    margin: 0,
-    padding: 0,
+    width: "75%",
   },
   startButton: {
+    backgroundColor: Colors.light.headerBackgroundColor,
     paddingVertical: Spacing.four,
-    paddingHorizontal: Spacing.seven,
     borderRadius: 16,
     justifyContent: "center",
-    width: "100%",
+    width: "75%",
+    flexDirection: "row",
+    gap: Spacing.two,
+    alignSelf: "center",
   },
   startText: {
-    fontFamily: Fonts.sans,
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "white",
+    fontFamily: Fonts.nunitoExtraBold,
+    fontSize: 24,
+    color: Colors.light.textWhite,
     alignSelf: "center",
   },
   bodyContainer: {

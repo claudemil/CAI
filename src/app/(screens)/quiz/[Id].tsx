@@ -2,7 +2,6 @@ import { useAuth } from "@/app/context/auth";
 import { Quiz, Quizzes } from "@/app/data/quizzes";
 import { Button } from "@/components/Button";
 import { Colors, Fonts, Spacing } from "@/constants/theme";
-import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import {
@@ -43,10 +42,7 @@ export default function QuizScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <LinearGradient
-        {...Colors.light.buttonGradient}
-        style={styles.headerContainer}
-      >
+      <View style={styles.headerContainer}>
         <View style={styles.header}>
           <View style={styles.headerGreetingsContainer}>
             <Text style={styles.headerText}>Stastationes</Text>
@@ -73,7 +69,7 @@ export default function QuizScreen() {
             page="index"
           ></Button>
         </View>
-      </LinearGradient>
+      </View>
       <ScrollView
         style={styles.styleView}
         contentContainerStyle={styles.bodyContainer}
@@ -82,20 +78,22 @@ export default function QuizScreen() {
           <Text style={{ backgroundColor: "#000000" }}>
             This will be a line
           </Text>
-          <Text>1/3</Text>
-        </View>
-        <View style={styles.questionCard}>
-          <View
+          <Text
             style={{
-              flexDirection: "row",
-              gap: Spacing.two,
+              fontFamily: Fonts.nunitoExtraBold,
+              color: Colors.light.headerBackgroundColor,
             }}
           >
-            <Text>Q1</Text>
-            <Text>{quizData.type}</Text>
+            1/3
+          </Text>
+        </View>
+        <View style={styles.questionCard}>
+          <View style={styles.questionHeader}>
+            <Text style={styles.questionText}>Q1.</Text>
+            <Text style={styles.questionText}>{quizData.type}</Text>
           </View>
           <View>
-            <Text>{quizData.questions[0]}</Text>
+            <Text style={styles.questionText}>{quizData.questions[0]}</Text>
           </View>
         </View>
         <View style={styles.answerCardRow}>
@@ -106,23 +104,33 @@ export default function QuizScreen() {
             return (
               <TouchableOpacity
                 key={index}
-                style={styles.answerCard}
+                style={[
+                  styles.answerCard,
+                  isSelected && styles.answerCardSelected,
+                ]}
                 onPress={() => setSelectedAnswer(answer)}
               >
+                <Text
+                  style={[
+                    styles.answerTextPill,
+                    isSelected && styles.answerTextPillSelected,
+                  ]}
+                >
+                  {letterLabel}
+                </Text>
                 <Text
                   style={[
                     styles.answerText,
                     isSelected && styles.answerTextSelected,
                   ]}
                 >
-                  {letterLabel}
+                  {answer}
                 </Text>
-                <Text>{answer}</Text>
               </TouchableOpacity>
             );
           })}
         </View>
-        <View>
+        <View style={{ width: "100%" }}>
           <TouchableOpacity
             style={styles.checkAnswerButton}
             onPress={() => checkAnswer(selectedAnswer!)}
@@ -133,10 +141,17 @@ export default function QuizScreen() {
         </View>
         {correctFlag && (
           <Modal>
-            <TouchableOpacity
-              style={styles.checkAnswerButton}
-              onPress={() => handleRedirectLessons}
-            ></TouchableOpacity>
+            <View>
+              <View style={styles.headerContainer}>
+                <Text style={styles.headerText}>Congrats!</Text>
+              </View>
+              <TouchableOpacity
+                style={styles.checkAnswerButton}
+                onPress={() => handleRedirectLessons()}
+              >
+                <Text style={styles.checkAnswerText}>Go back to Lessons</Text>
+              </TouchableOpacity>
+            </View>
           </Modal>
         )}
       </ScrollView>
@@ -169,7 +184,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 24,
-    color: Colors.light.textHeader,
+    color: Colors.light.textWhite,
     fontFamily: Fonts.nunitoBlack,
   },
   headerGreetingsContainer: {
@@ -190,12 +205,16 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     borderRadius: 200,
     alignSelf: "flex-start",
-    backgroundColor: Colors.light.buttonPrimary,
-    color: Colors.light.textPrimary,
+    backgroundColor: Colors.light.startStatusBackground,
+    borderColor: Colors.light.background,
+    borderWidth: 2,
+    color: Colors.light.background,
     fontFamily: Fonts.nunitoBlack,
+    fontSize: 16,
   },
   styleView: {
     flex: 1,
+    width: "75%",
   },
   bodyContainer: {
     alignItems: "center",
@@ -211,18 +230,25 @@ const styles = StyleSheet.create({
     gap: Spacing.three,
   },
   questionCard: {
-    backgroundColor: Colors.light.background,
+    backgroundColor: Colors.light.startStatusBackground,
     borderWidth: 1,
     borderColor: Colors.light.borderColor,
     borderRadius: 16,
     padding: Spacing.four,
     overflow: "hidden",
     flex: 1,
+    width: "100%",
+  },
+  questionHeader: { flexDirection: "row", gap: Spacing.two },
+  questionText: {
+    fontFamily: Fonts.nunitoExtraBold,
+    fontSize: 18,
+    color: Colors.light.textWhite,
   },
   answerCard: {
     backgroundColor: Colors.light.background,
-    borderWidth: 1,
-    borderColor: Colors.light.borderColor,
+    borderWidth: 2,
+    borderColor: Colors.light.headerBackgroundColor,
     borderRadius: 16,
     paddingVertical: Spacing.four,
     paddingHorizontal: Spacing.four,
@@ -232,40 +258,66 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: Spacing.two,
   },
-  answerText: {
+  answerCardSelected: {
+    backgroundColor: Colors.light.headerBackgroundColor,
+    borderWidth: 2,
+    borderColor: Colors.light.headerBackgroundColor,
+    borderRadius: 16,
+    paddingVertical: Spacing.four,
+    paddingHorizontal: Spacing.four,
+    overflow: "hidden",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    gap: Spacing.two,
+  },
+  answerTextPill: {
     padding: Spacing.two,
     paddingHorizontal: Spacing.three,
     marginHorizontal: Spacing.two,
     borderRadius: 999,
     backgroundColor: Colors.light.statusColor,
-    color: Colors.light.statusText,
+    color: Colors.light.textWhite,
     fontSize: 12,
-    fontFamily: Fonts.sans,
-    fontWeight: "bold",
+    fontFamily: Fonts.nunitoExtraBold,
   },
-  answerTextSelected: {
-    color: Colors.light.statusText,
+  answerTextPillSelected: {
+    color: Colors.light.statusColor,
     fontWeight: "600",
     padding: Spacing.two,
     paddingHorizontal: Spacing.three,
     marginHorizontal: Spacing.two,
     borderRadius: 999,
-    backgroundColor: "#8bf187",
+    backgroundColor: Colors.light.background,
     fontSize: 12,
-    fontFamily: Fonts.sans,
+    fontFamily: Fonts.nunitoExtraBold,
+  },
+  answerText: {
+    color: Colors.light.headerBackgroundColor,
+    fontSize: 18,
+    fontFamily: Fonts.nunitoBold,
+  },
+  answerTextSelected: {
+    color: Colors.light.textWhite,
+    fontSize: 18,
+    fontFamily: Fonts.nunitoBold,
   },
   answerCardRow: {
     gap: Spacing.three,
     width: "100%",
   },
   checkAnswerButton: {
-    backgroundColor: "blue",
+    backgroundColor: Colors.light.headerBackgroundColor,
     padding: Spacing.four,
     justifyContent: "center",
+    borderRadius: 12,
+    width: "75%",
+    alignSelf: "center",
   },
   checkAnswerText: {
-    fontFamily: Fonts.sans,
-    fontWeight: "bold",
-    color: "#ffffff",
+    fontFamily: Fonts.nunitoExtraBold,
+    fontSize: 18,
+    color: Colors.light.textWhite,
+    alignSelf: "center",
   },
 });
