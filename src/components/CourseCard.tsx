@@ -43,23 +43,27 @@ export const CourseCard = ({
         <Text>ICON</Text>
       </View>
       <View style={styles.middleView}>
-        <View>
+        <View style={{ height: "auto" }}>
           <Text style={styles.title}>{title}</Text>
+        </View>
+        <View>
           <Text style={styles.subTitle}>{subTitle}</Text>
         </View>
-        <Text
-          style={
-            status == "Completed"
-              ? styles.completedStatusText
-              : status == "In Progress"
-                ? styles.InProgressStatusText
-                : status == "Locked"
-                  ? styles.lockedStatusText
-                  : styles.statusText
-          }
-        >
-          {status}
-        </Text>
+        <View style={{ marginTop: Spacing.two }}>
+          <Text
+            style={
+              status == "Completed"
+                ? styles.completedStatusText
+                : status == "In Progress"
+                  ? styles.InProgressStatusText
+                  : status == "Locked"
+                    ? styles.lockedStatusText
+                    : styles.statusText
+            }
+          >
+            {status}
+          </Text>
+        </View>
       </View>
       <View style={styles.lastView}>
         <TouchableOpacity
@@ -82,11 +86,11 @@ export const CourseCard = ({
 
 const styles = StyleSheet.create({
   container: {
-    width: "75%",
+    width: "100%",
     flexDirection: "row",
     borderRadius: 14,
     borderWidth: 1,
-    borderColor: "#C8C8C8",
+    borderColor: Colors.light.borderColor,
     padding: 16,
     marginLeft: 16,
     gap: Spacing.two,
@@ -94,11 +98,11 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 0.4)",
   },
   inProgressContainer: {
-    width: "75%",
+    width: "100%",
     flexDirection: "row",
     borderRadius: 14,
     borderWidth: 1,
-    borderColor: Colors.light.activeTabBarBackground,
+    borderColor: Colors.light.progressBorderColor,
     padding: 16,
     marginLeft: 16,
     gap: Spacing.two,
@@ -106,7 +110,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 0.4)",
   },
   completedContainer: {
-    width: "75%",
+    width: "100%",
     flexDirection: "row",
     borderRadius: 14,
     borderWidth: 1,
@@ -125,7 +129,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "center",
     paddingLeft: Spacing.two,
-    gap: Spacing.one,
+    // gap: Spacing.one,
   },
   lastView: {
     flex: 1,
@@ -136,6 +140,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.nunitoExtraBold,
     fontSize: 16,
     color: Colors.light.buttonPrimary,
+    width: "auto",
   },
   subTitle: {
     fontFamily: Fonts.nunitoBold,
@@ -166,7 +171,7 @@ const styles = StyleSheet.create({
   InProgressStatusText: {
     fontFamily: Fonts.nunitoBold,
     fontSize: 8,
-    color: Colors.light.startStatusText,
+    color: Colors.light.textSecondary,
     paddingHorizontal: Spacing.two,
     paddingVertical: Spacing.one,
     borderRadius: 200,
@@ -175,10 +180,9 @@ const styles = StyleSheet.create({
     textAlignVertical: "center",
   },
   lockedStatusText: {
-    fontFamily: Fonts.sans,
-    fontWeight: "bold",
+    fontFamily: Fonts.nunitoBold,
     fontSize: 8,
-    color: Colors.light.textSecondary,
+    color: Colors.light.textWhite,
     paddingHorizontal: Spacing.two,
     paddingVertical: Spacing.one,
     borderRadius: 200,

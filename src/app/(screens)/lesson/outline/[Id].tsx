@@ -39,21 +39,22 @@ export default function LessonOutlineId() {
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
         <View style={styles.header}>
-          <TouchableOpacity onPress={handleReturn}>
-            <Ionicons
-              name="chevron-back"
-              size={24}
-              style={{ alignSelf: "flex-start" }}
-              color={Colors.light.textPrimary}
-            ></Ionicons>
-          </TouchableOpacity>
+          <View style={{ alignSelf: "center" }}>
+            <TouchableOpacity onPress={handleReturn}>
+              <Ionicons
+                name="chevron-back"
+                size={24}
+                // style={{ alignSelf: "center" }}
+                color={Colors.light.textWhite}
+              ></Ionicons>
+            </TouchableOpacity>
+          </View>
+
           {/* <Text style={{ padding: Spacing.three, backgroundColor: "blue" }}>
             Icon
           </Text> */}
-          <Text style={styles.headerText}>Lesson 1</Text>
-          <View style={{ gap: 0 }}>
-            <Text style={styles.headerText}>{lessonData.title}</Text>
-            <Text style={styles.mutedHeaderText}>{lessonData.subtitle}</Text>
+          <View>
+            <Text style={styles.headerText}>Lesson 1</Text>
           </View>
         </View>
       </View>
@@ -61,6 +62,10 @@ export default function LessonOutlineId() {
         style={styles.styleView}
         contentContainerStyle={[styles.bodyContainer]}
       >
+        <View style={{ gap: 0, alignSelf: "flex-start" }}>
+          <Text style={styles.bodyHeaderText}>{lessonData.title}</Text>
+          <Text style={styles.mutedHeaderText}>{lessonData.subtitle}</Text>
+        </View>
         <View style={styles.aboutLessonCard}>
           <Text style={styles.aboutLessonHeader}>About this Lesson</Text>
           <Text style={styles.aboutLessonContent}>
@@ -88,7 +93,6 @@ export default function LessonOutlineId() {
             <Ionicons
               name="arrow-forward"
               size={24}
-              style={{ alignSelf: "center" }}
               color={Colors.light.textWhite}
             ></Ionicons>
           </TouchableOpacity>
@@ -119,10 +123,11 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.headerBackgroundColor,
   },
   header: {
+    flexDirection: "row",
     alignItems: "flex-start",
     justifyContent: "flex-start",
     width: "100%",
-    gap: Spacing.one,
+    gap: Spacing.two,
     paddingHorizontal: Spacing.five,
     paddingLeft: Spacing.three,
     paddingTop: Spacing.three,
@@ -134,13 +139,18 @@ const styles = StyleSheet.create({
   },
   mutedHeaderText: {
     fontSize: 16,
-    color: Colors.light.backgroundElement,
+    color: Colors.light.headerBackgroundColor,
     fontFamily: Fonts.nunitoExtraBold,
+  },
+  bodyHeaderText: {
+    fontSize: 24,
+    color: Colors.light.headerBackgroundColor,
+    fontFamily: Fonts.nunitoBlack,
   },
   aboutLessonCard: {
     // borderWidth: 2,
     // borderColor: Colors.light.headerBackgroundColor,
-    width: "75%",
+    width: "100%",
     backgroundColor: Colors.light.headerBackgroundColor,
     borderRadius: 12,
     paddingVertical: Spacing.two,
@@ -149,13 +159,13 @@ const styles = StyleSheet.create({
   aboutLessonHeader: {
     fontFamily: Fonts.nunitoExtraBold,
     color: Colors.light.textWhite,
-    fontSize: 24,
+    fontSize: 18,
     marginBottom: Spacing.one,
   },
   aboutLessonContent: {
     fontFamily: Fonts.nunitoBold,
     color: Colors.light.textWhite,
-    fontSize: 18,
+    fontSize: 12,
     marginBottom: Spacing.three,
   },
   bodyHeader: {
@@ -167,10 +177,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: Colors.light.headerBackgroundColor,
     alignSelf: "flex-start",
-    marginBottom: Spacing.four,
+    marginBottom: Spacing.two,
   },
   objectivesContainer: {
-    width: "75%",
+    width: "100%",
     // paddingHorizontal: Spacing.five,
     alignContent: "center",
     justifyContent: "center",
@@ -185,7 +195,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     paddingHorizontal: Spacing.two,
     paddingVertical: Spacing.three,
-    gap: Spacing.two,
   },
   indexPill: {
     paddingTop: 6,
@@ -203,9 +212,10 @@ const styles = StyleSheet.create({
   objectiveText: {
     fontFamily: Fonts.nunitoBold,
     color: Colors.light.headerBackgroundColor,
-    fontSize: 16,
+    fontSize: 12,
     alignSelf: "center",
     marginRight: Spacing.two,
+    width: "85%",
   },
   pillPrimary: {
     paddingTop: 6,
@@ -224,7 +234,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   buttonContainer: {
-    width: "75%",
+    width: "100%",
   },
   startButton: {
     backgroundColor: Colors.light.headerBackgroundColor,
@@ -248,7 +258,7 @@ const styles = StyleSheet.create({
     width: "100%",
     gap: Spacing.three,
     marginTop: Spacing.two,
-    paddingVertical: Spacing.five,
+    paddingVertical: Spacing.two,
     paddingHorizontal: Spacing.three,
   },
 });

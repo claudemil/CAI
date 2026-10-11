@@ -1,4 +1,5 @@
 import { Colors, Fonts, Spacing } from "@/constants/theme";
+import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
@@ -18,34 +19,39 @@ const landing = () => {
         style={{
           width: "80%",
           alignSelf: "center",
-          justifyContent: "center",
-          height: "50%",
+          justifyContent: "flex-end",
+          height: "40%",
+          marginBottom: Spacing.three,
         }}
       >
-        <Text
+        <Ionicons
+          name="book-outline"
+          size={64}
+          color={Colors.light.headerBackgroundColor}
+          style={{ alignSelf: "center" }}
+        ></Ionicons>
+        {/* <Text
           style={{
             padding: Spacing.seven,
             backgroundColor: "#c8c8c8c8",
             width: "50%",
             alignSelf: "center",
-            marginBottom: Spacing.seven,
           }}
         >
           Logo
-        </Text>
+        </Text> */}
         <Text
           style={{
             alignSelf: "center",
             fontFamily: Fonts.nunitoBlack,
-            fontSize: 64,
+            fontSize: 32,
             color: Colors.light.startStatusBackground,
-            marginTop: Spacing.two,
           }}
         >
           Stastasiones
         </Text>
       </View>
-      <View style={{ height: "50%", gap: Spacing.three }}>
+      <View style={{ height: "60%", width: "100%", gap: Spacing.three }}>
         <TouchableOpacity
           style={{
             width: "75%",
@@ -59,6 +65,7 @@ const landing = () => {
             style={{
               alignSelf: "center",
               padding: Spacing.four,
+              paddingHorizontal: Spacing.five,
               fontFamily: Fonts.nunitoBlack,
               fontSize: 16,
               color: Colors.light.background,
@@ -82,6 +89,8 @@ const landing = () => {
             style={{
               alignSelf: "center",
               padding: Spacing.four,
+              paddingHorizontal: Spacing.five,
+
               fontFamily: Fonts.nunitoBlack,
               fontSize: 16,
               color: Colors.light.startStatusBackground,

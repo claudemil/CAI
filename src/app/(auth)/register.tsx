@@ -34,16 +34,6 @@ const register = () => {
   return (
     <View style={{ backgroundColor: Colors.light.background }}>
       <View style={styles.headerContainer}>
-        <View style={{ alignSelf: "flex-end" }}>
-          <TouchableOpacity style={{}} onPress={() => handleRedirectLogin()}>
-            <Text>
-              Already have an account?{"  "}
-              <Text style={{ color: Colors.light.startStatusBackground }}>
-                Login
-              </Text>
-            </Text>
-          </TouchableOpacity>
-        </View>
         <View style={styles.header}>
           <View style={styles.avatarCircle}>
             <Ionicons
@@ -62,11 +52,7 @@ const register = () => {
       <View style={styles.bodyContainer}>
         <View style={styles.inputRow}>
           <TextInput
-            style={{
-              fontFamily: Fonts.nunitoBold,
-              fontSize: 16,
-              color: Colors.light.startStatusBackground,
-            }}
+            style={styles.inputText}
             placeholder="Username"
             placeholderTextColor={Colors.light.startStatusBackground}
             value={username}
@@ -76,11 +62,7 @@ const register = () => {
         </View>
         <View style={styles.inputRow}>
           <TextInput
-            style={{
-              fontFamily: Fonts.nunitoBold,
-              fontSize: 16,
-              color: Colors.light.startStatusBackground,
-            }}
+            style={styles.inputText}
             placeholder="Email"
             placeholderTextColor={Colors.light.startStatusBackground}
             value={email}
@@ -91,11 +73,7 @@ const register = () => {
 
         <View style={styles.inputRow}>
           <TextInput
-            style={{
-              fontFamily: Fonts.nunitoBold,
-              fontSize: 16,
-              color: Colors.light.startStatusBackground,
-            }}
+            style={styles.inputText}
             placeholder="Password"
             placeholderTextColor={Colors.light.startStatusBackground}
             value={password}
@@ -105,17 +83,28 @@ const register = () => {
         </View>
         <View style={styles.inputRow}>
           <TextInput
-            style={{
-              fontFamily: Fonts.nunitoBold,
-              fontSize: 16,
-              color: Colors.light.startStatusBackground,
-            }}
+            style={styles.inputText}
             placeholder="Confirm Password"
             placeholderTextColor={Colors.light.startStatusBackground}
             value={confirmPassword}
             onChangeText={setConfirmPassword}
             secureTextEntry
           ></TextInput>
+        </View>
+        <View>
+          <TouchableOpacity style={{}} onPress={() => handleRedirectLogin()}>
+            <Text>
+              Already have an account?{"  "}
+              <Text
+                style={{
+                  color: Colors.light.startStatusBackground,
+                  fontFamily: Fonts.nunitoExtraBold,
+                }}
+              >
+                Login
+              </Text>
+            </Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.buttonRow}>
           <TouchableOpacity
@@ -133,18 +122,18 @@ const register = () => {
 const styles = StyleSheet.create({
   headerContainer: {
     width: "100%",
-    height: "40%",
+    height: "30%",
     alignContent: "center",
     justifyContent: "flex-end",
     gap: Spacing.three,
     paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.three,
-    paddingTop: Spacing.seven,
+    paddingBottom: Spacing.five,
   },
   header: {
     alignItems: "center",
     justifyContent: "space-between",
     width: "100%",
+
     gap: 0,
   },
   avatarCircle: {
@@ -159,18 +148,18 @@ const styles = StyleSheet.create({
   bodyContainer: {
     gap: Spacing.two,
     width: "75%",
-    height: "60%",
+    height: "70%",
     alignSelf: "center",
     justifyContent: "flex-start",
     backgroundColor: Colors.light.background,
   },
   headerText: {
-    fontSize: 48,
+    fontSize: 32,
     fontFamily: Fonts.nunitoBlack,
     color: Colors.light.startStatusBackground,
   },
   subHeaderText: {
-    fontSize: 24,
+    fontSize: 16,
     fontFamily: Fonts.nunitoBlack,
     color: Colors.light.startStatusBackground,
   },
@@ -188,6 +177,12 @@ const styles = StyleSheet.create({
     borderColor: Colors.light.startStatusBackground,
     borderWidth: 2,
     borderRadius: 12,
+  },
+  inputText: {
+    fontFamily: Fonts.nunitoBold,
+    fontSize: 16,
+    color: Colors.light.startStatusBackground,
+    width: "100%",
   },
   buttonRow: {
     width: "auto",
@@ -207,7 +202,7 @@ const styles = StyleSheet.create({
   registerButtonText: {
     fontFamily: Fonts.nunitoBlack,
     fontSize: 24,
-    color: Colors.light.textPrimary,
+    color: Colors.light.textWhite,
   },
 });
 export default register;

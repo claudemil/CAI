@@ -29,18 +29,6 @@ const login = () => {
   return (
     <View style={styles.screenContainer}>
       <View style={styles.headerContainer}>
-        <View>
-          <TouchableOpacity
-            onPress={() => handleRedirectRegister()}
-            style={styles.loginLink}
-          >
-            <Text>
-              Don't have an account?{" "}
-              <Text style={styles.loginLinkText}>Register here!</Text>
-            </Text>
-          </TouchableOpacity>
-        </View>
-
         <View style={styles.header}>
           <View style={styles.avatarCircle}>
             <Ionicons name="person" size={48} color={Colors.light.background} />
@@ -71,6 +59,17 @@ const login = () => {
             autoCapitalize="none"
             secureTextEntry
           ></TextInput>
+        </View>
+        <View style={{ alignSelf: "flex-start" }}>
+          <TouchableOpacity
+            onPress={() => handleRedirectRegister()}
+            style={styles.loginLink}
+          >
+            <Text>
+              Don't have an account?{" "}
+              <Text style={styles.loginLinkText}>Register here!</Text>
+            </Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.buttonRow}>
           <TouchableOpacity
@@ -131,13 +130,13 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.background,
   },
   headerText: {
-    fontSize: 48,
+    fontSize: 32,
     fontFamily: Fonts.nunitoBlack,
 
     color: Colors.light.startStatusBackground,
   },
   subHeaderText: {
-    fontSize: 24,
+    fontSize: 18,
     fontFamily: Fonts.nunitoExtraBold,
     color: Colors.light.startStatusBackground,
   },
@@ -165,6 +164,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.nunitoBold,
     fontSize: 16,
     color: Colors.light.startStatusBackground,
+    width: "100%",
   },
   buttonRow: {
     width: "auto",
@@ -184,7 +184,9 @@ const styles = StyleSheet.create({
   loginButtonText: {
     fontFamily: Fonts.nunitoBlack,
     fontSize: 24,
-    color: Colors.light.textPrimary,
+    color: Colors.light.textWhite,
+    alignSelf: "center",
+    width: "100%",
   },
 });
 export default login;
