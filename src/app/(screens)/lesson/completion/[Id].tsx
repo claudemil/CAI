@@ -83,7 +83,7 @@ export default function Id() {
             );
           })}
         </View>
-        <View style={{ width: "75%", alignSelf: "center" }}>
+        <View style={{ width: "100%", alignSelf: "center" }}>
           <TouchableOpacity
             style={styles.startButton}
             onPress={() => {
@@ -94,7 +94,7 @@ export default function Id() {
             <Text style={styles.startText}>Complete Lesson</Text>
             <Ionicons
               name="arrow-forward"
-              size={24}
+              size={18}
               style={{ alignSelf: "center" }}
               color={Colors.light.headerBackgroundColor}
             ></Ionicons>
@@ -115,14 +115,14 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     width: "100%",
-    height: "30%",
+    height: "20%",
     alignItems: "flex-end",
     justifyContent: "center",
     gap: Spacing.three,
     backgroundColor: Colors.light.headerBackgroundColor,
     marginBottom: Spacing.three,
     // paddingHorizontal: Spacing.seven,
-    // paddingVertical: Spacing.three,
+    marginTop: Spacing.five,
   },
   header: {
     alignItems: "center",
@@ -132,7 +132,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.five,
   },
   bigHeaderText: {
-    fontSize: 36,
+    width: "100%",
+    fontSize: 32,
     color: Colors.light.textWhite,
     fontFamily: Fonts.nunitoBlack,
   },
@@ -147,28 +148,28 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   objectivesContainer: {
-    width: "85%",
+    width: "100%",
     alignContent: "center",
     justifyContent: "center",
     gap: Spacing.two,
     marginBottom: Spacing.five,
   },
   objectiveCard: {
-    maxWidth: "100%",
+    width: "100%",
     backgroundColor: Colors.light.background,
     borderColor: Colors.light.headerBackgroundColor,
     borderWidth: 2,
     borderRadius: 16,
     flexDirection: "row",
     alignSelf: "center",
-    paddingHorizontal: Spacing.three,
+    paddingHorizontal: Spacing.two,
     paddingVertical: Spacing.three,
     gap: Spacing.two,
   },
   objectiveText: {
-    width: "75%",
+    width: "85%",
     fontFamily: Fonts.nunitoBold,
-    fontSize: 16,
+    fontSize: 12,
     color: Colors.light.headerBackgroundColor,
     alignSelf: "center",
     marginRight: Spacing.two,
@@ -195,7 +196,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.background,
     borderColor: Colors.light.headerBackgroundColor,
     paddingVertical: Spacing.four,
-    paddingHorizontal: Spacing.seven,
+    // paddingHorizontal: Spacing.seven,
+    paddingHorizontal: "auto",
     borderRadius: 16,
     justifyContent: "center",
     width: "100%",
@@ -203,10 +205,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   startText: {
-    fontFamily: Fonts.nunitoBold,
-    fontSize: 24,
+    width: "auto",
+    fontFamily: Fonts.nunitoExtraBold,
+    fontSize: 18,
     color: Colors.light.headerBackgroundColor,
-    alignSelf: "center",
+    alignSelf: "flex-start",
   },
   bodyContainer: {
     alignItems: "center",
