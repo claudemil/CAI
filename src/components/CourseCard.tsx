@@ -76,7 +76,11 @@ export const CourseCard = ({
           <Ionicons
             name="chevron-forward"
             size={24}
-            color={status === "Locked" ? Colors.light.borderColor : "#4b93ff"}
+            color={
+              status === "Locked"
+                ? Colors.light.borderColor
+                : Colors.light.headerBackgroundColor
+            }
           ></Ionicons>
         </TouchableOpacity>
       </View>
@@ -92,7 +96,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.light.borderColor,
     padding: 16,
-    marginLeft: 16,
+    // marginLeft: 16,
     gap: Spacing.two,
     overflow: "hidden",
     backgroundColor: "rgba(255, 255, 255, 0.4)",
@@ -104,7 +108,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.light.progressBorderColor,
     padding: 16,
-    marginLeft: 16,
+    // marginLeft: 16,
     gap: Spacing.two,
     overflow: "hidden",
     backgroundColor: "rgba(255, 255, 255, 0.4)",
@@ -116,7 +120,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.light.completedBorder,
     padding: 16,
-    marginLeft: 16,
+    // marginLeft: 16,
     gap: Spacing.two,
   },
   firstView: {

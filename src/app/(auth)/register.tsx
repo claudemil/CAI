@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "../context/auth";
 
 const register = () => {
@@ -32,7 +33,7 @@ const register = () => {
     }
   };
   return (
-    <View style={{ backgroundColor: Colors.light.background }}>
+    <SafeAreaView style={{ backgroundColor: Colors.light.background }}>
       <View style={styles.headerContainer}>
         <View style={styles.header}>
           <View style={styles.avatarCircle}>
@@ -93,12 +94,17 @@ const register = () => {
         </View>
         <View>
           <TouchableOpacity style={{}} onPress={() => handleRedirectLogin()}>
-            <Text>
+            <Text
+              style={{
+                fontFamily: Fonts.nunitoBold,
+              }}
+            >
               Already have an account?{"  "}
               <Text
                 style={{
                   color: Colors.light.startStatusBackground,
                   fontFamily: Fonts.nunitoExtraBold,
+                  fontSize: 16,
                 }}
               >
                 Login
@@ -115,7 +121,7 @@ const register = () => {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -72,7 +72,7 @@ export default function Index() {
             </Text>
           </View>
           <View>
-            <Text style={[styles.pillPrimary, {}]}>N DAY STREAK</Text>
+            <Text style={styles.pillPrimary}>N DAY STREAK</Text>
           </View>
         </View>
         <View style={styles.headerButtons}>
@@ -164,11 +164,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     width: "100%",
-    paddingHorizontal: 32,
+    paddingHorizontal: Spacing.three,
   },
   headerText: {
-    fontSize: 24,
-    color: Colors.light.textPrimary,
+    fontSize: 18,
+    color: Colors.light.textWhite,
     fontFamily: Fonts.nunitoBlack,
   },
   headerGreetingsContainer: {
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     color: Colors.light.background,
     fontFamily: Fonts.nunitoBlack,
-    fontSize: 16,
+    fontSize: 12,
   },
   cardRow: {
     flex: 1,

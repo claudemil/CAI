@@ -43,7 +43,7 @@ export const Button = ({
           <Ionicons
             name="book-outline"
             size={16}
-            color={Colors.light.textPrimary}
+            color={Colors.light.textWhite}
           ></Ionicons>
         )}
 
@@ -51,7 +51,7 @@ export const Button = ({
           <Ionicons
             name="stats-chart-outline"
             size={12}
-            color={Colors.light.textPrimary}
+            color={Colors.light.textWhite}
           ></Ionicons>
         )}
 
@@ -98,13 +98,14 @@ const styles = StyleSheet.create({
     margin: 0,
   },
   primaryText: {
-    color: Colors.light.textPrimary,
+    color: Colors.light.textWhite,
     fontFamily: Fonts.nunitoBlack,
     textAlign: "center",
   },
   secondaryText: {
-    color: Colors.light.textSecondary,
+    color: Colors.light.textWhite,
     fontFamily: Fonts.nunitoBlack,
+    textAlign: "center",
   },
   buttonContainer: {
     flexDirection: "row",
@@ -119,5 +120,6 @@ const styles = StyleSheet.create({
     color: Colors.light.buttonPrimary,
     opacity: 0.5,
     fontFamily: Fonts.nunitoBlack,
+    textAlign: "center",
   },
 });

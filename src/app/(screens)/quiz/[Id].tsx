@@ -6,13 +6,13 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import {
   Modal,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function QuizScreen() {
   const router = useRouter();
@@ -162,7 +162,6 @@ export default function QuizScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: "100%",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: Colors.light.background,
@@ -180,10 +179,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     width: "100%",
-    paddingHorizontal: 32,
+    paddingHorizontal: Spacing.three,
   },
   headerText: {
-    fontSize: 24,
+    fontSize: 18,
     color: Colors.light.textWhite,
     fontFamily: Fonts.nunitoBlack,
   },
@@ -214,7 +213,7 @@ const styles = StyleSheet.create({
   },
   styleView: {
     flex: 1,
-    width: "75%",
+    width: "100%",
   },
   bodyContainer: {
     alignItems: "center",
@@ -223,6 +222,7 @@ const styles = StyleSheet.create({
     gap: Spacing.three,
     marginTop: Spacing.two,
     paddingVertical: Spacing.three,
+    paddingHorizontal: Spacing.three,
   },
   progressRow: {
     // flex: 1,

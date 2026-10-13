@@ -1,8 +1,8 @@
 import { Colors, Fonts, Spacing } from "@/constants/theme";
+import { Ionicons } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
 import { useRouter } from "expo-router";
 import {
-  ImageBackground,
   ScrollView,
   StyleSheet,
   Text,
@@ -24,71 +24,73 @@ export default function Profile() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.headerContainer}>
-        <View>
-          <View style={styles.headerButtonRow}>
-            <TouchableOpacity
-              style={{ alignSelf: "flex-end" }}
-              onPress={() => handleRedirectRegister()}
-            >
-              <Text
-                style={{
-                  alignSelf: "flex-end",
-                  color: Colors.light.textWhite,
-                  fontFamily: Fonts.nunitoBlack,
-                }}
-              >
-                Register Here
-              </Text>
-            </TouchableOpacity>
-            <Text
-              style={{
-                fontFamily: Fonts.nunitoBlack,
-                fontSize: 16,
-                color: Colors.light.textSecondary,
-              }}
-            >
-              |
-            </Text>
-            <TouchableOpacity onPress={() => handleLogout()}>
-              <Text
-                style={{
-                  color: "#f33918",
-                  fontFamily: Fonts.nunitoBlack,
-                }}
-              >
-                Logout
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <View style={styles.header}>
-          <View style={styles.profileContainer}></View>
-          <View>
-            <Text style={styles.headerText}>
-              {appUser?.username || "Guest User"}
-            </Text>
-          </View>
-          <Text style={styles.pillUnit}>N DAY STREAK</Text>
-        </View>
-      </View>
-
       <ScrollView
         style={styles.styleView}
         contentContainerStyle={styles.bodyContainer}
       >
-        <ScrollView>
-          <ImageBackground
-            source={require("../images/snflower.jpg")}
-            resizeMode="cover"
-            style={styles.achievementCardContainer}
-          >
+        <View style={styles.headerContainer}>
+          <View>
+            <View style={styles.headerButtonRow}>
+              <TouchableOpacity
+                style={{ alignSelf: "flex-end" }}
+                onPress={() => handleRedirectRegister()}
+              >
+                <Text
+                  style={{
+                    alignSelf: "flex-end",
+                    color: Colors.light.textWhite,
+                    fontFamily: Fonts.nunitoBlack,
+                  }}
+                >
+                  Register Here
+                </Text>
+              </TouchableOpacity>
+              <Text
+                style={{
+                  fontFamily: Fonts.nunitoBlack,
+                  fontSize: 16,
+                  color: Colors.light.textSecondary,
+                }}
+              >
+                |
+              </Text>
+              <TouchableOpacity onPress={() => handleLogout()}>
+                <Text
+                  style={{
+                    color: "#f33918",
+                    fontFamily: Fonts.nunitoBlack,
+                  }}
+                >
+                  Logout
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <View style={styles.header}>
+            <View>
+              <Ionicons
+                name="person-circle"
+                color={Colors.light.textWhite}
+                size={64}
+              />
+            </View>
+            <View>
+              <Text style={styles.headerText}>
+                {appUser?.username || "Guest User"}
+              </Text>
+            </View>
+            <Text style={styles.pillUnit}>N DAY STREAK</Text>
+          </View>
+        </View>
+        <View>
+          <View style={styles.achievementCardContainer}>
             <Text
               style={{
                 alignSelf: "center",
                 marginBottom: Spacing.two,
                 fontFamily: Fonts.nunitoExtraBold,
+                color: Colors.light.textWhite,
               }}
             >
               Achievements
@@ -98,7 +100,7 @@ export default function Profile() {
               <BlurView intensity={20} style={styles.achievementCard}>
                 <View style={{ alignSelf: "center" }}>
                   <Text
-                    style={{ backgroundColor: "gray", padding: Spacing.five }}
+                    style={{ backgroundColor: "gray", padding: Spacing.three }}
                   >
                     Icon
                   </Text>
@@ -108,7 +110,7 @@ export default function Profile() {
               <BlurView intensity={20} style={styles.achievementCard}>
                 <View style={{ alignSelf: "center" }}>
                   <Text
-                    style={{ backgroundColor: "gray", padding: Spacing.five }}
+                    style={{ backgroundColor: "gray", padding: Spacing.three }}
                   >
                     Icon
                   </Text>
@@ -120,7 +122,7 @@ export default function Profile() {
               <BlurView intensity={20} style={styles.achievementCard}>
                 <View style={{ alignSelf: "center" }}>
                   <Text
-                    style={{ backgroundColor: "gray", padding: Spacing.five }}
+                    style={{ backgroundColor: "gray", padding: Spacing.three }}
                   >
                     Icon
                   </Text>
@@ -131,7 +133,7 @@ export default function Profile() {
               <BlurView intensity={20} style={styles.achievementCard}>
                 <View style={{ alignSelf: "center" }}>
                   <Text
-                    style={{ backgroundColor: "gray", padding: Spacing.five }}
+                    style={{ backgroundColor: "gray", padding: Spacing.three }}
                   >
                     Icon
                   </Text>
@@ -139,13 +141,15 @@ export default function Profile() {
                 <Text style={styles.achievementLabel}>Data Analyst</Text>
               </BlurView>
             </View>
-          </ImageBackground>
-        </ScrollView>
+          </View>
+        </View>
         <View style={styles.statContainer}>
           <View style={styles.statTitleContainer}>
             <Text style={styles.statTitle}>Your Learning Stats</Text>
           </View>
-          <View style={{ gap: Spacing.two, width: "75%", alignSelf: "center" }}>
+          <View
+            style={{ gap: Spacing.two, width: "100%", alignSelf: "center" }}
+          >
             <View style={styles.statCard}>
               <Text style={styles.statBadge}>1</Text>
               <Text style={styles.statText}>Days Active</Text>
@@ -176,7 +180,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    gap: Spacing.three,
+    // gap: Spacing.three,
     backgroundColor: Colors.light.headerBackgroundColor,
   },
   headerButtonRow: {
@@ -208,8 +212,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: Spacing.three,
-    marginTop: Spacing.two,
-    paddingVertical: Spacing.five,
+    // paddingVertical: Spacing.five,
   },
   unitHeader: {
     paddingHorizontal: 16,
@@ -253,7 +256,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.light.textWhite,
     borderWidth: 2,
     color: Colors.light.textWhite,
-    fontSize: 16,
+    fontSize: 12,
     fontFamily: Fonts.nunitoBlack,
     alignSelf: "center",
   },
@@ -268,12 +271,12 @@ const styles = StyleSheet.create({
     width: "100%",
     alignSelf: "center",
     paddingVertical: Spacing.four,
+    paddingHorizontal: Spacing.three,
     borderRadius: 16,
-    // backgroundColor: Colors.light.startStatusBackground,
-    backgroundImage: "../images/snflower.jpg",
+    backgroundColor: Colors.light.startStatusBackground,
   },
   achievementCard: {
-    padding: Spacing.four,
+    padding: Spacing.two,
     borderColor: Colors.light.borderColor,
     borderWidth: 1,
     borderRadius: 16,
@@ -285,19 +288,21 @@ const styles = StyleSheet.create({
   achievementLabel: {
     alignSelf: "center",
     fontFamily: Fonts.nunitoExtraBold,
+    color: Colors.light.textWhite,
+    width: "auto",
   },
   statContainer: {
     width: "75%",
   },
   statTitleContainer: {
-    width: "75%",
-    alignSelf: "center",
+    width: "100%",
     borderBottomWidth: 2,
     borderColor: Colors.light.headerBackgroundColor,
     marginBottom: Spacing.three,
   },
   statTitle: {
     alignSelf: "center",
+    width: "auto",
     fontFamily: Fonts.nunitoExtraBold,
     marginBottom: Spacing.one,
     color: Colors.light.headerBackgroundColor,
@@ -305,7 +310,7 @@ const styles = StyleSheet.create({
   statCard: {
     flexDirection: "row",
     gap: Spacing.three,
-    width: "75%",
+    width: "100%",
     paddingVertical: Spacing.two,
     justifyContent: "flex-start",
     alignContent: "flex-start",

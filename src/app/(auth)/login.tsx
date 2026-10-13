@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "../context/auth";
 
 const login = () => {
@@ -27,7 +28,7 @@ const login = () => {
     login(username, password);
   };
   return (
-    <View style={styles.screenContainer}>
+    <SafeAreaView style={styles.screenContainer}>
       <View style={styles.headerContainer}>
         <View style={styles.header}>
           <View style={styles.avatarCircle}>
@@ -80,7 +81,7 @@ const login = () => {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
