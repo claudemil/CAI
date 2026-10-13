@@ -6,12 +6,12 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "../context/auth";
 import { useCourse } from "../context/course";
-import { lessons } from "../data/lessons";
+import { LessonOutlines } from "../data/lessons";
 
 export default function Index() {
   const router = useRouter();
   const { appUser } = useAuth();
-  const lessonEntries = Object.entries(lessons);
+  const lessonEntries = Object.entries(LessonOutlines);
   const { handleCompleteCourse, getCourseStatus } = useCourse();
 
   const handleRedirectQuiz = (Id: string) => {
