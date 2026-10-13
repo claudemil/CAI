@@ -1,12 +1,33 @@
-export interface Lesson {
+export interface LessonOutline {
   title: string;
   subtitle: string;
   objectives: string[];
 }
 
-export type LessonsMap = Record<string, Lesson>;
+export type TextChunk =
+  | string
+  | {
+      text: string;
+      bold?: boolean;
+      color?: string;
+    };
 
-export const lessons: LessonsMap = {
+export type LessonParagraph = {
+  theme?: "default" | "opposite";
+  chunks: TextChunk[];
+};
+
+export interface Lesson {
+  number: string;
+  title: string[];
+  content: LessonParagraph[][];
+}
+
+export type LessonOutlinesMap = Record<string, LessonOutline>;
+
+export type LessonMap = Record<string, Lesson>;
+
+export const LessonOutlines: LessonOutlinesMap = {
   "intro-to-statistics": {
     title: "Intro to Statistics",
     subtitle: "Type & Classifications",
@@ -36,4 +57,59 @@ export const lessons: LessonsMap = {
   },
 };
 
-export default lessons;
+export const Lessons: LessonMap = {
+  "what-is-statistics": {
+    number: "1.1",
+    title: ["What is Statistics?"],
+    content: [
+      [
+        {
+          theme: "default",
+          chunks: [
+            "Statistics is the mathematical discipline and structured framework concerned with",
+            {
+              text: " collecting, organizing, analyzing, interpreting, and presenting data.",
+              bold: true,
+            },
+            " In digital systems and e-learning platforms, statistics allows decision-makers to make sense of large amounts of data under conditions of uncertainty.",
+          ],
+        },
+      ],
+      [
+        {
+          theme: "opposite",
+          chunks: [
+            "When people speak of the word ",
+            { text: "statistics", bold: true },
+            ", it usually means one of two things:",
+          ],
+        },
+      ],
+      [
+        {
+          theme: "default",
+          chunks: [
+            { text: "Statistics as Singular:", bold: true },
+            " Referring to the ",
+            { text: "field itself", bold: true },
+            ", which is concerned with the",
+            { text: " scientific methods and principles", bold: true },
+            " used to process data",
+          ],
+        },
+      ],
+      [
+        {
+          theme: "opposite",
+          chunks: [
+            { text: "Statistics as Plural:", bold: true },
+            " The numerical facts and observations, which are the ",
+            { text: "data itself", bold: true },
+          ],
+        },
+      ],
+    ],
+  },
+};
+
+export default LessonOutlines;
