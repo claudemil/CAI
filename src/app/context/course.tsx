@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { lessons } from "../data/lessons";
+import { LessonOutlines } from "../data/lessons";
 
 type CourseStatus = "Completed" | "In Progress" | "Locked";
 
@@ -37,14 +37,14 @@ export const CourseProvider = ({ children }: { children: React.ReactNode }) => {
       return "Completed";
     }
 
-    const lessonKeys = Object.keys(lessons);
-    const currentIndex = lessonKeys.indexOf(key);
+    const lessonOutlineKeys = Object.keys(LessonOutlines);
+    const currentIndex = lessonOutlineKeys.indexOf(key);
 
     if (currentIndex === 0) {
       return "In Progress";
     }
 
-    const previousKey = lessonKeys[currentIndex - 1];
+    const previousKey = lessonOutlineKeys[currentIndex - 1];
     if (previousKey && completedKeys.includes(previousKey)) {
       return "In Progress";
     }

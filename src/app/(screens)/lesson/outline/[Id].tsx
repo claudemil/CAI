@@ -1,6 +1,6 @@
 import { Colors, Fonts, Spacing } from "@/constants/theme";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { lessons } from "../../../data/lessons";
+import { LessonOutlines } from "../../../data/lessons";
 
 import { Ionicons } from "@expo/vector-icons";
 import {
@@ -18,16 +18,23 @@ export default function LessonOutlineId() {
     Id: string;
   }>();
 
-  const lessonData = getLessonDataById(Id);
+  const lessonData = getLessonOutlineDataById(Id);
 
   if (!lessonData) {
     return <Text>"Lesson not found!"</Text>;
   }
 
-  const handleShowLessonCompletion = () => {
+  // const handleShowLessonCompletion = () => {
+  //   router.push({
+  //     pathname: "/(screens)/lesson/completion/[Id]",
+  //     params: { Id: Id },
+  //   });
+  // };
+
+  const handleShowLessonContent = (id: string) => {
     router.push({
-      pathname: "/(screens)/lesson/completion/[Id]",
-      params: { Id: Id },
+      pathname: "/lesson/content/[Id]",
+      params: { Id: id },
     });
   };
 
@@ -87,7 +94,7 @@ export default function LessonOutlineId() {
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.startButton}
-            onPress={handleShowLessonCompletion}
+            onPress={() => handleShowLessonContent("what-is-statistics")}
           >
             <Text style={styles.startText}>Start Lesson</Text>
             <Ionicons
@@ -102,8 +109,8 @@ export default function LessonOutlineId() {
   );
 }
 
-function getLessonDataById(id: string) {
-  return lessons[id];
+function getLessonOutlineDataById(id: string) {
+  return LessonOutlines[id];
 }
 
 const styles = StyleSheet.create({

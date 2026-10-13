@@ -10,12 +10,14 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Lesson, lessons } from "../../../data/lessons";
+import { LessonOutline, LessonOutlines } from "../../../data/lessons";
 
 export default function Id() {
   const router = useRouter();
   const { Id } = useLocalSearchParams<{ Id: string }>();
-  const lessonData: Lesson | undefined = Id ? lessons[Id] : undefined;
+  const lessonData: LessonOutline | undefined = Id
+    ? LessonOutlines[Id]
+    : undefined;
   const { handleCompleteCourse, getCourseStatus } = useCourse();
 
   const status = getCourseStatus(Id);
