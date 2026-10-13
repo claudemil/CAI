@@ -5,7 +5,7 @@ import {
   useFonts,
 } from "@expo-google-fonts/nunito";
 import { Stack, useRouter, useSegments } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
+// import * as SplashScreen from "expo-splash-screen";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
@@ -14,7 +14,7 @@ import { AuthProvider } from "./context/auth";
 import { CourseProvider } from "./context/course";
 
 // Prevent the native splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+// SplashScreen.preventAutoHideAsync();
 export default function Layout() {
   const [user, setUser] = useState<User | null>(null);
   const [initializing, setInitializing] = useState(true);
@@ -41,7 +41,7 @@ export default function Layout() {
     if (initializing) return;
     const inAuthGroup = segments[0] === "(auth)";
     if (!user && !inAuthGroup) {
-      router.replace("/(auth)/login");
+      router.replace("/(auth)/register");
     } else if (user && inAuthGroup) {
       router.replace("/(tabs)");
     }
