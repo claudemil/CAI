@@ -9,7 +9,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Lessons } from "../../../data/lessons";
+import { LessonKeys, Lessons } from "../../../data/lessons";
 
 export default function LessonOutlineId() {
   const router = useRouter();
@@ -18,15 +18,25 @@ export default function LessonOutlineId() {
   }>();
 
   const lessonData = getLessonDataById(Id);
+  const currentIndex = LessonKeys.indexOf(Id);
+  const prevKey: string = LessonKeys[currentIndex - 1];
+  const nextId: string = LessonKeys[currentIndex + 1];
 
   if (!lessonData) {
     return <Text>"Lesson not found!"</Text>;
   }
 
+  const handleShowNextLesson = (id: string) => {
+    router.push({
+      pathname: "/(screens)/lesson/content/[Id]",
+      params: { Id: id },
+    });
+  };
+
   const handleShowLessonCompletion = () => {
     router.push({
       pathname: "/(screens)/lesson/completion/[Id]",
-      params: { Id: Id },
+      params: { Id: "intro-to-statistics" },
     });
   };
 
@@ -198,6 +208,7 @@ export default function LessonOutlineId() {
                             : styles.oppositeText,
                           { textAlign: "left" },
                         ]}
+                        key={cIndex}
                       >
                         {chunk}
                       </Text>
@@ -220,7 +231,12 @@ export default function LessonOutlineId() {
         </View>
 
         <View style={styles.oppositeLessonCard}>
-          <View style={{ justifyContent: "center", alignSelf: "center" }}>
+          <View
+            style={{
+              justifyContent: "center",
+              alignSelf: "center",
+            }}
+          >
             <Text
               style={{
                 width: 32,
@@ -229,10 +245,12 @@ export default function LessonOutlineId() {
                 paddingVertical: Spacing.one,
                 textAlign: "center",
                 fontFamily: Fonts.nunitoExtraBold,
-                fontSize: 5,
+                fontSize: 14,
                 backgroundColor: Colors.light.headerBackgroundColor,
+                borderColor: Colors.light.headerBackgroundColor,
+                borderWidth: 2,
                 borderRadius: 20,
-                color: Colors.light.buttonSecondary,
+                color: Colors.light.textWhite,
               }}
             >
               2
@@ -251,6 +269,7 @@ export default function LessonOutlineId() {
                             : styles.oppositeText,
                           { textAlign: "left" },
                         ]}
+                        key={cIndex}
                       >
                         {chunk}
                       </Text>
@@ -273,14 +292,26 @@ export default function LessonOutlineId() {
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
-            style={styles.startButton}
-            onPress={handleShowLessonCompletion}
+            style={!nextId ? styles.disabledButton : styles.startButton}
+            onPress={
+              !nextId
+                ? () => handleShowLessonCompletion()
+                : () => handleShowNextLesson(nextId)
+            }
+            // disabled={!nextId}
           >
-            <Text style={styles.startText}>Next</Text>
+            <Text style={!nextId ? styles.disabledStartText : styles.startText}>
+              Next
+            </Text>
             <Ionicons
               name="arrow-forward"
               size={24}
-              color={Colors.light.textWhite}
+              color={
+                !nextId
+                  ? Colors.light.headerBackgroundColor
+                  : Colors.light.textWhite
+              }
+              style={{ alignSelf: "center" }}
             ></Ionicons>
           </TouchableOpacity>
         </View>
@@ -340,6 +371,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     paddingVertical: Spacing.two,
     paddingHorizontal: Spacing.three,
+    gap: Spacing.three,
   },
   oppositeLessonCard: {
     width: "100%",
@@ -348,6 +380,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     paddingVertical: Spacing.two,
     paddingHorizontal: Spacing.three,
+    gap: Spacing.three,
   },
 
   aboutLessonHeader: {
@@ -459,10 +492,26 @@ const styles = StyleSheet.create({
     gap: Spacing.two,
     alignSelf: "center",
   },
+  disabledButton: {
+    backgroundColor: Colors.light.backgroundElement,
+    paddingVertical: Spacing.four,
+    borderRadius: 16,
+    justifyContent: "center",
+    width: "75%",
+    flexDirection: "row",
+    gap: Spacing.two,
+    alignSelf: "center",
+  },
   startText: {
     fontFamily: Fonts.nunitoExtraBold,
     fontSize: 24,
     color: Colors.light.textWhite,
+    alignSelf: "center",
+  },
+  disabledStartText: {
+    fontFamily: Fonts.nunitoExtraBold,
+    fontSize: 24,
+    color: Colors.light.headerBackgroundColor,
     alignSelf: "center",
   },
   bodyContainer: {

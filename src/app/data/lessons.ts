@@ -110,6 +110,50 @@ export const Lessons: LessonMap = {
       ],
     ],
   },
+  "objectives-of-statistics": {
+    number: "1.2",
+    title: ["Objectives of Statistics"],
+    content: [
+      [
+        {
+          theme: "default",
+          chunks: [
+            { text: "Data Summarization: ", bold: true },
+            "Reducing massive datasets into clear, manageable metrics (e.g., measures of central tendencies and standard deviations).",
+          ],
+        },
+      ],
+      [
+        {
+          theme: "opposite",
+          chunks: [
+            { text: "Pattern Recognition: ", bold: true },
+            "Identifying correlations, trends, and anomalies within data streams.",
+          ],
+        },
+      ],
+      [
+        {
+          theme: "default",
+          chunks: [
+            { text: "Hypothesis Testing: ", bold: true },
+            "Using statistical tests to validate or refute assumptions.",
+          ],
+        },
+      ],
+      [
+        {
+          theme: "opposite",
+          chunks: [
+            { text: "Risk & Uncertainty Quantification: ", bold: true },
+            "Calculating probabilities and margins of error.",
+          ],
+        },
+      ],
+    ],
+  },
 };
+
+export const LessonKeys = Object.keys(Lessons);
 
 export default LessonOutlines;
