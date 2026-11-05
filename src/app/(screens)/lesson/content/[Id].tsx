@@ -67,12 +67,16 @@ export default function LessonOutlineId() {
               gap: Spacing.two,
             }}
           >
-            <Text style={styles.currentIndicator}></Text>
-            <Text style={styles.inactiveIndicator}></Text>
-            <Text style={styles.inactiveIndicator}></Text>
-            <Text style={styles.inactiveIndicator}></Text>
-            <Text style={styles.inactiveIndicator}></Text>
-            <Text style={styles.inactiveIndicator}></Text>
+            {LessonKeys.map((key, index) => (
+              <Text
+                key={key}
+                style={
+                  index === currentIndex
+                    ? styles.currentIndicator
+                    : styles.inactiveIndicator
+                }
+              ></Text>
+            ))}
           </View>
           <View style={{ width: "15%" }}>
             <Text
@@ -83,7 +87,7 @@ export default function LessonOutlineId() {
                 fontSize: 16,
               }}
             >
-              1/6{" "}
+              {currentIndex + 1} / {LessonKeys.length}
             </Text>
           </View>
         </View>
@@ -292,7 +296,7 @@ export default function LessonOutlineId() {
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
-            style={!nextId ? styles.disabledButton : styles.startButton}
+            style={styles.startButton}
             onPress={
               !nextId
                 ? () => handleShowLessonCompletion()
@@ -300,17 +304,16 @@ export default function LessonOutlineId() {
             }
             // disabled={!nextId}
           >
-            <Text style={!nextId ? styles.disabledStartText : styles.startText}>
-              Next
-            </Text>
+            {!nextId ? (
+              <Text style={styles.startText}>Complete</Text>
+            ) : (
+              <Text style={styles.startText}>Next</Text>
+            )}
+
             <Ionicons
               name="arrow-forward"
               size={24}
-              color={
-                !nextId
-                  ? Colors.light.headerBackgroundColor
-                  : Colors.light.textWhite
-              }
+              color={Colors.light.textWhite}
               style={{ alignSelf: "center" }}
             ></Ionicons>
           </TouchableOpacity>
@@ -371,7 +374,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     paddingVertical: Spacing.two,
     paddingHorizontal: Spacing.three,
-    gap: Spacing.three,
+    gap: Spacing.one,
   },
   oppositeLessonCard: {
     width: "100%",
@@ -380,7 +383,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     paddingVertical: Spacing.two,
     paddingHorizontal: Spacing.three,
-    gap: Spacing.three,
+    gap: Spacing.one,
   },
 
   aboutLessonHeader: {
@@ -492,16 +495,16 @@ const styles = StyleSheet.create({
     gap: Spacing.two,
     alignSelf: "center",
   },
-  disabledButton: {
-    backgroundColor: Colors.light.backgroundElement,
-    paddingVertical: Spacing.four,
-    borderRadius: 16,
-    justifyContent: "center",
-    width: "75%",
-    flexDirection: "row",
-    gap: Spacing.two,
-    alignSelf: "center",
-  },
+  // disabledButton: {
+  //   backgroundColor: Colors.light.backgroundElement,
+  //   paddingVertical: Spacing.four,
+  //   borderRadius: 16,
+  //   justifyContent: "center",
+  //   width: "75%",
+  //   flexDirection: "row",
+  //   gap: Spacing.two,
+  //   alignSelf: "center",
+  // },
   startText: {
     fontFamily: Fonts.nunitoExtraBold,
     fontSize: 24,
