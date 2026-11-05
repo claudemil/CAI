@@ -1,7 +1,8 @@
 import { useAuth } from "@/app/context/auth";
-import { Quiz, Quizzes } from "@/app/data/quizzes";
+import { Quiz, QuizKeys, Quizzes } from "@/app/data/quizzes";
 import { Button } from "@/components/Button";
 import { Colors, Fonts, Spacing } from "@/constants/theme";
+import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import {
@@ -18,21 +19,41 @@ export default function QuizScreen() {
   const router = useRouter();
   const { appUser } = useAuth();
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  const [correctAnswers, setCorrectAnwers] = useState(0);
+  const [wrongAnswers, setWrongAnwers] = useState(0);
+
   const [correctFlag, setCorrectFlag] = useState<boolean>(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const { Id } = useLocalSearchParams<{ Id: string }>();
 
   // fetches data from quizzes.ts
   const quizData: Quiz | undefined = Id ? Quizzes[Id] : undefined;
 
+  const prevId: string = QuizKeys[currentIndex - 1];
+  const questionsToRender = quizData?.questions || [];
+  const currentQuestion = questionsToRender[currentIndex];
+  const nextQuestion = questionsToRender[currentIndex + 1];
+
   if (!quizData) {
     return <Text>"Quiz not found!"</Text>;
   }
 
-  const checkAnswer = (answer: string) => {
-    if (quizData.correctAnswer == answer) {
-      setCorrectFlag(true);
+  const handleNext = () => {
+    if (currentIndex < questionsToRender.length - 1) {
+      setCurrentIndex((prev) => prev + 1);
     } else {
+      setCorrectFlag(true);
+    }
+  };
+
+  const checkAnswer = (answer: string) => {
+    if (currentQuestion.correctAnswer == answer) {
+      setCorrectAnwers((prev) => prev + 1);
+      handleNext();
+    } else {
+      setWrongAnwers((prev) => prev + 1);
       setCorrectFlag(false);
+      handleNext();
     }
   };
 
@@ -75,29 +96,36 @@ export default function QuizScreen() {
         contentContainerStyle={styles.bodyContainer}
       >
         <View style={styles.progressRow}>
-          <Text style={{ backgroundColor: "#000000" }}>
-            This will be a line
-          </Text>
+          {questionsToRender.map((key, index) => (
+            <Text
+              key={key.question}
+              style={
+                index === currentIndex
+                  ? styles.currentIndicator
+                  : styles.inactiveIndicator
+              }
+            ></Text>
+          ))}
           <Text
             style={{
               fontFamily: Fonts.nunitoExtraBold,
               color: Colors.light.headerBackgroundColor,
             }}
           >
-            1/3
+            {currentIndex + 1} / {questionsToRender.length}
           </Text>
         </View>
         <View style={styles.questionCard}>
           <View style={styles.questionHeader}>
-            <Text style={styles.questionText}>Q1.</Text>
+            <Text style={styles.questionText}>Q{currentIndex + 1}.</Text>
             <Text style={styles.questionText}>{quizData.type}</Text>
           </View>
           <View>
-            <Text style={styles.questionText}>{quizData.questions[0]}</Text>
+            <Text style={styles.questionText}>{currentQuestion.question}</Text>
           </View>
         </View>
         <View style={styles.answerCardRow}>
-          {quizData.answers.map((answer: string, index: number) => {
+          {currentQuestion.answers.map((answer: string, index: number) => {
             const isSelected = selectedAnswer === answer;
             const letterLabel = String.fromCharCode(65 + index);
 
@@ -135,8 +163,18 @@ export default function QuizScreen() {
             style={styles.checkAnswerButton}
             onPress={() => checkAnswer(selectedAnswer!)}
           >
-            <Text style={styles.checkAnswerText}>Check Answer</Text>
-            {correctFlag && <Text>Correct!</Text>}
+            {!nextQuestion ? (
+              <Text style={styles.checkAnswerText}>Complete</Text>
+            ) : (
+              <Text style={styles.checkAnswerText}>Next</Text>
+            )}
+
+            <Ionicons
+              name="arrow-forward"
+              size={24}
+              color={Colors.light.textWhite}
+              style={{ alignSelf: "center" }}
+            ></Ionicons>
           </TouchableOpacity>
         </View>
         {correctFlag && (
@@ -144,6 +182,14 @@ export default function QuizScreen() {
             <View>
               <View style={styles.headerContainer}>
                 <Text style={styles.headerText}>Congrats!</Text>
+              </View>
+              <View style={styles.headerContainer}>
+                <Text style={styles.headerText}>
+                  Correct answers: {correctAnswers}
+                </Text>
+                <Text style={styles.headerText}>
+                  Wrong answers: {wrongAnswers}
+                </Text>
               </View>
               <TouchableOpacity
                 style={styles.checkAnswerButton}
@@ -313,11 +359,25 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     width: "75%",
     alignSelf: "center",
+    flex: 1,
+    flexDirection: "row",
   },
   checkAnswerText: {
     fontFamily: Fonts.nunitoExtraBold,
     fontSize: 18,
     color: Colors.light.textWhite,
     alignSelf: "center",
+  },
+  currentIndicator: {
+    width: 48,
+    height: 24,
+    borderRadius: 20,
+    backgroundColor: Colors.light.headerBackgroundColor,
+  },
+  inactiveIndicator: {
+    width: 24,
+    height: 24,
+    borderRadius: 20,
+    backgroundColor: Colors.light.backgroundElement,
   },
 });
